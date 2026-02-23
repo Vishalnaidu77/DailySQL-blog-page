@@ -24,15 +24,12 @@ const highlightSQL = (code) => {
   let key = 0
 
   while (remaining.length > 0) {
-    let matched = false
-
     // Comments (-- or #)
     const commentMatch = remaining.match(/^(--|#)(.*)$/m)
     if (commentMatch && remaining.startsWith(commentMatch[1])) {
       const fullComment = commentMatch[0]
       tokens.push(<span key={key++} className="sql-comment">{fullComment}</span>)
       remaining = remaining.slice(fullComment.length)
-      matched = true
       continue
     }
 
@@ -43,7 +40,6 @@ const highlightSQL = (code) => {
         const str = remaining.slice(0, endIdx + 1)
         tokens.push(<span key={key++} className="sql-string">{str}</span>)
         remaining = remaining.slice(endIdx + 1)
-        matched = true
         continue
       }
     }
@@ -53,7 +49,6 @@ const highlightSQL = (code) => {
     if (numMatch) {
       tokens.push(<span key={key++} className="sql-number">{numMatch[0]}</span>)
       remaining = remaining.slice(numMatch[0].length)
-      matched = true
       continue
     }
 
@@ -68,7 +63,6 @@ const highlightSQL = (code) => {
         tokens.push(<span key={key++} className="sql-identifier">{word}</span>)
       }
       remaining = remaining.slice(word.length)
-      matched = true
       continue
     }
 
@@ -77,7 +71,6 @@ const highlightSQL = (code) => {
     if (opMatch) {
       tokens.push(<span key={key++} className="sql-operator">{opMatch[0]}</span>)
       remaining = remaining.slice(opMatch[0].length)
-      matched = true
       continue
     }
 
@@ -135,13 +128,6 @@ const App = () => {
         <h1>{title}</h1>
         <p className="subtitle">
           {totalProblems} real-world SQL problems. No grinding, no overload. Just consistent practice.
-        </p>
-        <p className="source-info">
-          Source:{' '}
-          <a href={source} target="_blank" rel="noreferrer">
-            dsfaisal.com
-          </a>{' '}
-          • Scraped {new Date(scrapedAt).toLocaleDateString()}
         </p>
         <div className="tag-list">
           {tags.map((tag) => (
