@@ -2,6 +2,37 @@ import { useState, useMemo } from 'react'
 import './App.css'
 import dataset from './assets/questions.json'
 
+// Sidebar Navigation Component
+const Sidebar = ({ problems }) => {
+  return (
+    <aside className="sidebar">
+      <div className="sidebar-header">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <line x1="3" y1="12" x2="21" y2="12" />
+          <line x1="3" y1="6" x2="21" y2="6" />
+          <line x1="3" y1="18" x2="21" y2="18" />
+        </svg>
+        <span>On this page</span>
+      </div>
+      <nav className="sidebar-nav">
+        {problems.map((problem) => (
+          <a
+            key={problem.section_id}
+            href={`#${problem.section_id}`}
+            className="sidebar-link"
+          >
+            <span className="sidebar-link-id">{problem.id}.</span>
+            <span className="sidebar-link-title">{problem.title}</span>
+            <span className={`sidebar-link-difficulty ${problem.difficulty.toLowerCase()}`}>
+              {problem.difficulty}
+            </span>
+          </a>
+        ))}
+      </nav>
+    </aside>
+  )
+}
+
 // SQL Syntax Highlighter
 const SQL_KEYWORDS = [
   'SELECT', 'FROM', 'WHERE', 'JOIN', 'LEFT', 'RIGHT', 'INNER', 'OUTER', 'FULL', 'CROSS',
@@ -178,7 +209,7 @@ const App = () => {
   const { title, tags, total_problems: totalProblems, problems } = dataset
 
   return (
-    <main className="page">
+    <div className="app-container">
       <header className="page-header">
         <div className="badge">Practice SQL Daily</div>
         <h1>{title}</h1>
@@ -187,79 +218,82 @@ const App = () => {
         </p>
         <div className="tag-list">
           {tags.map((tag) => (
-            <span key={tag} className="tag">  
+            <span key={tag} className="tag">
               {tag}
             </span>
           ))}
         </div>
       </header>
 
-      <section className="problem-list">
-        {problems.map((problem) => (
-          <article key={problem.section_id} className="problem-card" id={problem.section_id}>
-            {/* Problem Title Header */}
-            <h2 className="problem-title">
-              {problem.id}. {problem.title} | <span className={`difficulty-inline ${problem.difficulty.toLowerCase()}`}>{problem.difficulty}</span> |{' '}
-              {problem.leetcode_url ? (
-                <a href={problem.leetcode_url} target="_blank" rel="noreferrer">
-                  LeetCode
-                </a>
-              ) : (
-                'LeetCode'
-              )}
-            </h2>
+      <div className="content-layout">
+        <Sidebar problems={problems} />
+        
+        <main className="main-content">
 
-            {/* Table Schema Sections */}
-            {problem.table_schemas && problem.table_schemas.length > 0 && (
-              <div className="tables-section">
-                {problem.table_schemas.map((table) => (
-                  <div key={table.name} className="table-schema-block">
-                    <p className="table-label">
-                      Table: <code>{table.name}</code>
-                    </p>
-                    <div className="code-block schema-block">
-                      <div className="code-block-header">
-                        <CopyButton text={table.schema} />
+      <section className="problem-list">
+            {problems.map((problem) => (
+              <article key={problem.section_id} className="problem-card" id={problem.section_id}>
+                {/* Problem Title Header */}
+                <h2 className="problem-title">
+                  {problem.id}. {problem.title} | <span className={`difficulty-inline ${problem.difficulty.toLowerCase()}`}>{problem.difficulty}</span> |{' '}
+                  {problem.leetcode_url ? (
+                    <a href={problem.leetcode_url} target="_blank" rel="noreferrer">
+                      LeetCode
+                    </a>
+                  ) : (
+                    'LeetCode'
+                  )}
+                </h2>
+
+                {/* Table Schema Sections */}
+                {problem.table_schemas && problem.table_schemas.length > 0 && (
+                  <div className="tables-section">
+                    {problem.table_schemas.map((table) => (
+                      <div key={table.name} className="table-schema-block">
+                        <p className="table-label">
+                          Table: <code>{table.name}</code>
+                        </p>
+                        <div className="code-block schema-block">
+                          <div className="code-block-header">
+                            <CopyButton text={table.schema} />
+                          </div>
+                          <pre className="schema-pre">
+                            <SchemaCode schema={table.schema} />
+                          </pre>
+                        </div>
                       </div>
-                      <pre className="schema-pre">
-                        <SchemaCode schema={table.schema} />
+                    ))}
+                  </div>
+                )}
+
+                {/* Problem Description */}
+                {problem.description && (
+                  <div className="description-section">
+                    <p className="problem-description">{problem.description}</p>
+                  </div>
+                )}
+
+                {/* Solution Section */}
+                <div className="solution-section">
+                  <h3 className="section-title">Solution</h3>
+                  {problem.solutions.map((solution) => (
+                    <div key={`${problem.id}-${solution.label}`} className="code-block">
+                      <div className="code-block-header">
+                        {problem.solutions.length > 1 && <span className="solution-label">{solution.label}</span>}
+                        <CopyButton text={solution.sql} />
+                      </div>
+                      <pre>
+                        <SQLCode code={solution.sql} />
                       </pre>
                     </div>
-                  </div>
-                ))}
-              </div>
-            )}
-
-            {/* Problem Description */}
-            {problem.description && (
-              <div className="description-section">
-                <p className="problem-description">{problem.description}</p>
-              </div>
-            )}
-
-            {/* Solution Section */}
-            <div className="solution-section">
-              <h3 className="section-title">Solution</h3>
-              {problem.solutions.map((solution) => (
-                <div key={`${problem.id}-${solution.label}`} className="code-block">
-                  <div className="code-block-header">
-                    {problem.solutions.length > 1 && <span className="solution-label">{solution.label}</span>}
-                    <CopyButton text={solution.sql} />
-                  </div>
-                  <pre>
-                    <SQLCode code={solution.sql} />
-                  </pre>
+                  ))}
                 </div>
-              ))}
-            </div>
-          </article>
-        ))}
-      </section>
-
-      <footer className="page-footer">
-        <p>Data sourced from dsfaisal.com • Built with React + Vite</p>
-      </footer>
-    </main>
+              </article>
+            ))}
+          </section>
+        </main>
+      </div>
+    </div>
   )
 }
 

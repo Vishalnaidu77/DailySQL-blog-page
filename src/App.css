@@ -25,6 +25,7 @@ body {
   padding: 0;
   width: 100%;
   min-height: 100vh;
+  scroll-behavior: smooth;
 }
 
 body {
@@ -48,19 +49,112 @@ a:hover {
   color: var(--accent-hover);
 }
 
-/* ===== Page Layout ===== */
-.page {
+/* ===== App Container ===== */
+.app-container {
   width: 100%;
-  max-width: 100%;
-  margin: 0;
-  padding: 3rem 2rem 4rem;
+  min-height: 100vh;
+}
+
+/* ===== Content Layout (Sidebar + Main) ===== */
+.content-layout {
+  display: flex;
+  width: 100%;
+}
+
+/* ===== Sidebar ===== */
+.sidebar {
+  position: sticky;
+  top: 0;
+  width: 320px;
+  min-width: 320px;
+  height: calc(100vh);
+  background: var(--bg-gradient-start);
+  border-right: 1px solid var(--border);
+  overflow-y: auto;
+}
+
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 1rem;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.sidebar-nav {
+  padding: 0.5rem 0;
+}
+
+.sidebar-link {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  padding: 0.6rem 1rem;
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  border-left: 3px solid transparent;
+  transition: all 0.2s;
+}
+
+.sidebar-link:hover {
+  color: var(--text-primary);
+  background: var(--surface);
+  border-left-color: var(--accent);
+}
+
+.sidebar-link-id {
+  color: var(--text-secondary);
+  font-weight: 500;
+  flex-shrink: 0;
+}
+
+.sidebar-link-title {
+  flex: 1;
+  color: inherit;
+}
+
+.sidebar-link-difficulty {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.1rem 0.4rem;
+  border-radius: 4px;
+  background: var(--surface);
+  flex-shrink: 0;
+}
+
+.sidebar-link-difficulty.easy {
+  color: var(--easy);
+}
+
+.sidebar-link-difficulty.medium {
+  color: var(--medium);
+}
+
+.sidebar-link-difficulty.hard {
+  color: var(--hard);
+}
+
+.sidebar::-webkit-scrollbar{
+  display: none;
+}
+
+/* ===== Main Content ===== */
+.main-content {
+  flex: 1;
+  padding: 2rem;
+  min-width: 0;
 }
 
 /* ===== Header ===== */
 .page-header {
   text-align: center;
-  margin-bottom: 3rem;
-  padding-bottom: 2rem;
+  padding: 2rem 2rem;
   border-bottom: 1px solid var(--border);
 }
 
@@ -128,6 +222,7 @@ a:hover {
   max-width: 100%;
   overflow-wrap: break-word;
   word-wrap: break-word;
+  scroll-margin-top: 1rem;
 }
 
 .problem-card:last-child {
