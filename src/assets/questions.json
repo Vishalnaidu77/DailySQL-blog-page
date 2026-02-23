@@ -1,0 +1,2928 @@
+{
+  "source": "https://www.dsfaisal.com/blog/sql/leetcode-sql-problem-solving",
+  "title": "LeetCode SQL Problem Solving Questions With Solutions",
+  "published": "Nov 06, 2020",
+  "tags": [
+    "SQL",
+    "SQL Problem Solving",
+    "LeetCode"
+  ],
+  "problems": [
+    {
+      "id": 175,
+      "title": "Combine Two Tables",
+      "difficulty": "Easy",
+      "locked": false,
+      "leetcode_url": "https://leetcode.com/problems/combine-two-tables/",
+      "description": "Write a SQL query for a report that provides FirstName, LastName, City, State for each person in the Person table, regardless if there is an address for each of those people.",
+      "tables": [
+        "Person",
+        "Address"
+      ],
+      "solutions": [
+        {
+          "label": "Solution 1",
+          "sql": "SELECT p.FirstName, p.LastName, a.City, a.State\nFROM Person p\nLEFT JOIN Address a\nON p.PersonId = a.PersonId;"
+        }
+      ]
+    },
+    {
+      "id": 176,
+      "title": "Second Highest Salary",
+      "difficulty": "Easy",
+      "locked": false,
+      "leetcode_url": "https://leetcode.com/problems/second-highest-salary/",
+      "description": "Write a SQL query to get the second highest salary from the Employee table. If there is no second highest salary, return null.",
+      "tables": [
+        "Employee"
+      ],
+      "solutions": [
+        {
+          "label": "Solution 1",
+          "sql": "SELECT Max(Salary) SecondHighestSalary\nFROM Employee WHERE Salary < (SELECT MAX(Salary) FROM Employee)"
+        },
+        {
+          "label": "Solution 2",
+          "sql": "WITH CTE AS (SELECT DISTINCT Salary\nFROM Employee\nORDER BY Salary DESC\nLIMIT 2)\n\nSELECT Salary as SecondHighestSalary\nFROM CTE\nORDER BY Salary Asc\nLIMIT 1;"
+        },
+        {
+          "label": "Solution 3",
+          "sql": "WITH CTE AS\n(\n    SELECT Salary,\n           DENSE_RANK() OVER (ORDER BY Salary DESC) AS DENSERANK\n    FROM Employee\n)\nSELECT Salary SecondHighestSalary\nFROM CTE\nWHERE DENSERANK = 2;"
+        }
+      ]
+    },
+    {
+      "id": 177,
+      "title": "Nth Highest Salary",
+      "difficulty": "Medium",
+      "locked": false,
+      "leetcode_url": "https://leetcode.com/problems/nth-highest-salary/",
+      "description": "Write a SQL query to get the nth highest salary from the Employee table. If there is no nth highest salary, return null.",
+      "tables": [
+        "Employee"
+      ],
+      "solutions": [
+        {
+          "label": "Solution 1",
+          "sql": "CREATE FUNCTION getNthHighestSalary(N INT) RETURNS INT\nBEGIN\nSET N = N-1;\n    RETURN(\n        SELECT DISTINCT Salary FROM Employee ORDER BY Salary DESC\n        LIMIT 1 OFFSET N\n    );\nEND"
+        }
+      ]
+    },
+    {
+      "id": 178,
+      "title": "Rank Scores",
+      "difficulty": "Medium",
+      "locked": false,
+      "leetcode_url": "https://leetcode.com/problems/rank-scores/",
+      "description": "Write a SQL query to rank scores. Ties share the same rank with no holes between ranks (dense ranking).",
+      "tables": [
+        "Scores"
+      ],
+      "solutions": [
+        {
+          "label": "Solution 1",
+          "sql": "SELECT score, DENSE_RANK() OVER (ORDER By Score DESC) AS \"Rank\"\nFROM Scores;"
+        }
+      ]
+    },
+    {
+      "id": 180,
+      "title": "Consecutive Numbers",
+      "difficulty": "Medium",
+      "locked": false,
+      "leetcode_url": "https://leetcode.com/problems/consecutive-numbers/",
+      "description": "Find all numbers that appear at least three times consecutively.",
+      "tables": [
+        "Logs"
+      ],
+      "solutions": [
+        {
+          "label": "Solution 1",
+          "sql": "SELECT a.Num as ConsecutiveNums\nFROM Logs a\nJOIN Logs b ON a.id = b.id+1 AND a.num = b.num\nJOIN Logs c ON a.id = c.id+2 AND a.num = c.num;"
+        }
+      ]
+    },
+    {
+      "id": 181,
+      "title": "Employees Earning More Than Their Managers",
+      "difficulty": "Easy",
+      "locked": false,
+      "leetcode_url": "https://leetcode.com/problems/employees-earning-more-than-their-managers/",
+      "description": "Find employees who earn more than their managers.",
+      "tables": [
+        "Employee"
+      ],
+      "solutions": [
+        {
+          "label": "Solution 1",
+          "sql": "SELECT E.Name as \"Employee\"\nFROM Employee E\nJOIN Employee M ON E.ManagerId = M.Id AND E.Salary > M.Salary;"
+        }
+      ]
+    },
+    {
+      "id": 182,
+      "title": "Duplicate Emails",
+      "difficulty": "Easy",
+      "locked": false,
+      "leetcode_url": "https://leetcode.com/problems/duplicate-emails/",
+      "description": "Find all duplicate emails in a table named Person.",
+      "tables": [
+        "Person"
+      ],
+      "solutions": [
+        {
+          "label": "Solution 1",
+          "sql": "SELECT Email\nFROM Person\nGROUP BY Email\nHAVING count(*) > 1"
+        },
+        {
+          "label": "Solution 2",
+          "sql": "WITH CTE AS(\nSELECT Email, ROW_NUMBER() OVER(PARTITION BY Email ORDER BY Email) AS RN\nFROM Person\n)\nSELECT Email\nFROM CTE\nWHERE RN > 1;"
+        }
+      ]
+    },
+    {
+      "id": 183,
+      "title": "Customers Who Never Order",
+      "difficulty": "Easy",
+      "locked": false,
+      "leetcode_url": "https://leetcode.com/problems/customers-who-never-order/",
+      "description": "Find all customers who never order anything.",
+      "tables": [
+        "Customers",
+        "Orders"
+      ],
+      "solutions": [
+        {
+          "label": "Solution 1",
+          "sql": "SELECT Name AS Customers\nFROM Customers\nLEFT JOIN Orders ON Customers.Id = Orders.CustomerId\nWHERE CustomerId IS NULL;"
+        },
+        {
+          "label": "Solution 2",
+          "sql": "SELECT Name as Customers\nFROM Customers\nWHERE Id NOT IN(\n    SELECT CustomerId FROM Orders\n)"
+        }
+      ]
+    },
+    {
+      "id": 184,
+      "title": "Department Highest Salary",
+      "difficulty": "Medium",
+      "locked": false,
+      "leetcode_url": "https://leetcode.com/problems/department-highest-salary/",
+      "description": "Find employees who have the highest salary in each department.",
+      "tables": [
+        "Employee",
+        "Department"
+      ],
+      "solutions": [
+        {
+          "label": "Solution 1",
+          "sql": "SELECT Department.Name AS Department, Employee.Name AS Employee, Salary\nFROM Employee\nJOIN Department ON Employee.DepartmentId = Department.Id\nWHERE (DepartmentId, Salary) IN(\n    SELECT DepartmentId, MAX(Salary) AS Salary\n    FROM Employee\n    GROUP BY DepartmentId\n);"
+        }
+      ]
+    },
+    {
+      "id": 185,
+      "title": "Department Top Three Salaries",
+      "difficulty": "Hard",
+      "locked": false,
+      "leetcode_url": "https://leetcode.com/problems/department-top-three-salaries/",
+      "description": "Find employees who earn the top three salaries in each department.",
+      "tables": [
+        "Employee",
+        "Department"
+      ],
+      "solutions": [
+        {
+          "label": "Solution 1",
+          "sql": "WITH department_ranking AS (\n    SELECT Name AS Employee, Salary, DepartmentId,\n    DENSE_RANK() OVER (PARTITION BY DepartmentId ORDER BY Salary DESC) AS rnk\n    FROM Employee\n)\nSELECT d.Name AS Department, r.Employee, r.Salary\nFROM department_ranking AS r\nJOIN Department AS d ON r.DepartmentId = d.Id\nWHERE r.rnk <= 3\nORDER BY d.Name ASC, r.Salary DESC;"
+        }
+      ]
+    },
+    {
+      "id": 196,
+      "title": "Delete Duplicate Emails",
+      "difficulty": "Easy",
+      "locked": false,
+      "leetcode_url": "https://leetcode.com/problems/delete-duplicate-emails/",
+      "description": "Delete all duplicate email entries in the Person table, keeping only unique emails with the smallest Id.",
+      "tables": [
+        "Person"
+      ],
+      "solutions": [
+        {
+          "label": "Solution 1",
+          "sql": "DELETE p2\nFROM Person p1\nJOIN Person p2 ON p1.Email = p2.Email AND p1.id < p2.id"
+        }
+      ]
+    },
+    {
+      "id": 197,
+      "title": "Rising Temperature",
+      "difficulty": "Easy",
+      "locked": false,
+      "leetcode_url": "https://leetcode.com/problems/rising-temperature/",
+      "description": "Find all dates' id with higher temperature compared to the previous day.",
+      "tables": [
+        "Weather"
+      ],
+      "solutions": [
+        {
+          "label": "Solution 1",
+          "sql": "SELECT t.Id\nFROM Weather AS t, Weather AS y\nWHERE DATEDIFF(t.RecordDate, y.RecordDate) = 1\nAND t.Temperature > y.Temperature;"
+        },
+        {
+          "label": "Solution 2",
+          "sql": "SELECT t.Id\nFROM Weather t\nJOIN Weather y ON DATEDIFF(t.recordDate, y.recordDate) = 1\nAND t.temperature > y.temperature;"
+        }
+      ]
+    },
+    {
+      "id": 262,
+      "title": "Trips and Users",
+      "difficulty": "Hard",
+      "locked": false,
+      "leetcode_url": "https://leetcode.com/problems/trips-and-users/",
+      "description": "Find the cancellation rate of requests with unbanned users each day between 2013-10-01 and 2013-10-03. Round to 2 decimal places.",
+      "tables": [
+        "Trips",
+        "Users"
+      ],
+      "solutions": [
+        {
+          "label": "Solution 1",
+          "sql": "SELECT Request_at AS Day,\nROUND(SUM(IF(Status<>\"completed\", 1, 0))/COUNT(Status),2) AS \"Cancellation Rate\"\nFROM Trips\nWHERE Request_at BETWEEN \"2013-10-01\" AND \"2013-10-03\"\nAND Client_Id NOT IN (SELECT Users_Id FROM Users WHERE Banned = 'Yes')\nAND Driver_Id NOT IN (SELECT Users_Id FROM Users WHERE Banned = 'Yes')\nGROUP BY Request_at;"
+        }
+      ]
+    },
+    {
+      "id": 511,
+      "title": "Game Play Analysis I",
+      "difficulty": "Easy",
+      "locked": true,
+      "leetcode_url": "https://leetcode.com/problems/game-play-analysis-i/",
+      "description": "Report the first login date for each player.",
+      "tables": [
+        "Activity"
+      ],
+      "solutions": [
+        {
+          "label": "Solution 1",
+          "sql": "SELECT player_id, MIN(event_date) as first_login\nFROM Activity\nGROUP BY player_id"
+        }
+      ]
+    },
+    {
+      "id": 512,
+      "title": "Game Play Analysis II",
+      "difficulty": "Easy",
+      "locked": true,
+      "leetcode_url": "https://leetcode.com/problems/game-play-analysis-ii/",
+      "description": "Report the device that is first logged in for each player.",
+      "tables": [
+        "Activity"
+      ],
+      "solutions": [
+        {
+          "label": "Solution 1",
+          "sql": "SELECT DISTINCT player_id, device_id\nFROM Activity\nWHERE (player_id, event_date) in (\n    SELECT player_id, min(event_date) FROM Activity GROUP BY player_id)"
+        },
+        {
+          "label": "Solution 2",
+          "sql": "SELECT a.player_id, b.device_id\nFROM (SELECT player_id, MIN(event_date) AS event_date FROM Activity GROUP BY player_id) a\nJOIN Activity b ON a.player_id = b.player_id AND a.event_date = b.event_date;"
+        },
+        {
+          "label": "Solution 3",
+          "sql": "SELECT player_id, device_id\nFROM (\n    SELECT player_id, device_id, event_date,\n    ROW_NUMBER() OVER (PARTITION BY player_id ORDER BY event_date) AS r\n    FROM Activity\n) lookup\nWHERE r = 1;"
+        }
+      ]
+    },
+    {
+      "id": 534,
+      "title": "Game Play Analysis III",
+      "difficulty": "Medium",
+      "locked": true,
+      "leetcode_url": "https://leetcode.com/problems/game-play-analysis-iii/",
+      "description": "For each player and date, report how many games played so far by the player (cumulative sum until that date).",
+      "tables": [
+        "Activity"
+      ],
+      "solutions": [
+        {
+          "label": "Solution 1",
+          "sql": "SELECT t1.player_id, t1.event_date, SUM(t2.games_played) as games_played_so_far\nFROM Activity t1\nJOIN Activity t2 ON t1.player_id = t2.player_id\nWHERE t1.event_date >= t2.event_date\nGROUP BY t1.player_id, t1.event_date;"
+        },
+        {
+          "label": "Solution 2",
+          "sql": "SELECT player_id, event_date,\nSUM(games_played) OVER (PARTITION BY player_id ORDER BY event_date) AS games_played_so_far\nFROM Activity;"
+        }
+      ]
+    },
+    {
+      "id": 550,
+      "title": "Game Play Analysis IV",
+      "difficulty": "Medium",
+      "locked": true,
+      "leetcode_url": "https://leetcode.com/problems/game-play-analysis-iv/",
+      "description": "Report the fraction of players that logged in again on the day after the day they first logged in, rounded to 2 decimal places.",
+      "tables": [
+        "Activity"
+      ],
+      "solutions": [
+        {
+          "label": "Solution 1",
+          "sql": "SELECT ROUND(sum(CASE WHEN t1.event_date = t2.first_event+1 THEN 1 ELSE 0 END)/COUNT(DISTINCT t1.player_id), 2) AS fraction\nFROM Activity t1\nJOIN (SELECT player_id, MIN(event_date) AS first_event FROM Activity GROUP BY player_id) t2\nON t1.player_id = t2.player_id;"
+        },
+        {
+          "label": "Solution 2",
+          "sql": "SELECT ROUND(COUNT(DISTINCT b.player_id)/COUNT(DISTINCT a.player_id),2) AS fraction\nFROM (SELECT player_id, MIN(event_date) AS event_date FROM Activity GROUP BY player_id) a\nLEFT JOIN Activity b ON a.player_id = b.player_id AND a.event_date+1 = b.event_date;"
+        }
+      ]
+    },
+    {
+      "id": 569,
+      "title": "Median Employee Salary",
+      "difficulty": "Hard",
+      "locked": true,
+      "leetcode_url": "https://leetcode.com/problems/median-employee-salary/",
+      "description": "Find the median salary of each company.",
+      "tables": [
+        "Employee"
+      ],
+      "solutions": [
+        {
+          "label": "Solution 1",
+          "sql": "SELECT t1.Id AS Id, t1.Company, t1.Salary\nFROM Employee AS t1 JOIN Employee AS t2 ON t1.Company = t2.Company\nGROUP BY t1.Id\nHAVING abs(sum(CASE WHEN t2.Salary<t1.Salary THEN 1\n                    WHEN t2.Salary>t1.Salary THEN -1\n                    WHEN t2.Salary=t1.Salary AND t2.Id<t1.Id THEN 1\n                    WHEN t2.Salary=t1.Salary AND t2.Id>t1.Id THEN -1\n                    ELSE 0 END)) <= 1\nORDER BY t1.Company, t1.Salary, t1.Id"
+        }
+      ]
+    },
+    {
+      "id": 570,
+      "title": "Managers with at Least 5 Direct Reports",
+      "difficulty": "Medium",
+      "locked": true,
+      "leetcode_url": "https://leetcode.com/problems/managers-with-at-least-5-direct-reports/",
+      "description": "Find managers with at least 5 direct reports.",
+      "tables": [
+        "Employee"
+      ],
+      "solutions": [
+        {
+          "label": "Solution 1",
+          "sql": "SELECT Name\nFROM Employee\nWHERE id IN (\n    SELECT ManagerId FROM Employee GROUP BY ManagerId HAVING COUNT(DISTINCT Id) >= 5\n)"
+        }
+      ]
+    },
+    {
+      "id": 571,
+      "title": "Find Median Given Frequency of Numbers",
+      "difficulty": "Hard",
+      "locked": true,
+      "leetcode_url": "https://leetcode.com/problems/find-median-given-frequency-of-numbers/",
+      "description": "Find the median of all numbers given a frequency table.",
+      "tables": [
+        "Numbers"
+      ],
+      "solutions": [
+        {
+          "label": "Solution 1",
+          "sql": "SELECT avg(t3.Number) as median\nFROM Numbers as t3\nJOIN (\n    SELECT t1.Number,\n    abs(SUM(CASE WHEN t1.Number>t2.Number THEN t2.Frequency ELSE 0 END) -\n        SUM(CASE WHEN t1.Number<t2.Number THEN t2.Frequency ELSE 0 END)) AS count_diff\n    FROM numbers AS t1, numbers AS t2\n    GROUP BY t1.Number\n) AS t4 ON t3.Number = t4.Number\nWHERE t3.Frequency>=t4.count_diff"
+        }
+      ]
+    },
+    {
+      "id": 574,
+      "title": "Winning Candidate",
+      "difficulty": "Medium",
+      "locked": true,
+      "leetcode_url": "https://leetcode.com/problems/winning-candidate/",
+      "description": "Find the name of the winning candidate (most votes).",
+      "tables": [
+        "Candidate",
+        "Vote"
+      ],
+      "solutions": [
+        {
+          "label": "Solution 1",
+          "sql": "SELECT Name\nFROM Candidate\nWHERE id = (\n    SELECT CandidateId FROM Vote GROUP BY CandidateId ORDER BY COUNT(1) desc LIMIT 1\n)"
+        }
+      ]
+    },
+    {
+      "id": 577,
+      "title": "Employee Bonus",
+      "difficulty": "Easy",
+      "locked": true,
+      "leetcode_url": "https://leetcode.com/problems/employee-bonus/",
+      "description": "Select all employee names and bonuses where bonus is less than 1000.",
+      "tables": [
+        "Employee",
+        "Bonus"
+      ],
+      "solutions": [
+        {
+          "label": "Solution 1",
+          "sql": "SELECT name, bonus\nFROM Employee LEFT JOIN Bonus ON Employee.empId = Bonus.empId\nWHERE bonus<1000 OR bonus IS NULL;"
+        }
+      ]
+    },
+    {
+      "id": 578,
+      "title": "Get Highest Answer Rate Question",
+      "difficulty": "Medium",
+      "locked": true,
+      "leetcode_url": "https://leetcode.com/problems/get-highest-answer-rate-question/",
+      "description": "Find the question with the highest answer rate from a survey log table.",
+      "tables": [
+        "survey_log"
+      ],
+      "solutions": [
+        {
+          "label": "Solution 1",
+          "sql": "SELECT question_id AS survey_log FROM\n(SELECT question_id,\n    SUM(IF(action='show', 1, 0)) AS num_show,\n    SUM(IF(action='answer', 1, 0)) AS num_answer\nFROM survey_log GROUP BY question_id) AS t\nORDER BY (num_answer/num_show) DESC LIMIT 1;"
+        },
+        {
+          "label": "Solution 2",
+          "sql": "SELECT question_id AS survey_log\nFROM (\n    SELECT question_id,\n    sum(CASE WHEN action='show' THEN 1 ELSE 0 END) AS show_count,\n    sum(CASE WHEN action='answer' THEN 1 ELSE 0 END) AS answer_count\n    FROM survey_log GROUP BY question_id\n) AS t\nORDER BY answer_count/show_count DESC LIMIT 1;"
+        }
+      ]
+    },
+    {
+      "id": 579,
+      "title": "Find Cumulative Salary of an Employee",
+      "difficulty": "Hard",
+      "locked": true,
+      "leetcode_url": "https://leetcode.com/problems/find-cumulative-salary-of-an-employee/",
+      "description": "Get the cumulative sum of an employee's salary over a period of 3 months, excluding the most recent month. Order by Id ASC, Month DESC.",
+      "tables": [
+        "Employee"
+      ],
+      "solutions": [
+        {
+          "label": "Solution 1",
+          "sql": "SELECT a.id, a.month, SUM(b.salary) Salary\nFROM Employee a JOIN Employee b\nON a.id = b.id AND a.month - b.month >= 0 AND a.month - b.month < 3\nGROUP BY a.id, a.month\nHAVING (a.id, a.month) NOT IN (SELECT id, MAX(month) FROM Employee GROUP BY id)\nORDER BY a.id, a.month DESC"
+        }
+      ]
+    },
+    {
+      "id": 580,
+      "title": "Count Student Number in Departments",
+      "difficulty": "Medium",
+      "locked": true,
+      "leetcode_url": "https://leetcode.com/problems/count-student-number-in-departments/",
+      "description": "Print department name and number of students in each department (including departments with 0 students). Sort by descending student count, then alphabetically.",
+      "tables": [
+        "student",
+        "department"
+      ],
+      "solutions": [
+        {
+          "label": "Solution 1",
+          "sql": "SELECT dept_name,\nSUM(CASE WHEN student_id IS NULL THEN 0 ELSE 1 END) AS student_number\nFROM department\nLEFT JOIN student ON department.dept_id = student.dept_id\nGROUP BY department.dept_id\nORDER BY student_number DESC, dept_name"
+        }
+      ]
+    },
+    {
+      "id": 584,
+      "title": "Find Customer Referee",
+      "difficulty": "Easy",
+      "locked": true,
+      "leetcode_url": "https://leetcode.com/problems/find-customer-referee/",
+      "description": "Return the list of customers NOT referred by the person with id 2.",
+      "tables": [
+        "customer"
+      ],
+      "solutions": [
+        {
+          "label": "Solution 1",
+          "sql": "SELECT name\nFROM customer\nWHERE referee_id != '2' OR referee_id IS NULL;"
+        }
+      ]
+    },
+    {
+      "id": 585,
+      "title": "Investments in 2016",
+      "difficulty": "Medium",
+      "locked": true,
+      "leetcode_url": "https://leetcode.com/problems/investments-in-2016/",
+      "description": "Print the sum of TIV_2016 for policyholders who share TIV_2015 with at least one other policyholder and have a unique (LAT, LON) location.",
+      "tables": [
+        "insurance"
+      ],
+      "solutions": [
+        {
+          "label": "Solution 1",
+          "sql": "SELECT SUM(TIV_2016) AS TIV_2016\nFROM insurance\nWHERE CONCAT(LAT, ',', LON) IN (\n    SELECT CONCAT(LAT, ',', LON) FROM insurance GROUP BY LAT, LON HAVING COUNT(1) = 1\n)\nAND TIV_2015 in (\n    SELECT TIV_2015 FROM insurance GROUP BY TIV_2015 HAVING COUNT(1)>1\n)"
+        }
+      ]
+    },
+    {
+      "id": 586,
+      "title": "Customer Placing the Largest Number of Orders",
+      "difficulty": "Easy",
+      "locked": true,
+      "leetcode_url": "https://leetcode.com/problems/customer-placing-the-largest-number-of-orders/",
+      "description": "Find the customer_number for the customer who has placed the largest number of orders.",
+      "tables": [
+        "orders"
+      ],
+      "solutions": [
+        {
+          "label": "Solution 1",
+          "sql": "SELECT customer_number FROM orders\nGROUP BY customer_number\nORDER BY COUNT(1) DESC\nLIMIT 1"
+        }
+      ]
+    },
+    {
+      "id": 595,
+      "title": "Big Countries",
+      "difficulty": "Easy",
+      "locked": false,
+      "leetcode_url": "https://leetcode.com/problems/big-countries/",
+      "description": "Output big countries' name, population and area. A country is big if area > 3 million sq km OR population > 25 million.",
+      "tables": [
+        "World"
+      ],
+      "solutions": [
+        {
+          "label": "Solution 1",
+          "sql": "SELECT name, population, area\nFROM World\nWHERE area >= 3000000 OR population > 25000000;"
+        }
+      ]
+    },
+    {
+      "id": 596,
+      "title": "Classes More Than 5 Students",
+      "difficulty": "Easy",
+      "locked": false,
+      "leetcode_url": "https://leetcode.com/problems/classes-more-than-5-students/",
+      "description": "List all classes which have more than or equal to 5 students.",
+      "tables": [
+        "courses"
+      ],
+      "solutions": [
+        {
+          "label": "Solution 1",
+          "sql": "SELECT class\nFROM courses\nGROUP BY class\nHAVING count(DISTINCT Student)>=5;"
+        }
+      ]
+    },
+    {
+      "id": 597,
+      "title": "Friend Requests I: Overall Acceptance Rate",
+      "difficulty": "Easy",
+      "locked": true,
+      "leetcode_url": "https://leetcode.com/problems/friend-requests-i-overall-acceptance-rate/",
+      "description": "Find the overall acceptance rate of friend requests rounded to 2 decimals. If no requests exist, return 0.00.",
+      "tables": [
+        "friend_request",
+        "request_accepted"
+      ],
+      "solutions": [
+        {
+          "label": "Solution 1",
+          "sql": "SELECT IFNULL((round(accepts/requests, 2)), 0.0) AS accept_rate\nFROM\n    (SELECT count(DISTINCT sender_id, send_to_id) AS requests FROM friend_request) AS t1,\n    (SELECT count(DISTINCT requester_id, accepter_id) AS accepts FROM request_accepted) AS t2"
+        }
+      ]
+    },
+    {
+      "id": 601,
+      "title": "Human Traffic of Stadium",
+      "difficulty": "Hard",
+      "locked": false,
+      "leetcode_url": "https://leetcode.com/problems/human-traffic-of-stadium/",
+      "description": "Display records with three or more consecutive ids where people >= 100, ordered by visit_date ascending.",
+      "tables": [
+        "Stadium"
+      ],
+      "solutions": [
+        {
+          "label": "Solution 1",
+          "sql": "SELECT DISTINCT s1.*\nFROM Stadium s1 JOIN Stadium s2 JOIN Stadium s3\nON (s1.id = s2.id-1 AND s1.id = s3.id-2) OR\n   (s1.id = s2.id+1 AND s1.id = s3.id-1) OR\n   (s1.id = s2.id+1 AND s1.id = s3.id+2)\nWHERE s1.people >= 100 AND s2.people >= 100 AND s3.people>=100\nORDER BY visit_date"
+        }
+      ]
+    },
+    {
+      "id": 602,
+      "title": "Friend Requests II: Who Has the Most Friends",
+      "difficulty": "Medium",
+      "locked": true,
+      "leetcode_url": "https://leetcode.com/problems/friend-requests-ii-who-has-the-most-friends/",
+      "description": "Find the person who has the most friends and the most friends number.",
+      "tables": [
+        "request_accepted"
+      ],
+      "solutions": [
+        {
+          "label": "Solution 1",
+          "sql": "SELECT t.id, sum(t.num) AS num\nFROM (\n    (SELECT requester_id AS id, COUNT(1) AS num FROM request_accepted GROUP BY requester_id)\n    UNION ALL\n    (SELECT accepter_id AS id, COUNT(1) AS num FROM request_accepted GROUP BY accepter_id)\n) AS t\nGROUP BY t.id\nORDER BY num DESC\nLIMIT 1;"
+        }
+      ]
+    },
+    {
+      "id": 603,
+      "title": "Consecutive Available Seats",
+      "difficulty": "Easy",
+      "locked": true,
+      "leetcode_url": "https://leetcode.com/problems/consecutive-available-seats/",
+      "description": "Find all consecutive available seats (2 or more consecutive free seats), ordered by seat_id.",
+      "tables": [
+        "cinema"
+      ],
+      "solutions": [
+        {
+          "label": "Solution 1",
+          "sql": "SELECT DISTINCT t1.seat_id\nFROM cinema AS t1 JOIN cinema AS t2\nON abs(t1.seat_id-t2.seat_id)=1\nWHERE t1.free='1' AND t2.free='1'\nORDER BY t1.seat_id"
+        }
+      ]
+    },
+    {
+      "id": 607,
+      "title": "Sales Person",
+      "difficulty": "Easy",
+      "locked": true,
+      "leetcode_url": "https://leetcode.com/problems/sales-person/",
+      "description": "Output all salesperson names who didn't have sales to company 'RED'.",
+      "tables": [
+        "salesperson",
+        "company",
+        "orders"
+      ],
+      "solutions": [
+        {
+          "label": "Solution 1",
+          "sql": "SELECT name\nFROM salesperson\nWHERE name NOT IN (\n    SELECT DISTINCT salesperson.name\n    FROM salesperson, orders, company\n    WHERE company.name = 'RED'\n    AND salesperson.sales_id = orders.sales_id\n    AND orders.com_id = company.com_id\n)"
+        }
+      ]
+    },
+    {
+      "id": 608,
+      "title": "Tree Node",
+      "difficulty": "Medium",
+      "locked": true,
+      "leetcode_url": "https://leetcode.com/problems/tree-node/",
+      "description": "Print each node id and its type: Root, Inner, or Leaf.",
+      "tables": [
+        "tree"
+      ],
+      "solutions": [
+        {
+          "label": "Solution 1",
+          "sql": "SELECT t1.id,\n    CASE\n        WHEN ISNULL(t1.p_id) THEN 'Root'\n        WHEN ISNULL(MAX(t2.id)) THEN 'Leaf'\n        ELSE 'Inner'\n    END AS Type\nFROM tree AS t1 LEFT JOIN tree AS t2 ON t1.id = t2.p_id\nGROUP BY t1.id, t1.p_id"
+        }
+      ]
+    },
+    {
+      "id": 610,
+      "title": "Triangle Judgement",
+      "difficulty": "Easy",
+      "locked": true,
+      "leetcode_url": "https://leetcode.com/problems/triangle-judgement/",
+      "description": "Judge whether three sides can form a triangle.",
+      "tables": [
+        "triangle"
+      ],
+      "solutions": [
+        {
+          "label": "Solution 1",
+          "sql": "SELECT x, y, z,\n    CASE WHEN x+y>z AND y+z>x AND x+z>y THEN 'Yes' ELSE 'No' END AS triangle\nFROM triangle"
+        }
+      ]
+    },
+    {
+      "id": 612,
+      "title": "Shortest Distance in a Plane",
+      "difficulty": "Medium",
+      "locked": true,
+      "leetcode_url": "https://leetcode.com/problems/shortest-distance-in-a-plane/",
+      "description": "Find the shortest distance between any two unique points in a 2D plane, rounded to 2 decimals.",
+      "tables": [
+        "point_2d"
+      ],
+      "solutions": [
+        {
+          "label": "Solution 1",
+          "sql": "SELECT ROUND(MIN(SQRT((t1.x-t2.x)*(t1.x-t2.x) + (t1.y-t2.y)*(t1.y-t2.y))), 2) as shortest\nFROM point_2d AS t1, point_2d AS t2\nWHERE t1.x!=t2.x OR t1.y!=t2.y"
+        }
+      ]
+    },
+    {
+      "id": 613,
+      "title": "Shortest Distance in a Line",
+      "difficulty": "Easy",
+      "locked": true,
+      "leetcode_url": "https://leetcode.com/problems/shortest-distance-in-a-line/",
+      "description": "Find the shortest distance between two points on the x-axis.",
+      "tables": [
+        "point"
+      ],
+      "solutions": [
+        {
+          "label": "Solution 1",
+          "sql": "SELECT t1.x-t2.x AS shortest\nFROM point AS t1 JOIN point AS t2\nWHERE t1.x>t2.x\nORDER BY (t1.x-t2.x) ASC\nLIMIT 1"
+        }
+      ]
+    },
+    {
+      "id": 614,
+      "title": "Second Degree Follower",
+      "difficulty": "Medium",
+      "locked": true,
+      "leetcode_url": "https://leetcode.com/problems/second-degree-follower/",
+      "description": "For each follower who is also a followee, get the number of their followers.",
+      "tables": [
+        "follow"
+      ],
+      "solutions": [
+        {
+          "label": "Solution 1",
+          "sql": "SELECT f1.follower, COUNT(DISTINCT f2.follower) AS num\nFROM follow AS f1 JOIN follow AS f2 ON f1.follower = f2.followee\nGROUP BY f1.follower;"
+        }
+      ]
+    },
+    {
+      "id": 615,
+      "title": "Average Salary: Departments VS Company",
+      "difficulty": "Hard",
+      "locked": true,
+      "leetcode_url": "https://leetcode.com/problems/average-salary-departments-vs-company",
+      "description": "Display the comparison (higher/lower/same) of average department salary vs company average salary by month.",
+      "tables": [
+        "salary",
+        "employee"
+      ],
+      "solutions": [
+        {
+          "label": "Solution 1",
+          "sql": "SELECT t1.pay_month, t1.department_id,\n    (CASE WHEN t1.amount = t2.amount THEN 'same'\n          WHEN t1.amount > t2.amount THEN 'higher'\n          WHEN t1.amount < t2.amount THEN 'lower' END) AS comparison\nFROM\n    (SELECT left(pay_date, 7) AS pay_month, department_id, avg(amount) AS amount\n    FROM salary JOIN employee ON salary.employee_id = employee.employee_id\n    GROUP BY pay_month, department_id ORDER BY pay_month DESC, department_id) AS t1\nJOIN\n    (SELECT left(pay_date, 7) AS pay_month, avg(amount) AS amount\n    FROM salary JOIN employee ON salary.employee_id = employee.employee_id\n    GROUP BY pay_month) AS t2\nON t1.pay_month = t2.pay_month"
+        }
+      ]
+    },
+    {
+      "id": 618,
+      "title": "Students Report By Geography",
+      "difficulty": "Hard",
+      "locked": true,
+      "leetcode_url": "https://leetcode.com/problems/students-report-by-geography",
+      "description": "Pivot the continent column so each name is sorted alphabetically under its corresponding continent (America, Asia, Europe).",
+      "tables": [
+        "student"
+      ],
+      "solutions": [
+        {
+          "label": "Solution 1",
+          "sql": "SELECT t1.name AS America, t2.name AS Asia, t3.name AS Europe\nFROM\n    (SELECT (@cnt1 := @cnt1 + 1) AS id, name FROM student\n    CROSS JOIN (SELECT @cnt1 := 0) AS dummy WHERE continent='America' ORDER BY name) AS t1\nLEFT JOIN\n    (SELECT (@cnt2 := @cnt2 + 1) AS id, name FROM student\n    CROSS JOIN (SELECT @cnt2 := 0) AS dummy WHERE continent='Asia' ORDER BY name) AS t2\n    ON t1.id = t2.id\nLEFT JOIN\n    (SELECT (@cnt3 := @cnt3 + 1) AS id, name FROM student\n    CROSS JOIN (SELECT @cnt3 := 0) AS dummy WHERE continent='Europe' ORDER BY name) AS t3\n    ON t1.id = t3.id"
+        }
+      ]
+    },
+    {
+      "id": 619,
+      "title": "Biggest Single Number",
+      "difficulty": "Easy",
+      "locked": true,
+      "leetcode_url": "https://leetcode.com/problems/biggest-single-number",
+      "description": "Find the biggest number that appears only once. If no such number exists, output null.",
+      "tables": [
+        "number"
+      ],
+      "solutions": [
+        {
+          "label": "Solution 1",
+          "sql": "SELECT IFNULL((\n    SELECT num FROM number GROUP BY num HAVING count(1) = 1 ORDER BY num DESC LIMIT 0, 1\n), NULL) AS num"
+        }
+      ]
+    },
+    {
+      "id": 620,
+      "title": "Not Boring Movies",
+      "difficulty": "Easy",
+      "locked": false,
+      "leetcode_url": "https://leetcode.com/problems/not-boring-movies/",
+      "description": "Output movies with an odd numbered ID and description that is not 'boring', ordered by rating descending.",
+      "tables": [
+        "Cinema"
+      ],
+      "solutions": [
+        {
+          "label": "Solution 1",
+          "sql": "SELECT *\nFROM Cinema\nWHERE description <> 'boring' AND ID % 2 = 1\nORDER BY rating DESC;"
+        }
+      ]
+    },
+    {
+      "id": 626,
+      "title": "Exchange Seats",
+      "difficulty": "Medium",
+      "locked": false,
+      "leetcode_url": "https://leetcode.com/problems/exchange-seats/",
+      "description": "Swap seats for adjacent students. If the number of students is odd, the last seat is unchanged.",
+      "tables": [
+        "seat"
+      ],
+      "solutions": [
+        {
+          "label": "Solution 1",
+          "sql": "SELECT\nIF(id<(SELECT MAX(id) FROM seat),IF(id%2=0,id-1, id+1),IF(id%2=0, id-1, id)) AS id, student\nFROM seat\nORDER BY id;"
+        }
+      ]
+    },
+    {
+      "id": 627,
+      "title": "Swap Salary",
+      "difficulty": "Easy",
+      "locked": false,
+      "leetcode_url": "https://leetcode.com/problems/swap-salary/",
+      "description": "Swap all 'f' and 'm' values in the sex column with a single UPDATE statement.",
+      "tables": [
+        "Salary"
+      ],
+      "solutions": [
+        {
+          "label": "Solution 1 - IF",
+          "sql": "UPDATE Salary SET sex = IF(sex='m', 'f', 'm')"
+        },
+        {
+          "label": "Solution 2 - CASE",
+          "sql": "UPDATE Salary SET sex = CASE WHEN sex='m' THEN 'f' ELSE 'm' END"
+        }
+      ]
+    },
+    {
+      "id": 1045,
+      "title": "Customers Who Bought All Products",
+      "difficulty": "Medium",
+      "locked": true,
+      "leetcode_url": "https://leetcode.com/problems/customers-who-bought-all-products",
+      "description": "Find customer ids who bought all products in the Product table.",
+      "tables": [
+        "Customer",
+        "Product"
+      ],
+      "solutions": [
+        {
+          "label": "Solution 1",
+          "sql": "SELECT customer_id\nFROM Customer\nGROUP BY customer_id\nHAVING count(DISTINCT product_key) = (SELECT count(1) FROM Product)"
+        }
+      ]
+    },
+    {
+      "id": 1050,
+      "title": "Actors and Directors Who Cooperated At Least Three Times",
+      "difficulty": "Easy",
+      "locked": true,
+      "leetcode_url": "https://leetcode.com/problems/actors-and-directors-who-cooperated-at-least-three-times",
+      "description": "Find (actor_id, director_id) pairs where they have cooperated at least 3 times.",
+      "tables": [
+        "ActorDirector"
+      ],
+      "solutions": [
+        {
+          "label": "Solution 1",
+          "sql": "SELECT actor_id, director_id\nFROM ActorDirector\nGROUP BY actor_id, director_id\nHAVING COUNT(1)>=3"
+        }
+      ]
+    },
+    {
+      "id": 1068,
+      "title": "Product Sales Analysis I",
+      "difficulty": "Easy",
+      "locked": true,
+      "leetcode_url": "https://leetcode.com/problems/product-sales-analysis-i",
+      "description": "Report all product names of products in the Sales table along with their selling year and price.",
+      "tables": [
+        "Sales",
+        "Product"
+      ],
+      "solutions": [
+        {
+          "label": "Solution 1",
+          "sql": "SELECT product_name, year, price\nFROM Sales JOIN Product ON Product.product_id = Sales.product_id"
+        }
+      ]
+    },
+    {
+      "id": 1069,
+      "title": "Product Sales Analysis II",
+      "difficulty": "Easy",
+      "locked": true,
+      "leetcode_url": "https://leetcode.com/problems/product-sales-analysis-ii",
+      "description": "Report the total quantity sold for every product id.",
+      "tables": [
+        "Sales",
+        "Product"
+      ],
+      "solutions": [
+        {
+          "label": "Solution 1",
+          "sql": "SELECT product_id, sum(quantity) AS total_quantity\nFROM Sales\nGROUP BY product_id;"
+        }
+      ]
+    },
+    {
+      "id": 1070,
+      "title": "Product Sales Analysis III",
+      "difficulty": "Medium",
+      "locked": true,
+      "leetcode_url": "https://leetcode.com/problems/product-sales-analysis-iii",
+      "description": "Select the product id, year, quantity, and price for the first year of every product sold.",
+      "tables": [
+        "Sales",
+        "Product"
+      ],
+      "solutions": [
+        {
+          "label": "Solution 1",
+          "sql": "SELECT product_id, year first_year, quantity, price\nFROM Sales\nWHERE (product_id, year) IN (\n    SELECT product_id, MIN(year) FROM Sales GROUP BY product_id\n)"
+        }
+      ]
+    },
+    {
+      "id": 1075,
+      "title": "Project Employees I",
+      "difficulty": "Easy",
+      "locked": true,
+      "leetcode_url": "https://leetcode.com/problems/project-employees-i",
+      "description": "Report the average experience years of all employees for each project, rounded to 2 digits.",
+      "tables": [
+        "Project",
+        "Employee"
+      ],
+      "solutions": [
+        {
+          "label": "Solution 1",
+          "sql": "SELECT p.project_id, ROUND(AVG(e.experience_years),2) average_years\nFROM Project p JOIN Employee e ON p.employee_id = e.employee_id\nGROUP BY p.project_id"
+        }
+      ]
+    },
+    {
+      "id": 1076,
+      "title": "Project Employees II",
+      "difficulty": "Easy",
+      "locked": true,
+      "leetcode_url": "https://leetcode.com/problems/project-employees-ii",
+      "description": "Report all projects that have the most employees.",
+      "tables": [
+        "Project",
+        "Employee"
+      ],
+      "solutions": [
+        {
+          "label": "Solution 1",
+          "sql": "SELECT project_id\nFROM Project\nGROUP BY project_id\nHAVING COUNT(employee_id) = (\n    SELECT COUNT(employee_id) FROM Project GROUP BY project_id ORDER BY COUNT(employee_id) DESC LIMIT 1\n)"
+        }
+      ]
+    },
+    {
+      "id": 1077,
+      "title": "Project Employees III",
+      "difficulty": "Medium",
+      "locked": true,
+      "leetcode_url": "https://leetcode.com/problems/project-employees-iii",
+      "description": "Report the most experienced employees in each project. In case of a tie, report all.",
+      "tables": [
+        "Project",
+        "Employee"
+      ],
+      "solutions": [
+        {
+          "label": "Solution 1",
+          "sql": "SELECT p.project_id, e.employee_id\nFROM Project p LEFT JOIN Employee e ON p.employee_id = e.employee_id\nWHERE (p.project_id, e.experience_years) IN (\n    SELECT p.project_id, MAX(e.experience_years)\n    FROM Project p JOIN Employee e ON p.employee_id = e.employee_id\n    GROUP BY p.project_id\n)"
+        }
+      ]
+    },
+    {
+      "id": 1082,
+      "title": "Sales Analysis I",
+      "difficulty": "Easy",
+      "locked": true,
+      "leetcode_url": "https://leetcode.com/problems/sales-analysis-i",
+      "description": "Report the best seller(s) by total sales price. If there is a tie, report all.",
+      "tables": [
+        "Product",
+        "Sales"
+      ],
+      "solutions": [
+        {
+          "label": "Solution 1",
+          "sql": "SELECT seller_id\nFROM Sales\nGROUP BY seller_id\nHAVING SUM(price) = (\n    SELECT SUM(price) FROM Sales GROUP BY seller_id ORDER BY SUM(price) DESC LIMIT 1\n)"
+        }
+      ]
+    },
+    {
+      "id": 1083,
+      "title": "Sales Analysis II",
+      "difficulty": "Easy",
+      "locked": true,
+      "leetcode_url": "https://leetcode.com/problems/sales-analysis-ii",
+      "description": "Report buyers who bought S8 but not iPhone.",
+      "tables": [
+        "Product",
+        "Sales"
+      ],
+      "solutions": [
+        {
+          "label": "Solution 1",
+          "sql": "SELECT DISTINCT s.buyer_id\nFROM Sales s LEFT JOIN Product p ON s.product_id = p.product_id\nWHERE p.product_name = 'S8' AND\n      s.buyer_id NOT IN (\n          SELECT s.buyer_id FROM Sales s LEFT JOIN Product p ON s.product_id = p.product_id\n          WHERE p.product_name = 'iPhone'\n      )"
+        }
+      ]
+    },
+    {
+      "id": 1084,
+      "title": "Sales Analysis III",
+      "difficulty": "Easy",
+      "locked": true,
+      "leetcode_url": "https://leetcode.com/problems/sales-analysis-iii",
+      "description": "Report products that were only sold in spring 2019 (between 2019-01-01 and 2019-03-31 inclusive).",
+      "tables": [
+        "Product",
+        "Sales"
+      ],
+      "solutions": [
+        {
+          "label": "Solution 1",
+          "sql": "(SELECT DISTINCT s.product_id, p.product_name\nFROM Sales s LEFT JOIN Product p ON s.product_id = p.product_id\nWHERE s.sale_date >= '2019-01-01' AND s.sale_date <= '2019-03-31')\nEXCEPT\n(SELECT DISTINCT s.product_id, p.product_name\nFROM Sales s LEFT JOIN Product p ON s.product_id = p.product_id\nWHERE s.sale_date < '2019-01-01' OR s.sale_date > '2019-03-31')"
+        }
+      ]
+    },
+    {
+      "id": 1097,
+      "title": "Game Play Analysis V",
+      "difficulty": "Hard",
+      "locked": true,
+      "leetcode_url": "https://leetcode.com/problems/game-play-analysis-v",
+      "description": "For each install date, report the number of players that installed the game on that day and the day 1 retention rate.",
+      "tables": [
+        "Activity"
+      ],
+      "solutions": [
+        {
+          "label": "Solution 1",
+          "sql": "SELECT install_dt, COUNT(player_id) installs,\n    ROUND(COUNT(retention)/COUNT(player_id),2) Day1_retention\nFROM (\n    SELECT a.player_id, a.install_dt, b.event_date retention\n    FROM (SELECT player_id, MIN(event_date) install_dt FROM Activity GROUP BY player_id) a\n    LEFT JOIN Activity b ON a.player_id = b.player_id AND a.install_dt + 1=b.event_date\n) AS tmp\nGROUP BY install_dt"
+        }
+      ]
+    },
+    {
+      "id": 1098,
+      "title": "Unpopular Books",
+      "difficulty": "Medium",
+      "locked": true,
+      "leetcode_url": "https://leetcode.com/problems/unpopular-books",
+      "description": "Report books that have sold less than 10 copies in the last year, excluding books available for less than 1 month from 2019-06-23.",
+      "tables": [
+        "Books",
+        "Orders"
+      ],
+      "solutions": [
+        {
+          "label": "Solution 1",
+          "sql": "SELECT b.book_id, b.name\nFROM Books b LEFT JOIN (\n    SELECT book_id, SUM(quantity) nsold\n    FROM Orders\n    WHERE dispatch_date BETWEEN '2018-06-23' AND '2019-06-23'\n    GROUP BY book_id\n) o ON b.book_id = o.book_id\nWHERE (o.nsold < 10 OR o.nsold IS NULL)\nAND DATEDIFF('2019-06-23', b.available_from) > 30"
+        }
+      ]
+    },
+    {
+      "id": 1107,
+      "title": "New Users Daily Count",
+      "difficulty": "Medium",
+      "locked": true,
+      "leetcode_url": "https://leetcode.com/problems/new-users-daily-count",
+      "description": "For every date within at most 90 days from 2019-06-30, report the number of users that logged in for the first time on that date.",
+      "tables": [
+        "Traffic"
+      ],
+      "solutions": [
+        {
+          "label": "Solution 1",
+          "sql": "SELECT login_date, COUNT(user_id) AS user_count\nFROM (SELECT user_id, MIN(activity_date) AS login_date\n    FROM Traffic WHERE activity = 'login' GROUP BY user_id) AS t\nWHERE login_date >= DATE_ADD('2019-06-30', INTERVAL -90 DAY) AND login_date <= '2019-06-30'\nGROUP BY login_date"
+        },
+        {
+          "label": "Solution 2",
+          "sql": "SELECT login_date, COUNT(user_id) user_count\nFROM (SELECT user_id, MIN(activity_date) as login_date\n    FROM Traffic WHERE activity='login' GROUP BY user_id) as t\nWHERE DATEDIFF('2019-06-30', login_date) <= 90\nGROUP BY login_date"
+        }
+      ]
+    },
+    {
+      "id": 1112,
+      "title": "Highest Grade For Each Student",
+      "difficulty": "Medium",
+      "locked": true,
+      "leetcode_url": "https://leetcode.com/problems/highest-grade-for-each-student",
+      "description": "Find the highest grade with its corresponding course for each student. In case of a tie, pick the smallest course_id. Sort by student_id ascending.",
+      "tables": [
+        "Enrollments"
+      ],
+      "solutions": [
+        {
+          "label": "Solution 1",
+          "sql": "SELECT student_id, MIN(course_id) course_id, grade\nFROM Enrollments\nWHERE (student_id, grade) IN (\n    SELECT student_id, MAX(grade) FROM Enrollments GROUP BY student_id\n)\nGROUP BY student_id\nORDER BY student_id;"
+        }
+      ]
+    },
+    {
+      "id": 1113,
+      "title": "Reported Posts",
+      "difficulty": "Easy",
+      "locked": true,
+      "leetcode_url": "https://leetcode.com/problems/reported-posts",
+      "description": "Report the number of posts reported yesterday (2019-07-04) for each report reason.",
+      "tables": [
+        "Actions"
+      ],
+      "solutions": [
+        {
+          "label": "Solution 1",
+          "sql": "SELECT extra report_reason, COUNT(DISTINCT post_id) report_count\nFROM (\n    SELECT post_id, extra FROM Actions\n    WHERE action_date = DATE_SUB('2019-07-05', INTERVAL 1 DAY) AND action = 'report'\n) AS tmp\nGROUP BY extra"
+        }
+      ]
+    },
+    {
+      "id": 1126,
+      "title": "Active Businesses",
+      "difficulty": "Medium",
+      "locked": true,
+      "leetcode_url": "https://leetcode.com/problems/active-businesses",
+      "description": "Find all active businesses \u2014 businesses with more than one event type whose occurrences are greater than the average occurrences of that event type.",
+      "tables": [
+        "Events"
+      ],
+      "solutions": [
+        {
+          "label": "Solution 1",
+          "sql": "SELECT business_id\nFROM (\n    SELECT a.business_id, a.event_type, a.occurences, b.event_avg\n    FROM Events a LEFT JOIN (\n        SELECT event_type, AVG(occurences) event_avg FROM Events GROUP BY event_type\n    ) b ON a.event_type = b.event_type\n) tmp\nWHERE occurences > event_avg\nGROUP BY business_id\nHAVING COUNT(event_type) > 1"
+        }
+      ]
+    },
+    {
+      "id": 1127,
+      "title": "User Purchase Platform",
+      "difficulty": "Hard",
+      "locked": true,
+      "leetcode_url": "https://leetcode.com/problems/user-purchase-platform",
+      "description": "Find the total number of users and amount spent using mobile only, desktop only and both for each date.",
+      "tables": [
+        "Spending"
+      ],
+      "solutions": [
+        {
+          "label": "Solution 1",
+          "sql": "SELECT aa.spend_date, aa.platform,\n    COALESCE(bb.total_amount, 0) total_amount,\n    COALESCE(bb.total_users,0) total_users\nFROM\n    (SELECT DISTINCT(spend_date), a.platform\n    FROM Spending JOIN (\n        SELECT 'desktop' AS platform UNION SELECT 'mobile' AS platform UNION SELECT 'both' AS platform\n    ) a) aa\nLEFT JOIN (\n    SELECT spend_date, platform, SUM(amount) total_amount, COUNT(user_id) total_users\n    FROM (\n        SELECT spend_date, user_id,\n        (CASE COUNT(DISTINCT platform) WHEN 1 THEN platform WHEN 2 THEN 'both' END) platform,\n        SUM(amount) amount\n        FROM Spending GROUP BY spend_date, user_id\n    ) b GROUP BY spend_date, platform\n) bb ON aa.platform = bb.platform AND aa.spend_date = bb.spend_date"
+        }
+      ]
+    },
+    {
+      "id": 1132,
+      "title": "Reported Posts II",
+      "difficulty": "Medium",
+      "locked": true,
+      "leetcode_url": "https://leetcode.com/problems/reported-posts-ii",
+      "description": "Find the average daily percentage of spam-reported posts that got removed, rounded to 2 decimal places.",
+      "tables": [
+        "Actions",
+        "Removals"
+      ],
+      "solutions": [
+        {
+          "label": "Solution 1",
+          "sql": "WITH t1 AS(\n    SELECT a.action_date,\n    (COUNT(DISTINCT r.post_id))/(COUNT(DISTINCT a.post_id)) AS result\n    FROM (\n        SELECT action_date, post_id FROM actions\n        WHERE extra = 'spam' AND action = 'report'\n    ) a\n    LEFT JOIN removals r ON a.post_id = r.post_id\n    GROUP BY a.action_date\n)\nSELECT ROUND(AVG(t1.result)*100,2) AS average_daily_percent\nFROM t1"
+        }
+      ]
+    },
+    {
+      "id": 1141,
+      "title": "User Activity for the Past 30 Days I",
+      "difficulty": "Easy",
+      "locked": true,
+      "leetcode_url": "https://leetcode.com/problems/user-activity-for-the-past-30-days-i",
+      "description": "Find the daily active user count for a period of 30 days ending 2019-07-27 inclusively.",
+      "tables": [
+        "Activity"
+      ],
+      "solutions": [
+        {
+          "label": "Solution 1",
+          "sql": "SELECT activity_date AS day, COUNT(DISTINCT user_id) AS active_users\nFROM activity\nWHERE activity_date > '2019-06-26' AND activity_date < '2019-07-27'\nGROUP BY activity_date"
+        }
+      ]
+    },
+    {
+      "id": 1142,
+      "title": "User Activity for the Past 30 Days II",
+      "difficulty": "Easy",
+      "locked": true,
+      "leetcode_url": "https://leetcode.com/problems/user-activity-for-the-past-30-days-ii",
+      "description": "Find the average number of sessions per user for a period of 30 days ending 2019-07-27 inclusively, rounded to 2 decimal places.",
+      "tables": [
+        "Activity"
+      ],
+      "solutions": [
+        {
+          "label": "Solution 1",
+          "sql": "SELECT IFNULL(ROUND(AVG(a.num),2),0) AS average_sessions_per_user\nFROM (\n    SELECT COUNT(DISTINCT session_id) AS num\n    FROM activity\n    WHERE activity_date BETWEEN '2019-06-28' AND '2019-07-27'\n    GROUP BY user_id\n) a"
+        }
+      ]
+    },
+    {
+      "id": 1148,
+      "title": "Article Views I",
+      "difficulty": "Easy",
+      "locked": true,
+      "leetcode_url": "https://leetcode.com/problems/article-views-i",
+      "description": "Find all authors that viewed at least one of their own articles, sorted by id ascending.",
+      "tables": [
+        "Views"
+      ],
+      "solutions": [
+        {
+          "label": "Solution 1",
+          "sql": "SELECT DISTINCT author_id AS id\nFROM Views\nWHERE author_id = viewer_id\nORDER BY author_id"
+        }
+      ]
+    },
+    {
+      "id": 1149,
+      "title": "Article Views II",
+      "difficulty": "Medium",
+      "locked": true,
+      "leetcode_url": "https://leetcode.com/problems/article-views-ii",
+      "description": "Find all people who viewed more than one article on the same date, sorted by id ascending.",
+      "tables": [
+        "Views"
+      ],
+      "solutions": [
+        {
+          "label": "Solution 1",
+          "sql": "SELECT DISTINCT viewer_id AS id\nFROM views\nGROUP BY viewer_id, view_date\nHAVING count(DISTINCT article_id)>1\nORDER BY 1"
+        }
+      ]
+    },
+    {
+      "id": 1158,
+      "title": "Market Analysis I",
+      "difficulty": "Medium",
+      "locked": true,
+      "leetcode_url": "https://leetcode.com/problems/market-analysis-i",
+      "description": "For each user, find the join date and the number of orders they made as a buyer in 2019.",
+      "tables": [
+        "Users",
+        "Orders",
+        "Items"
+      ],
+      "solutions": [
+        {
+          "label": "Solution 1",
+          "sql": "SELECT user_id AS buyer_id, join_date, coalesce(a.orders_in_2019,0)\nFROM users\nLEFT JOIN (\n    SELECT buyer_id, coalesce(count(*), 0) AS orders_in_2019\n    FROM orders o JOIN users u ON u.user_id = o.buyer_id\n    WHERE extract('year' FROM order_date) = 2019\n    GROUP BY buyer_id\n) a ON users.user_id = a.buyer_id"
+        }
+      ]
+    },
+    {
+      "id": 1159,
+      "title": "Market Analysis II",
+      "difficulty": "Hard",
+      "locked": true,
+      "leetcode_url": "https://leetcode.com/problems/market-analysis-ii",
+      "description": "For each user, determine whether the brand of the second item they sold matches their favorite brand.",
+      "tables": [
+        "Users",
+        "Orders",
+        "Items"
+      ],
+      "solutions": [
+        {
+          "label": "Solution 1",
+          "sql": "SELECT user_id AS seller_id,\n    IF(ISNULL(item_brand), 'no', 'yes') AS 2nd_item_fav_brand\nFROM Users LEFT JOIN (\n    SELECT seller_id, item_brand\n    FROM Orders INNER JOIN Items ON Orders.item_id = Items.item_id\n    WHERE (seller_id, order_date) IN (\n        SELECT seller_id, MIN(order_date) AS order_date FROM Orders\n        WHERE (seller_id, order_date) NOT IN (\n            SELECT seller_id, MIN(order_date) FROM Orders GROUP BY seller_id\n        ) GROUP BY seller_id\n    )\n) AS t ON Users.user_id = t.seller_id AND favorite_brand = item_brand"
+        },
+        {
+          "label": "Solution 2",
+          "sql": "WITH t1 AS(\n    SELECT user_id,\n    CASE WHEN favorite_brand = item_brand THEN 'yes' ELSE 'no' END AS 2nd_item_fav_brand\n    FROM users u LEFT JOIN (\n        SELECT o.item_id, seller_id, item_brand,\n        RANK() OVER(PARTITION BY seller_id ORDER BY order_date) AS rk\n        FROM orders o JOIN items i USING (item_id)\n    ) a ON u.user_id = a.seller_id\n    WHERE a.rk = 2\n)\nSELECT u.user_id AS seller_id, COALESCE(2nd_item_fav_brand,'no') AS 2nd_item_fav_brand\nFROM users u LEFT JOIN t1 USING(user_id)"
+        }
+      ]
+    },
+    {
+      "id": 1164,
+      "title": "Product Price at a Given Date",
+      "difficulty": "Medium",
+      "locked": true,
+      "leetcode_url": "https://leetcode.com/problems/product-price-at-a-given-date",
+      "description": "Find the prices of all products on 2019-08-16. Assume the price of all products before any change is 10.",
+      "tables": [
+        "Products"
+      ],
+      "solutions": [
+        {
+          "label": "Solution 1",
+          "sql": "WITH t1 AS (\n    SELECT a.product_id, new_price\n    FROM (\n        SELECT product_id, max(change_date) AS date FROM products\n        WHERE change_date<='2019-08-16' GROUP BY product_id\n    ) a JOIN products p ON a.product_id = p.product_id AND a.date = p.change_date\n),\nt2 AS (SELECT distinct product_id FROM products)\n\nSELECT t2.product_id, coalesce(new_price,10) AS price\nFROM t2 LEFT JOIN t1 ON t2.product_id = t1.product_id\nORDER BY price DESC"
+        },
+        {
+          "label": "Solution 2",
+          "sql": "SELECT t1.product_id, IF(ISNULL(t2.price), 10, t2.price) AS price\nFROM (SELECT distinct product_id FROM Products) AS t1\nLEFT JOIN (\n    SELECT product_id, new_price AS price FROM Products\n    WHERE (product_id, change_date) in (\n        SELECT product_id, max(change_date) FROM Products\n        WHERE change_date <='2019-08-16' GROUP BY product_id\n    )\n) AS t2 ON t1.product_id = t2.product_id"
+        }
+      ]
+    },
+    {
+      "id": 1173,
+      "title": "Immediate Food Delivery I",
+      "difficulty": "Easy",
+      "locked": true,
+      "leetcode_url": "https://leetcode.com/problems/immediate-food-delivery-i",
+      "description": "Find the percentage of immediate orders (where preferred delivery date equals order date), rounded to 2 decimal places.",
+      "tables": [
+        "Delivery"
+      ],
+      "solutions": [
+        {
+          "label": "Solution 1",
+          "sql": "SELECT ROUND(\n    SUM(CASE WHEN order_date=customer_pref_delivery_date THEN 1 ELSE 0 END)/count(1)*100, 2\n) immediate_percentage\nFROM Delivery;"
+        },
+        {
+          "label": "Solution 2",
+          "sql": "SELECT ROUND(\n    avg(CASE WHEN order_date=customer_pref_delivery_date THEN 1 ELSE 0 END)*100, 2\n) AS immediate_percentage\nFROM delivery"
+        }
+      ]
+    },
+    {
+      "id": 1174,
+      "title": "Immediate Food Delivery II",
+      "difficulty": "Medium",
+      "locked": true,
+      "leetcode_url": "https://leetcode.com/problems/immediate-food-delivery-ii",
+      "description": "Find the percentage of immediate orders in the first orders of all customers, rounded to 2 decimal places.",
+      "tables": [
+        "Delivery"
+      ],
+      "solutions": [
+        {
+          "label": "Solution 1",
+          "sql": "SELECT ROUND(\n    SUM(CASE WHEN order_date=customer_pref_delivery_date THEN 1 ELSE 0 END)/count(DISTINCT customer_id)*100, 2\n) immediate_percentage\nFROM Delivery\nWHERE (customer_id, order_date) IN (\n    SELECT customer_id, MIN(order_date) FROM Delivery GROUP BY customer_id\n)"
+        },
+        {
+          "label": "Solution 2",
+          "sql": "SELECT ROUND(AVG(CASE WHEN order_date = customer_pref_delivery_date THEN 1 ELSE 0 END)*100,2) as immediate_percentage\nFROM (\n    SELECT *, RANK() OVER(PARTITION BY customer_id ORDER BY order_date) AS rk\n    FROM delivery\n) a\nWHERE a.rk=1"
+        }
+      ]
+    },
+    {
+      "id": 1179,
+      "title": "Reformat Department Table",
+      "difficulty": "Easy",
+      "locked": false,
+      "leetcode_url": "https://leetcode.com/problems/reformat-department-table/",
+      "description": "Reformat the Department table to have a department id column and a revenue column for each month (Jan\u2013Dec).",
+      "tables": [
+        "Department"
+      ],
+      "solutions": [
+        {
+          "label": "Solution 1",
+          "sql": "SELECT id,\nSUM(IF(month='Jan', revenue, NULL)) AS Jan_Revenue,\nSUM(IF(month='Feb', revenue, NULL)) AS Feb_Revenue,\nSUM(IF(month='Mar', revenue, NULL)) AS Mar_Revenue,\nSUM(IF(month='Apr', revenue, NULL)) AS Apr_Revenue,\nSUM(IF(month='May', revenue, NULL)) AS May_Revenue,\nSUM(IF(month='Jun', revenue, NULL)) AS Jun_Revenue,\nSUM(IF(month='Jul', revenue, NULL)) AS Jul_Revenue,\nSUM(IF(month='Aug', revenue, NULL)) AS Aug_Revenue,\nSUM(IF(month='Sep', revenue, NULL)) AS Sep_Revenue,\nSUM(IF(month='Oct', revenue, NULL)) AS Oct_Revenue,\nSUM(IF(month='Nov', revenue, NULL)) AS Nov_Revenue,\nSUM(IF(month='Dec', revenue, NULL)) AS Dec_Revenue\nFROM Department\nGroup BY id;"
+        }
+      ]
+    },
+    {
+      "id": 1193,
+      "title": "Monthly Transactions I",
+      "difficulty": "Medium",
+      "locked": true,
+      "leetcode_url": "https://leetcode.com/problems/monthly-transactions-i",
+      "description": "For each month and country, report number of transactions, total amount, number of approved transactions, and their total amount.",
+      "tables": [
+        "Transactions"
+      ],
+      "solutions": [
+        {
+          "label": "Solution 1",
+          "sql": "WITH t1 AS(\n    SELECT DATE_FORMAT(trans_date,'%Y-%m') AS month, country,\n    COUNT(state) AS trans_count, sum(amount) AS trans_total_amount\n    FROM transactions GROUP BY country, month(trans_date)\n),\nt2 AS (\n    SELECT DATE_FORMAT(trans_date,'%Y-%m') AS month, country,\n    COUNT(state) AS approved_count, sum(amount) AS approved_total_amount\n    FROM transactions WHERE state = 'approved' GROUP BY country, month(trans_date)\n)\nSELECT t1.month, t1.country,\n    COALESCE(t1.trans_count,0) AS trans_count,\n    COALESCE(t2.approved_count,0) AS approved_count,\n    COALESCE(t1.trans_total_amount,0) AS trans_total_amount,\n    COALESCE(t2.approved_total_amount,0) AS approved_total_amount\nFROM t1 LEFT JOIN t2 ON t1.country = t2.country AND t1.month = t2.month"
+        }
+      ]
+    },
+    {
+      "id": 1194,
+      "title": "Tournament Winners",
+      "difficulty": "Hard",
+      "locked": true,
+      "leetcode_url": "https://leetcode.com/problems/tournament-winners",
+      "description": "Find the winner in each group. The winner is the player with the most total points; ties are broken by lowest player_id.",
+      "tables": [
+        "Players",
+        "Matches"
+      ],
+      "solutions": [
+        {
+          "label": "Solution 1",
+          "sql": "WITH t1 AS(\n    SELECT first_player, SUM(first_score) AS total\n    FROM (\n        SELECT first_player, first_score FROM matches\n        UNION ALL\n        SELECT second_player, second_score FROM matches\n    ) a GROUP BY 1\n),\nt2 AS(\n    SELECT *, COALESCE(total,0) AS score\n    FROM players p LEFT JOIN t1 ON p.player_id = t1.first_player\n)\nSELECT group_id, player_id\nFROM (\n    SELECT *, ROW_NUMBER() OVER(PARTITION BY group_id ORDER BY group_id, score DESC) AS rn\n    FROM t2\n) b\nWHERE b.rn = 1"
+        }
+      ]
+    },
+    {
+      "id": 1204,
+      "title": "Last Person to Fit in the Elevator",
+      "difficulty": "Medium",
+      "locked": true,
+      "leetcode_url": "https://leetcode.com/problems/last-person-to-fit-in-the-elevator",
+      "description": "Find the person_name of the last person who will fit in the elevator without exceeding the 1000kg weight limit.",
+      "tables": [
+        "Queue"
+      ],
+      "solutions": [
+        {
+          "label": "Solution 1",
+          "sql": "WITH t1 AS (\n    SELECT *, SUM(weight) OVER(ORDER BY turn) AS cum_weight\n    FROM queue ORDER BY turn\n)\nSELECT t1.person_name\nFROM t1\nWHERE turn = (SELECT MAX(turn) FROM t1 WHERE t1.cum_weight<=1000)"
+        }
+      ]
+    },
+    {
+      "id": 1205,
+      "title": "Monthly Transactions II",
+      "difficulty": "Medium",
+      "locked": true,
+      "leetcode_url": "https://leetcode.com/problems/monthly-transactions-ii",
+      "description": "For each month and country, report approved transaction count/amount and chargeback count/amount. Ignore rows with all zeros.",
+      "tables": [
+        "Transactions",
+        "Chargebacks"
+      ],
+      "solutions": [
+        {
+          "label": "Solution 1 (UNION approach)",
+          "sql": "SELECT month, country,\n    SUM(CASE WHEN type='approved' THEN 1 ELSE 0 END) AS approved_count,\n    SUM(CASE WHEN type='approved' THEN amount ELSE 0 END) AS approved_amount,\n    SUM(CASE WHEN type='chargeback' THEN 1 ELSE 0 END) AS chargeback_count,\n    SUM(CASE WHEN type='chargeback' THEN amount ELSE 0 END) AS chargeback_amount\nFROM (\n    (SELECT left(t.trans_date, 7) AS month, t.country, amount,'approved' AS type\n    FROM Transactions AS t WHERE state='approved')\n    UNION ALL\n    (SELECT left(c.trans_date, 7) AS month, t.country, amount,'chargeback' AS type\n    FROM Transactions AS t JOIN Chargebacks AS c ON t.id = c.trans_id)\n) AS tt\nGROUP BY tt.month, tt.country"
+        }
+      ]
+    },
+    {
+      "id": 1211,
+      "title": "Queries Quality and Percentage",
+      "difficulty": "Easy",
+      "locked": true,
+      "leetcode_url": "https://leetcode.com/problems/queries-quality-and-percentage",
+      "description": "For each query, find the quality (average of rating/position) and the poor_query_percentage (percentage of queries with rating < 3), both rounded to 2 decimal places.",
+      "tables": [
+        "Queries"
+      ],
+      "solutions": [
+        {
+          "label": "Solution 1",
+          "sql": "SELECT query_name,\n    ROUND(AVG(rating/position),2) AS quality,\n    ROUND(SUM(IF(rating<3,1,0))/COUNT(*)*100,2) AS poor_query_percentage\nFROM Queries\nGROUP BY query_name"
+        }
+      ]
+    },
+    {
+      "id": 1212,
+      "title": "Team Scores in Football Tournament",
+      "difficulty": "Medium",
+      "locked": true,
+      "url": "https://leetcode.com/problems/team-scores-in-football-tournament",
+      "description": "Write an SQL query that selects the team_id, team_name and num_points of each team in the tournament after all described matches. Points: 3 for win, 1 for draw, 0 for loss. Order by num_points descending, then team_id ascending.",
+      "tables": [
+        "Teams",
+        "Matches"
+      ],
+      "solutions": [
+        {
+          "label": "Solution 1",
+          "code": "SELECT Teams.team_id, Teams.team_name,\n    SUM(CASE WHEN team_id=host_team AND host_goals>guest_goals THEN 3 ELSE 0 END) +\n    SUM(CASE WHEN team_id=host_team AND host_goals=guest_goals THEN 1 ELSE 0 END) +\n    SUM(CASE WHEN team_id=guest_team AND host_goals<guest_goals THEN 3 ELSE 0 END) +\n    SUM(CASE WHEN team_id=guest_team AND host_goals=guest_goals THEN 1 ELSE 0 END) AS num_points\nFROM Teams LEFT JOIN Matches\nON Teams.team_id = Matches.host_team OR Teams.team_id = Matches.guest_team\nGROUP BY Teams.team_id\nORDER BY num_points DESC, Teams.team_id ASC"
+        },
+        {
+          "label": "Solution 2",
+          "code": "SELECT Teams.team_id, Teams.team_name, SUM(if(isnull(num_points), 0, num_points)) AS num_points\nFROM Teams LEFT JOIN\n    (\n        SELECT host_team AS team_id,\n            SUM(CASE WHEN host_goals>guest_goals THEN 3\n                     WHEN host_goals=guest_goals THEN 1\n                     ELSE 0 END) AS num_points\n        FROM Matches\n        GROUP BY host_team\n        UNION ALL\n        SELECT guest_team AS team_id,\n            SUM(CASE WHEN host_goals<guest_goals THEN 3\n                     WHEN host_goals=guest_goals THEN 1\n                     ELSE 0 END) AS num_points\n        FROM Matches\n        GROUP BY guest_team\n    ) AS tt\nON Teams.team_id = tt.team_id\nGROUP BY Teams.team_id\nORDER BY num_points DESC, Teams.team_id ASC"
+        }
+      ]
+    },
+    {
+      "id": 1225,
+      "title": "Report Contiguous Dates",
+      "difficulty": "Hard",
+      "locked": true,
+      "url": "https://leetcode.com/problems/report-contiguous-dates",
+      "description": "Write an SQL query to generate a report of period_state for each continuous interval of days in the period from 2019-01-01 to 2019-12-31. period_state is 'failed' or 'succeeded'. Order by start_date.",
+      "tables": [
+        "Failed",
+        "Succeeded"
+      ],
+      "solutions": [
+        {
+          "label": "Solution 1 (Window Function)",
+          "code": "WITH t1 AS(\nSELECT MIN(success_date) AS start_date, MAX(success_date) AS end_date, state\nFROM(\nSELECT *, date_sub(success_date, interval ROW_NUMBER() OVER(ORDER BY success_date) day) AS diff, 1 AS state\nFROM succeeded\nWHERE success_date BETWEEN \"2019-01-01\" AND \"2019-12-31\") a\nGROUP BY diff),\n\nt2 AS(\nSELECT MIN(fail_date) AS start_date, MAX(fail_date) AS end_date, state\nFROM(\nSELECT *, date_sub(fail_date, interval ROW_NUMBER() OVER(ORDER BY fail_date) day) AS diff, 0 AS state\nFROM failed\nWHERE fail_date BETWEEN \"2019-01-01\" AND \"2019-12-31\") b\nGROUP BY diff)\n\nSELECT\nCASE WHEN c.state = 1 THEN \"succeeded\"\nELSE \"failed\"\nEND AS period_state,start_date, end_date\nFROM(\nSELECT * FROM t1\nUNION ALL\nSELECT * FROM t2) c\nORDER BY start_date"
+        }
+      ]
+    },
+    {
+      "id": 1241,
+      "title": "Number of Comments per Post",
+      "difficulty": "Easy",
+      "locked": true,
+      "url": "https://leetcode.com/problems/number-of-comments-per-post",
+      "description": "Write an SQL query to find number of unique comments per each post. Result must be sorted by post_id in ascending order.",
+      "tables": [
+        "Submissions"
+      ],
+      "solutions": [
+        {
+          "label": "Solution",
+          "code": "SELECT a.sub_id AS post_id, coalesce(b.number_of_comments,0) AS number_of_comments\nFROM(\nSELECT DISTINCT sub_id FROM submissions WHERE parent_id IS NULL) a\nLEFT JOIN(\nSELECT parent_id, count(DISTINCT(sub_id)) AS number_of_comments\nFROM submissions\nGROUP BY parent_id\nHAVING parent_id = any(SELECT sub_id from submissions WHERE parent_id IS NULL)) b\nON a.sub_id = b.parent_id\nORDER BY post_id"
+        }
+      ]
+    },
+    {
+      "id": 1251,
+      "title": "Average Selling Price",
+      "difficulty": "Easy",
+      "locked": true,
+      "url": "https://leetcode.com/problems/average-selling-price",
+      "description": "Write an SQL query to find the average selling price for each product. average_price should be rounded to 2 decimal places.",
+      "tables": [
+        "Prices",
+        "UnitsSold"
+      ],
+      "solutions": [
+        {
+          "label": "Solution",
+          "code": "SELECT UnitsSold.product_id, ROUND(SUM(units*price)/SUM(units), 2) AS average_price\nFROM UnitsSold INNER JOIN Prices\nON UnitsSold.product_id = Prices.product_id\nAND UnitsSold.purchase_date BETWEEN Prices.start_date AND Prices.end_date\nGROUP BY UnitsSold.product_id"
+        }
+      ]
+    },
+    {
+      "id": 1264,
+      "title": "Page Recommendations",
+      "difficulty": "Medium",
+      "locked": true,
+      "url": "https://leetcode.com/problems/page-recommendations",
+      "description": "Write an SQL query to recommend pages to user_id = 1 using pages that their friends liked. Should not recommend pages already liked.",
+      "tables": [
+        "Friendship",
+        "Likes"
+      ],
+      "solutions": [
+        {
+          "label": "Solution",
+          "code": "SELECT DISTINCT page_id AS recommended_page\nFROM Likes\nWHERE user_id IN (SELECT user2_id\n    FROM Friendship\n    WHERE user1_id=1\n    UNION\n    SELECT user1_id\n    FROM Friendship\n    WHERE user2_id=1)\n    AND page_id NOT IN\n        (SELECT page_id\n        FROM Likes\n        WHERE user_id=1)"
+        }
+      ]
+    },
+    {
+      "id": 1270,
+      "title": "All People Report to the Given Manager",
+      "difficulty": "Medium",
+      "locked": true,
+      "url": "https://leetcode.com/problems/all-people-report-to-the-given-manager",
+      "description": "Write an SQL query to find employee_id of all employees that directly or indirectly report to the head of company (employee_id=1). The indirect relation won't exceed 3 managers.",
+      "tables": [
+        "Employees"
+      ],
+      "solutions": [
+        {
+          "label": "Solution 1 (Triple Join)",
+          "code": "SELECT t1.employee_id\nFROM Employees AS t1 INNER JOIN Employees AS t2\nON t1.manager_id = t2.employee_id\nJOIN Employees AS t3\nON t2.manager_id = t3.employee_id\nWHERE t3.manager_id = 1 AND t1.employee_id != 1"
+        }
+      ]
+    },
+    {
+      "id": 1280,
+      "title": "Students and Examinations",
+      "difficulty": "Easy",
+      "locked": true,
+      "url": "https://leetcode.com/problems/students-and-examinations",
+      "description": "Write an SQL query to find the number of times each student attended each exam. Order by student_id and subject_name.",
+      "tables": [
+        "Students",
+        "Subjects",
+        "Examinations"
+      ],
+      "solutions": [
+        {
+          "label": "Solution 1",
+          "code": "SELECT Students.student_id, student_name, Subjects.subject_name, COUNT(Examinations.student_id) AS attended_exams\nFROM Students JOIN Subjects\nLEFT JOIN Examinations\nON Students.student_id = Examinations.student_id AND Subjects.subject_name = Examinations.subject_name\nGROUP BY Students.student_id, subject_name"
+        }
+      ]
+    },
+    {
+      "id": 1285,
+      "title": "Find the Start and End Number of Continuous Ranges",
+      "difficulty": "Medium",
+      "locked": true,
+      "url": "https://leetcode.com/problems/find-the-start-and-end-number-of-continuous-ranges",
+      "description": "Write an SQL query to find the start and end number of continuous ranges in table Logs. Order by start_id.",
+      "tables": [
+        "Logs"
+      ],
+      "solutions": [
+        {
+          "label": "Solution 1 (ROW_NUMBER)",
+          "code": "SELECT MIN(log_id) AS start_id, MAX(log_id) AS end_id\nFROM(\nSELECT log_id, log_id-ROW_NUMBER() OVER (ORDER BY log_id) AS rk\nFROM logs) a\nGROUP BY rk"
+        }
+      ]
+    },
+    {
+      "id": 1294,
+      "title": "Weather Type in Each Country",
+      "difficulty": "Easy",
+      "locked": true,
+      "url": "https://leetcode.com/problems/weather-type-in-each-country",
+      "description": "Write an SQL query to find the type of weather in each country for November 2019. Cold if avg<=15, Hot if avg>=25, Warm otherwise.",
+      "tables": [
+        "Countries",
+        "Weather"
+      ],
+      "solutions": [
+        {
+          "label": "Solution",
+          "code": "SELECT country_name, CASE WHEN AVG(weather_state) <= 15 THEN \"Cold\"\n                          WHEN AVG(weather_state) >= 25 THEN \"Hot\"\n                          ELSE \"Warm\" END AS weather_type\nFROM Countries INNER JOIN Weather\nON Countries.country_id = Weather.country_id\nWHERE MONTH(day) = 11\nGROUP BY country_name"
+        }
+      ]
+    },
+    {
+      "id": 1303,
+      "title": "Find the Team Size",
+      "difficulty": "Easy",
+      "locked": true,
+      "url": "https://leetcode.com/problems/find-the-team-size",
+      "description": "Write an SQL query to find the team size of each of the employees.",
+      "tables": [
+        "Employee"
+      ],
+      "solutions": [
+        {
+          "label": "Solution",
+          "code": "SELECT employee_id, b.team_size\nFROM employee e\nJOIN\n(\nSELECT team_id, count(team_id) AS team_size\nFROM employee\nGROUP BY team_id) b\nON e.team_id = b.team_id"
+        }
+      ]
+    },
+    {
+      "id": 1308,
+      "title": "Running Total for Different Genders",
+      "difficulty": "Medium",
+      "locked": true,
+      "url": "https://leetcode.com/problems/running-total-for-different-genders",
+      "description": "Write an SQL query to find the total score for each gender at each day. Order by gender and day.",
+      "tables": [
+        "Scores"
+      ],
+      "solutions": [
+        {
+          "label": "Solution 1 (Window Function)",
+          "code": "SELECT gender, day,\nSUM(score_points) OVER(PARTITION BY gender ORDER BY day) AS total\nFROM scores\nGROUP BY 1,2\nORDER BY 1,2"
+        }
+      ]
+    },
+    {
+      "id": 1321,
+      "title": "Restaurant Growth",
+      "difficulty": "Medium",
+      "locked": true,
+      "url": "https://leetcode.com/problems/restaurant-growth",
+      "description": "Write an SQL query to compute moving average of how much customer paid in a 7-day window (current day + 6 days before). Return ordered by visited_on.",
+      "tables": [
+        "Customer"
+      ],
+      "solutions": [
+        {
+          "label": "Solution",
+          "code": "SELECT t1.visited_on,\n    SUM(t2.amount) AS amount,\n    round(avg(t2.amount), 2) AS average_amount\nFROM (\n    SELECT visited_on, SUM(amount) AS amount\n    FROM Customer\n    GROUP BY visited_on) AS t1\n    inner join\n     (\n    SELECT visited_on, SUM(amount) AS amount\n    FROM Customer\n    GROUP BY visited_on) AS t2\nON t2.visited_on BETWEEN DATE_SUB(t1.visited_on, INTERVAL 6 DAY) and t1.visited_on\nGROUP BY t1.visited_on\nHAVING COUNT(1)=7"
+        }
+      ]
+    },
+    {
+      "id": 1322,
+      "title": "Ads Performance",
+      "difficulty": "Easy",
+      "locked": true,
+      "url": "https://leetcode.com/problems/ads-performance",
+      "description": "Write an SQL query to find the CTR (Click-Through Rate) of each Ad. Round ctr to 2 decimal points. Order by ctr descending, ad_id ascending in case of tie.",
+      "tables": [
+        "Ads"
+      ],
+      "solutions": [
+        {
+          "label": "Solution",
+          "code": "SELECT ad_id,\n    (CASE WHEN clicks+views = 0 THEN 0 ELSE ROUND(clicks/(clicks+views)*100, 2) END) AS ctr\nFROM\n    (SELECT ad_id,\n        SUM(CASE WHEN action='Clicked' THEN 1 ELSE 0 END) AS clicks,\n        SUM(CASE WHEN action='Viewed' THEN 1 ELSE 0 END) AS views\n    FROM Ads\n    GROUP BY ad_id) AS t\nORDER BY ctr DESC, ad_id ASC"
+        }
+      ]
+    },
+    {
+      "id": 1327,
+      "title": "List the Products Ordered in a Period",
+      "difficulty": "Easy",
+      "locked": true,
+      "url": "https://leetcode.com/problems/list-the-products-ordered-in-a-period",
+      "description": "Write an SQL query to get the names of products with >= 100 units ordered in February 2020 and their amount.",
+      "tables": [
+        "Products",
+        "Orders"
+      ],
+      "solutions": [
+        {
+          "label": "Solution",
+          "code": "SELECT product_name, SUM(unit) AS unit\nFROM Products JOIN Orders\nON Products.product_id = Orders.product_id\nWHERE left(order_date, 7) = \"2020-02\"\nGROUP BY Products.product_id\nHAVING SUM(unit)>=100"
+        }
+      ]
+    },
+    {
+      "id": 1336,
+      "title": "Number of Transactions per Visit",
+      "difficulty": "Hard",
+      "locked": true,
+      "url": "https://leetcode.com/problems/number-of-transactions-per-visit",
+      "description": "Write an SQL query to find how many users visited the bank and did 0, 1, 2... transactions. transactions_count should take all values from 0 to max(transactions_count). Order by transactions_count.",
+      "tables": [
+        "Visits",
+        "Transactions"
+      ],
+      "solutions": [
+        {
+          "label": "Solution (Recursive CTE)",
+          "code": "WITH RECURSIVE t1 AS(\n    SELECT visit_date, COALESCE(num_visits,0) as num_visits, COALESCE(num_trans,0) as num_trans\n    FROM ((SELECT visit_date, user_id, COUNT(*) as num_visits\n           FROM visits GROUP BY 1, 2) AS a\n         LEFT JOIN\n          (SELECT transaction_date, user_id, count(*) as num_trans\n           FROM transactions GROUP BY 1, 2) AS b\n         ON a.visit_date = b.transaction_date and a.user_id = b.user_id)\n),\nt2 AS (\n    SELECT MAX(num_trans) as trans FROM t1\n    UNION ALL\n    SELECT trans-1 FROM t2 WHERE trans >= 1\n)\nSELECT trans as transactions_count,\n       COALESCE(visits_count,0) as visits_count\nFROM t2 LEFT JOIN (\n    SELECT num_trans as transactions_count, COALESCE(COUNT(*),0) as visits_count\n    FROM t1 GROUP BY 1 ORDER BY 1) AS a\nON a.transactions_count = t2.trans\nORDER BY 1"
+        }
+      ]
+    },
+    {
+      "id": 1341,
+      "title": "Movie Rating",
+      "difficulty": "Medium",
+      "locked": true,
+      "url": "https://leetcode.com/problems/movie-rating",
+      "description": "Find the name of user who rated the most movies (lexicographically smaller if tie), and the movie with highest average rating in Feb 2020 (lexicographically smaller if tie).",
+      "tables": [
+        "Movies",
+        "Users",
+        "Movie_Rating"
+      ],
+      "solutions": [
+        {
+          "label": "Solution",
+          "code": "(SELECT name AS results\nFROM Movie_Rating JOIN Users\nON Movie_Rating.user_id = Users.user_id\nGROUP BY Movie_Rating.user_id\nORDER BY count(1) DESC, name\nLIMIT 1)\nUNION ALL\n(SELECT title AS results\nFROM Movie_Rating JOIN Movies\nON Movie_Rating.movie_id = Movies.movie_id\nWHERE left(created_at, 7) = \"2020-02\"\nGROUP BY Movie_Rating.movie_id\nORDER BY avg(rating) DESC, title\nLIMIT 1)"
+        }
+      ]
+    },
+    {
+      "id": 1350,
+      "title": "Students With Invalid Departments",
+      "difficulty": "Easy",
+      "locked": true,
+      "url": "https://leetcode.com/problems/students-with-invalid-departments",
+      "description": "Write an SQL query to find the id and name of all students enrolled in departments that no longer exist.",
+      "tables": [
+        "Departments",
+        "Students"
+      ],
+      "solutions": [
+        {
+          "label": "Solution",
+          "code": "SELECT id, name\nFROM Students\nWHERE department_id NOT IN\n    (SELECT id FROM Departments)"
+        }
+      ]
+    },
+    {
+      "id": 1355,
+      "title": "Activity Participants",
+      "difficulty": "Medium",
+      "locked": true,
+      "url": "https://leetcode.com/problems/activity-participants",
+      "description": "Write an SQL query to find the names of all activities with neither maximum nor minimum number of participants.",
+      "tables": [
+        "Friends",
+        "Activities"
+      ],
+      "solutions": [
+        {
+          "label": "Solution",
+          "code": "WITH CTE AS\n(SELECT COUNT(*) AS cnt, activity FROM Friends GROUP BY activity)\n\nSELECT activity FROM CTE\nWHERE cnt NOT IN\n    (SELECT MAX(cnt) FROM CTE\n    UNION ALL\n    SELECT MIN(cnt) FROM CTE)"
+        }
+      ]
+    },
+    {
+      "id": 1364,
+      "title": "Number of Trusted Contacts of a Customer",
+      "difficulty": "Medium",
+      "locked": true,
+      "url": "https://leetcode.com/problems/number-of-trusted-contacts-of-a-customer",
+      "description": "Write an SQL query to find for each invoice: customer_name, price, contacts_cnt, trusted_contacts_cnt. Order by invoice_id.",
+      "tables": [
+        "Customers",
+        "Contacts",
+        "Invoices"
+      ],
+      "solutions": [
+        {
+          "label": "Solution",
+          "code": "SELECT invoice_id, customer_name, price,\n COUNT(Contacts.user_id) AS contacts_cnt,\n SUM(CASE WHEN Contacts.contact_name IN\n    (SELECT customer_name FROM Customers)\n    THEN 1 ELSE 0 END) AS trusted_contacts_cnt\nFROM Invoices INNER JOIN Customers ON Invoices.user_id = Customers.customer_id\nLEFT JOIN Contacts ON Customers.customer_id = Contacts.user_id\nGROUP BY Invoices.invoice_id, customer_name\nORDER BY Invoices.invoice_id"
+        }
+      ]
+    },
+    {
+      "id": 1369,
+      "title": "Get the Second Most Recent Activity",
+      "difficulty": "Hard",
+      "locked": true,
+      "url": "https://leetcode.com/problems/get-the-second-most-recent-activity",
+      "description": "Write an SQL query to show the second most recent activity of each user. If the user only has one activity, return that one.",
+      "tables": [
+        "UserActivity"
+      ],
+      "solutions": [
+        {
+          "label": "Solution",
+          "code": "(SELECT *\nFROM UserActivity\nGROUP BY username\nHAVING count(1) = 1)\nUNION\n(SELECT a.*\nFROM UserActivity AS a LEFT JOIN UserActivity AS b\non a.username = b.username AND a.endDate<b.endDate\nGROUP BY a.username, a.endDate\nHAVING count(b.endDate) = 1)"
+        }
+      ]
+    },
+    {
+      "id": 1378,
+      "title": "Replace Employee ID With The Unique Identifier",
+      "difficulty": "Easy",
+      "locked": true,
+      "url": "https://leetcode.com/problems/replace-employee-id-with-the-unique-identifier",
+      "description": "Write an SQL query to show the unique ID of each user. If a user doesn't have a unique ID show null.",
+      "tables": [
+        "Employees",
+        "EmployeeUNI"
+      ],
+      "solutions": [
+        {
+          "label": "Solution",
+          "code": "SELECT unique_id, name\nFROM Employees\nLEFT JOIN EmployeeUNI\nON Employees.id = EmployeeUNI.id"
+        }
+      ]
+    },
+    {
+      "id": 1384,
+      "title": "Total Sales Amount by Year",
+      "difficulty": "Hard",
+      "locked": true,
+      "url": "https://leetcode.com/problems/total-sales-amount-by-year",
+      "description": "Write an SQL query to report the Total sales amount of each item for each year (2018-2020). Order by product_id and report_year.",
+      "tables": [
+        "Product",
+        "Sales"
+      ],
+      "solutions": [
+        {
+          "label": "Solution",
+          "code": "SELECT b.product_id, a.product_name, a.yr AS report_year,\n    CASE\n        WHEN YEAR(b.period_start)=YEAR(b.period_end) AND a.yr=YEAR(b.period_start) THEN DATEDIFF(b.period_end,b.period_start)+1\n        WHEN a.yr=YEAR(b.period_start) THEN DATEDIFF(DATE_FORMAT(b.period_start,'%Y-12-31'),b.period_start)+1\n        WHEN a.yr=YEAR(b.period_end) THEN DAYOFYEAR(b.period_end)\n        WHEN a.yr>YEAR(b.period_start) AND a.yr<YEAR(b.period_end) THEN 365\n        ELSE 0\n    END * average_daily_sales AS total_amount\nFROM\n    (SELECT product_id,product_name,'2018' AS yr FROM Product\n    UNION SELECT product_id,product_name,'2019' AS yr FROM Product\n    UNION SELECT product_id,product_name,'2020' AS yr FROM Product) a\n    JOIN Sales b ON a.product_id=b.product_id\nHAVING total_amount > 0\nORDER BY b.product_id,a.yr"
+        }
+      ]
+    },
+    {
+      "id": 1393,
+      "title": "Capital Gain/Loss",
+      "difficulty": "Medium",
+      "locked": true,
+      "url": "https://leetcode.com/problems/capital-gainloss",
+      "description": "Write an SQL query to report the Capital gain/loss for each stock (total gain or loss after buying and selling).",
+      "tables": [
+        "Stocks"
+      ],
+      "solutions": [
+        {
+          "label": "Solution",
+          "code": "SELECT stock_name,\n       SUM(CASE WHEN operation = 'Buy' THEN -price ELSE price END) AS capital_gain_loss\nFROM Stocks\nGROUP BY stock_name;"
+        }
+      ]
+    },
+    {
+      "id": 1398,
+      "title": "Customers Who Bought Products A and B but Not C",
+      "difficulty": "Medium",
+      "locked": true,
+      "url": "https://leetcode.com/problems/customers-who-bought-products-a-and-b-but-not-c",
+      "description": "Write an SQL query to report customer_id and customer_name of customers who bought products 'A' and 'B' but did not buy product 'C'. Order by customer_id.",
+      "tables": [
+        "Customers",
+        "Orders"
+      ],
+      "solutions": [
+        {
+          "label": "Solution",
+          "code": "SELECT *\nFROM Customers\nWHERE customer_id IN\n    (SELECT DISTINCT customer_id FROM Orders WHERE product_name = 'A')\n    AND customer_id IN\n    (SELECT DISTINCT customer_id FROM Orders WHERE product_name = 'B')\n    AND customer_id NOT IN\n    (SELECT DISTINCT customer_id FROM Orders WHERE product_name = 'C')\nORDER BY customer_id"
+        }
+      ]
+    },
+    {
+      "id": 1407,
+      "title": "Top Travellers",
+      "difficulty": "Easy",
+      "locked": true,
+      "url": "https://leetcode.com/problems/top-travellers",
+      "description": "Write an SQL query to report the distance travelled by each user. Order by travelled_distance descending, name ascending in case of tie.",
+      "tables": [
+        "Users",
+        "Rides"
+      ],
+      "solutions": [
+        {
+          "label": "Solution",
+          "code": "SELECT name, IFNULL(SUM(distance), 0) AS travelled_distance\nFROM Users LEFT JOIN Rides\nON Users.id = Rides.user_id\nGROUP BY Users.id\nORDER BY travelled_distance DESC, name"
+        }
+      ]
+    },
+    {
+      "id": 1412,
+      "title": "Find the Quiet Students in All Exams",
+      "difficulty": "Hard",
+      "locked": true,
+      "url": "https://leetcode.com/problems/find-the-quiet-students-in-all-exams",
+      "description": "Write an SQL query to report the students being 'quiet' in ALL exams (never scored highest or lowest). Students who never took an exam are excluded. Order by student_id.",
+      "tables": [
+        "Student",
+        "Exam"
+      ],
+      "solutions": [
+        {
+          "label": "Solution 1 (Window Function)",
+          "code": "WITH t1 AS(\nSELECT student_id\nFROM\n(SELECT *,\nMIN(score) OVER(PARTITION BY exam_id) AS least,\nMAX(score) OVER(PARTITION BY exam_id) AS most\nFROM exam) a\nWHERE least = score OR most = score)\n\nSELECT DISTINCT student_id, student_name\nFROM exam JOIN student\nUSING (student_id)\nWHERE student_id != all(SELECT student_id FROM t1)\nORDER BY 1"
+        }
+      ]
+    },
+    {
+      "id": 1421,
+      "title": "NPV Queries",
+      "difficulty": "Medium",
+      "locked": true,
+      "url": "https://leetcode.com/problems/npv-queries",
+      "description": "Write an SQL query to find the npv of each query in the Queries table. If not found in NPV table, return 0.",
+      "tables": [
+        "NPV",
+        "Queries"
+      ],
+      "solutions": [
+        {
+          "label": "Solution",
+          "code": "SELECT q.id, q.year, COALESCE(n.npv,0) AS npv\nFROM queries q\nLEFT JOIN npv n\nON q.id = n.id AND q.year=n.year"
+        }
+      ]
+    },
+    {
+      "id": 1435,
+      "title": "Create a Session Bar Chart",
+      "difficulty": "Easy",
+      "locked": true,
+      "url": "https://leetcode.com/problems/create-a-session-bar-chart",
+      "description": "Write an SQL query to create bins [0-5>, [5-10>, [10-15>, and '15 or more' and count sessions in each bin.",
+      "tables": [
+        "Sessions"
+      ],
+      "solutions": [
+        {
+          "label": "Solution",
+          "code": "(SELECT '[0-5>' AS bin, SUM(CASE WHEN duration/60 < 5 THEN 1 ELSE 0 END) AS total FROM Sessions)\n UNION\n(SELECT '[5-10>' AS bin, SUM(CASE WHEN ((duration/60 >= 5) AND (duration/60 < 10)) THEN 1 ELSE 0 END) AS total FROM Sessions)\n UNION\n(SELECT '[10-15>' AS bin, SUM(CASE WHEN ((duration/60 >= 10) AND (duration/60 < 15)) THEN 1 ELSE 0 END) AS total FROM Sessions)\n UNION\n(SELECT '15 or more' AS bin, SUM(CASE WHEN duration/60 >= 15 THEN 1 ELSE 0 END) AS total FROM Sessions)"
+        }
+      ]
+    },
+    {
+      "id": 1440,
+      "title": "Evaluate Boolean Expression",
+      "difficulty": "Medium",
+      "locked": true,
+      "url": "https://leetcode.com/problems/evaluate-boolean-expression",
+      "description": "Write an SQL query to evaluate the boolean expressions in Expressions table using the Variables table.",
+      "tables": [
+        "Variables",
+        "Expressions"
+      ],
+      "solutions": [
+        {
+          "label": "Solution",
+          "code": "SELECT t.left_operand, t.operator, t.right_operand,\n    (CASE WHEN v1_value>v2.value AND operator = '>' THEN \"true\"\n          WHEN v1_value<v2.value AND operator = '<' THEN \"true\"\n          WHEN v1_value=v2.value AND operator = '=' THEN \"true\"\n          ELSE \"false\"\n          END) AS value\nFROM\n   (SELECT e.*, v1.value AS v1_value\n    FROM Expressions AS e INNER JOIN Variables AS v1\n    ON e.left_operand = v1.name) AS t INNER JOIN Variables AS v2\n    ON t.right_operand = v2.name"
+        }
+      ]
+    },
+    {
+      "id": 1445,
+      "title": "Apples & Oranges",
+      "difficulty": "Medium",
+      "locked": true,
+      "url": "https://leetcode.com/problems/apples-oranges",
+      "description": "Write an SQL query to report the difference between number of apples and oranges sold each day. Order by sale_date.",
+      "tables": [
+        "Sales"
+      ],
+      "solutions": [
+        {
+          "label": "Solution",
+          "code": "SELECT sale_date, sum(CASE WHEN fruit='apples' THEN sold_num ELSE -sold_num END) AS diff\nFROM Sales\nGROUP BY sale_date"
+        }
+      ]
+    },
+    {
+      "id": 1454,
+      "title": "Active Users",
+      "difficulty": "Medium",
+      "locked": true,
+      "url": "https://leetcode.com/problems/active-users",
+      "description": "Write an SQL query to find the id and name of active users who logged in for 5 or more consecutive days. Order by id.",
+      "tables": [
+        "Accounts",
+        "Logins"
+      ],
+      "solutions": [
+        {
+          "label": "Solution 1 (LEAD Window Function)",
+          "code": "WITH t1 AS (\nSELECT id,login_date,\nlead(login_date,4) OVER(PARTITION BY id ORDER BY login_date) date_5\nFROM (SELECT DISTINCT * FROM Logins) b\n)\n\nSELECT DISTINCT a.id, a.name FROM t1\nINNER JOIN accounts a\nON t1.id = a.id\nWHERE DATEDIFF(t1.date_5,login_date) = 4\nORDER BY id"
+        }
+      ]
+    },
+    {
+      "id": 1459,
+      "title": "Rectangles Area",
+      "difficulty": "Medium",
+      "locked": true,
+      "url": "https://leetcode.com/problems/rectangles-area",
+      "description": "Write an SQL query to report all possible rectangles formed by any two points. p1 < p2 and area > 0. Order by area descending, then p1 and p2 ascending.",
+      "tables": [
+        "Points"
+      ],
+      "solutions": [
+        {
+          "label": "Solution",
+          "code": "SELECT t1.id AS p1, t2.id AS p2, ABS(t1.x_value-t2.x_value)*ABS(t1.y_value-t2.y_value) AS area\nFROM Points AS t1 INNER JOIN Points AS t2\nON t1.id < t2.id\nAND t1.x_value != t2.x_value AND t1.y_value != t2.y_value\nORDER BY area DESC, p1, p2"
+        }
+      ]
+    },
+    {
+      "id": 1468,
+      "title": "Calculate Salaries",
+      "difficulty": "Medium",
+      "locked": true,
+      "url": "https://leetcode.com/problems/calculate-salaries",
+      "description": "Write an SQL query to find salaries after applying taxes (0% if max<1000, 24% if max in [1000,10000], 49% if max>10000). Round to nearest integer.",
+      "tables": [
+        "Salaries"
+      ],
+      "solutions": [
+        {
+          "label": "Solution",
+          "code": "WITH t1 AS (\nSELECT company_id, employee_id, employee_name, salary AS sa, MAX(salary) OVER(PARTITION BY company_id) AS maximum\nFROM salaries)\n\nSELECT company_id, employee_id, employee_name,\nCASE WHEN t1.maximum<1000 THEN t1.sa\nWHEN t1.maximum BETWEEN 1000 AND 10000 THEN ROUND(t1.sa*.76,0)\nELSE ROUND(t1.sa*.51,0)\nEND AS salary\nFROM t1"
+        }
+      ]
+    },
+    {
+      "id": 1479,
+      "title": "Sales by Day of the Week",
+      "difficulty": "Hard",
+      "locked": true,
+      "url": "https://leetcode.com/problems/sales-by-day-of-the-week",
+      "description": "Write an SQL query to report how many units in each category have been ordered on each day of the week. Order by category.",
+      "tables": [
+        "Orders",
+        "Items"
+      ],
+      "solutions": [
+        {
+          "label": "Solution",
+          "code": "WITH t1 AS(\nSELECT DISTINCT item_category,\nCASE WHEN dayname(order_date)='Monday' THEN SUM(quantity) OVER(PARTITION BY item_category,dayname(order_date)) ELSE 0 END AS Monday,\nCASE WHEN dayname(order_date)='Tuesday' THEN SUM(quantity) OVER(PARTITION BY item_category,dayname(order_date)) ELSE 0 END AS Tuesday,\nCASE WHEN dayname(order_date)='Wednesday' THEN SUM(quantity) OVER(PARTITION BY item_category,dayname(order_date)) ELSE 0 END AS Wednesday,\nCASE WHEN dayname(order_date)='Thursday' THEN SUM(quantity) OVER(PARTITION BY item_category,dayname(order_date)) ELSE 0 END AS Thursday,\nCASE WHEN dayname(order_date)='Friday' THEN SUM(quantity) OVER(PARTITION BY item_category,dayname(order_date)) ELSE 0 END AS Friday,\nCASE WHEN dayname(order_date)='Saturday' THEN SUM(quantity) OVER(PARTITION BY item_category,dayname(order_date)) ELSE 0 END AS Saturday,\nCASE WHEN dayname(order_date)='Sunday' THEN SUM(quantity) OVER(PARTITION BY item_category,dayname(order_date)) ELSE 0 END AS Sunday\nFROM orders o RIGHT JOIN items i USING (item_id))\n\nSELECT item_category AS category, SUM(Monday) AS Monday, SUM(Tuesday) AS Tuesday, SUM(Wednesday) Wednesday, SUM(Thursday) Thursday,\nSUM(Friday) Friday, SUM(Saturday) Saturday, SUM(Sunday) Sunday\nFROM t1\nGROUP BY item_category"
+        }
+      ]
+    },
+    {
+      "id": 1484,
+      "title": "Group Sold Products By The Date",
+      "difficulty": "Easy",
+      "locked": true,
+      "url": "https://leetcode.com/problems/group-sold-products-by-the-date",
+      "description": "Write an SQL query to find for each date, the number of distinct products sold and their names (sorted lexicographically). Order by sell_date.",
+      "tables": [
+        "Activities"
+      ],
+      "solutions": [
+        {
+          "label": "Solution",
+          "code": "SELECT sell_date, COUNT(DISTINCT product) AS num_sold, group_concat(DISTINCT product) AS products\nFROM activities\nGROUP BY 1\nORDER BY 1"
+        }
+      ]
+    },
+    {
+      "id": 1495,
+      "title": "Friendly Movies Streamed Last Month",
+      "difficulty": "Easy",
+      "locked": true,
+      "url": "https://leetcode.com/problems/friendly-movies-streamed-last-month",
+      "description": "Write an SQL query to report the distinct titles of the kid-friendly movies streamed in June 2020.",
+      "tables": [
+        "TVProgram",
+        "Content"
+      ],
+      "solutions": [
+        {
+          "label": "Solution",
+          "code": "SELECT DISTINCT title\nFROM\n(SELECT content_id, title\nFROM content\nWHERE kids_content = 'Y' AND content_type = 'Movies') a\nJOIN tvprogram USING (content_id)\nWHERE month(program_date) = 6"
+        }
+      ]
+    },
+    {
+      "id": 1501,
+      "title": "Countries You Can Safely Invest In",
+      "difficulty": "Medium",
+      "locked": true,
+      "url": "https://leetcode.com/problems/countries-you-can-safely-invest-in",
+      "description": "Write an SQL query to find countries where the average call duration is strictly greater than the global average call duration.",
+      "tables": [
+        "Person",
+        "Country",
+        "Calls"
+      ],
+      "solutions": [
+        {
+          "label": "Solution",
+          "code": "WITH t1 AS(\nSELECT caller_id AS id, duration AS total\nFROM\n(SELECT caller_id, duration FROM calls\nUNION ALL\nSELECT callee_id, duration FROM calls) a\n)\nSELECT name AS country\nFROM\n(SELECT distinct avg(total) OVER(PARTITION BY code) AS avg_call, avg(total) OVER() AS global_avg, c.name\nFROM\n((SELECT *, coalesce(total,0) AS duration, SUBSTRING(phone_number FROM 1 for 3) AS code\nFROM person RIGHT JOIN t1 USING (id)) b\njoin country c ON c.country_code = b.code)) d\nWHERE avg_call > global_avg"
+        }
+      ]
+    },
+    {
+      "id": 1511,
+      "title": "Customer Order Frequency",
+      "difficulty": "Easy",
+      "locked": true,
+      "url": "https://leetcode.com/problems/customer-order-frequency",
+      "description": "Write an SQL query to report customer_id and customer_name of customers who have spent at least $100 in each month of June and July 2020.",
+      "tables": [
+        "Customers",
+        "Product",
+        "Orders"
+      ],
+      "solutions": [
+        {
+          "label": "Solution",
+          "code": "SELECT customer_id, name\nFROM\n(\n    SELECT o.customer_id, c.name,\n        sum(CASE WHEN left(o.order_date,7) = '2020-06' THEN p.price * o.quantity END) AS JuneSpend,\n        sum(CASE WHEN left(o.order_date,7) = '2020-07' THEN p.price * o.quantity END) AS JulySpend\n    FROM Orders o\n    LEFT JOIN Customers c ON o.customer_id = c.customer_id\n    LEFT JOIN Product p ON o.product_id = p.product_id\n    GROUP BY o.customer_id\n    HAVING JuneSpend >= 100 AND JulySpend >= 100\n) AS temp"
+        }
+      ]
+    },
+    {
+      "id": 1517,
+      "title": "Find Users With Valid E-Mails",
+      "difficulty": "Easy",
+      "locked": true,
+      "url": "https://leetcode.com/problems/find-users-with-valid-e-mails",
+      "description": "Write an SQL query to find users with valid emails. Prefix must start with a letter, can contain letters/digits/_/./-, and domain must be @leetcode.com.",
+      "tables": [
+        "Users"
+      ],
+      "solutions": [
+        {
+          "label": "Solution",
+          "code": "SELECT user_id, name, mail\nFROM Users\nWHERE mail regexp \"^[a-zA-Z]+[a-zA-Z0-9_\\./\\-]{0,}@leetcode\\.com$\"\nORDER BY user_id"
+        }
+      ]
+    },
+    {
+      "id": 1527,
+      "title": "Patients With a Condition",
+      "difficulty": "Easy",
+      "locked": true,
+      "url": "https://leetcode.com/problems/patients-with-a-condition",
+      "description": "Write an SQL query to report the patient_id, patient_name and conditions of patients who have Type I Diabetes (conditions starting with DIAB1).",
+      "tables": [
+        "Patients"
+      ],
+      "solutions": [
+        {
+          "label": "Solution",
+          "code": "SELECT patient_id, patient_name, conditions\nFROM Patients\nWHERE conditions LIKE '%DIAB1%'"
+        }
+      ]
+    },
+    {
+      "id": 1532,
+      "title": "The Most Recent Three Orders",
+      "difficulty": "Medium",
+      "locked": true,
+      "url": "https://leetcode.com/problems/the-most-recent-three-orders",
+      "description": "Write an SQL query to find the most recent 3 orders of each user. If < 3 orders, return all. Order by customer_name, customer_id, order_date descending.",
+      "tables": [
+        "Customers",
+        "Orders"
+      ],
+      "solutions": [
+        {
+          "label": "Solution",
+          "code": "WITH tmp AS (\nSELECT a.name, a.customer_id, b.order_id, b.order_date,\nROW_NUMBER() OVER(PARTITION BY a.name, a.customer_id ORDER BY b.order_date DESC) AS rnk\nFROM Customers AS a\nJOIN Orders AS b ON a.customer_id = b.customer_id\n)\nSELECT name AS customer_name, customer_id, order_id, order_date\nFROM tmp\nWHERE rnk <= 3\nORDER BY customer_name, customer_id, order_date DESC;"
+        }
+      ]
+    },
+    {
+      "id": 1543,
+      "title": "Fix Product Name Format",
+      "difficulty": "Easy",
+      "locked": true,
+      "url": "https://leetcode.com/problems/fix-product-name-format",
+      "description": "Write an SQL query to report product_name in lowercase without spaces, sale_date in YYYY-MM format, and total count. Order by product_name, then sale_date.",
+      "tables": [
+        "Sales"
+      ],
+      "solutions": [
+        {
+          "label": "Solution",
+          "code": "SELECT TRIM(LOWER(product_name)) AS product_name,\n       DATE_FORMAT(sale_date, '%Y-%m') AS sale_date,\n       COUNT(*) AS total\nFROM Sales\nGROUP BY 1, DATE_FORMAT(sale_date, '%Y-%m')\nORDER BY 1, 2;"
+        }
+      ]
+    },
+    {
+      "id": 1549,
+      "title": "The Most Recent Orders for Each Product",
+      "difficulty": "Medium",
+      "locked": true,
+      "url": "https://leetcode.com/problems/the-most-recent-orders-for-each-product",
+      "description": "Write an SQL query to find the most recent order(s) of each product. Order by product_name, product_id, order_id ascending.",
+      "tables": [
+        "Customers",
+        "Orders",
+        "Products"
+      ],
+      "solutions": [
+        {
+          "label": "Solution",
+          "code": "SELECT p.product_name, o.product_id, o.order_id, o.order_date\nFROM(\n    SELECT product_id, order_id, order_date,\n    RANK() OVER(PARTITION BY product_id ORDER BY order_date DESC) AS seq\n    FROM orders\n) o\nLEFT JOIN products p ON o.product_id = p.product_id\nWHERE o.seq = 1\nORDER BY 1,2,3"
+        }
+      ]
+    },
+    {
+      "id": 1555,
+      "title": "Bank Account Summary",
+      "difficulty": "Medium",
+      "locked": true,
+      "url": "https://leetcode.com/problems/bank-account-summary",
+      "description": "Write an SQL query to report user_id, user_name, credit (current balance after transactions), and credit_limit_breached (Yes/No if credit < 0).",
+      "tables": [
+        "Users",
+        "Transaction"
+      ],
+      "solutions": [
+        {
+          "label": "Solution",
+          "code": "SELECT Users.user_id AS user_id, Users.user_name AS user_name,\n    credit+IFNULL(SUM(trans),0) AS credit,\n    CASE WHEN credit+IFNULL(SUM(trans),0)>0 THEN 'No' ELSE 'Yes' END AS credit_limit_breached\nFROM(\n    SELECT paid_by AS user_id, -amount AS trans FROM Transaction\n    UNION ALL\n    SELECT paid_to AS user_id, amount AS trans FROM Transaction\n) t RIGHT JOIN users ON t.user_id=users.user_id\nGROUP BY user_id"
+        }
+      ]
+    },
+    {
+      "id": 1565,
+      "title": "Unique Orders and Customers Per Month",
+      "difficulty": "Easy",
+      "locked": true,
+      "url": "https://leetcode.com/problems/unique-orders-and-customers-per-month",
+      "description": "Write an SQL query to find the number of unique orders and unique users with invoices > $20 for each different month.",
+      "tables": [
+        "Orders"
+      ],
+      "solutions": [
+        {
+          "label": "Solution",
+          "code": "SELECT LEFT(order_date, 7) AS month, COUNT(DISTINCT order_id) AS order_count,\n\tCOUNT(DISTINCT customer_id) AS customer_count\nFROM orders\nWHERE invoice > 20\nGROUP BY month"
+        }
+      ]
+    },
+    {
+      "id": 1571,
+      "title": "Warehouse Manager",
+      "difficulty": "Easy",
+      "locked": true,
+      "url": "https://leetcode.com/problems/warehouse-manager",
+      "description": "Write an SQL query to report how much cubic feet of volume the inventory occupies in each warehouse.",
+      "tables": [
+        "Warehouse",
+        "Products"
+      ],
+      "solutions": [
+        {
+          "label": "Solution",
+          "code": "SELECT a.name AS warehouse_name,\nSUM(a.units * b.Width * b.Length * b.Height) AS volume\nFROM Warehouse AS a\nLEFT JOIN Products AS b ON a.product_id = b.product_id\nGROUP BY a.name;"
+        }
+      ]
+    },
+    {
+      "id": 1581,
+      "title": "Customer Who Visited but Did Not Make Any Transactions",
+      "difficulty": "Easy",
+      "locked": true,
+      "url": "https://leetcode.com/problems/customer-who-visited-but-did-not-make-any-transactions",
+      "description": "Write an SQL query to find the IDs of users who visited without making any transactions and the number of times they made these types of visits.",
+      "tables": [
+        "Visits",
+        "Transactions"
+      ],
+      "solutions": [
+        {
+          "label": "Solution",
+          "code": "SELECT a.customer_id, COUNT(a.visit_id) AS count_no_trans FROM Visits AS a\nLEFT JOIN Transactions AS b ON a.visit_id = b.visit_id\nWHERE b.transaction_id IS NULL\nGROUP BY a.customer_id;"
+        }
+      ]
+    },
+    {
+      "id": 1587,
+      "title": "Bank Account Summary II",
+      "difficulty": "Easy",
+      "locked": true,
+      "url": "https://leetcode.com/problems/bank-account-summary-ii",
+      "description": "Write an SQL query to report the name and balance of users with a balance higher than 10000. The balance of an account is equal to the sum of the amounts of all transactions involving that account.",
+      "tables": [
+        "Users",
+        "Transactions"
+      ],
+      "solutions": [
+        {
+          "label": "Solution",
+          "code": "SELECT name, SUM(amount) AS balance\nFROM Users u JOIN Transactions t\nON u.account = t.account\nGROUP BY u.account\nHAVING SUM(amount) > 10000"
+        }
+      ]
+    },
+    {
+      "id": 1596,
+      "title": "The Most Frequently Ordered Products for Each Customer",
+      "difficulty": "Medium",
+      "locked": true,
+      "url": "https://leetcode.com/problems/the-most-frequently-ordered-products-for-each-customer",
+      "description": "Write an SQL query to find the most frequently ordered product(s) for each customer. Return customer_id, product_id, product_name.",
+      "tables": [
+        "Customers",
+        "Orders",
+        "Products"
+      ],
+      "solutions": [
+        {
+          "label": "Solution",
+          "code": "SELECT customer_id, product_id, product_name\nFROM(\nSELECT o.customer_id, o.product_id, p.product_name,\nRANK() OVER(PARTITION BY customer_id ORDER BY COUNT(*) DESC) AS rk\nFROM orders o JOIN products p\nON o.product_id = p.product_id\nGROUP BY o.customer_id, o.product_id\n) t\nWHERE rk = 1"
+        }
+      ]
+    },
+    {
+      "id": 1607,
+      "title": "Sellers With No Sales",
+      "difficulty": "Easy",
+      "locked": true,
+      "url": "https://leetcode.com/problems/sellers-with-no-sales",
+      "description": "Write an SQL query to report the names of all sellers who did not make any sales in 2020. Return the result ordered by seller_name ascending.",
+      "tables": [
+        "Customer",
+        "Orders",
+        "Seller"
+      ],
+      "solutions": [
+        {
+          "label": "Solution",
+          "code": "SELECT seller_name\nFROM Seller\nWHERE seller_id NOT IN (\n    SELECT DISTINCT seller_id\n    FROM Orders\n    WHERE YEAR(sale_date) = 2020\n)\nORDER BY seller_name"
+        }
+      ]
+    },
+    {
+      "id": 1613,
+      "title": "Find the Missing IDs",
+      "difficulty": "Medium",
+      "locked": true,
+      "url": "https://leetcode.com/problems/find-the-missing-ids",
+      "description": "Write an SQL query to find the missing customer IDs. The missing IDs are ones that are not in the Customers table but are in the range between 1 and the maximum customer_id.",
+      "tables": [
+        "Customers"
+      ],
+      "solutions": [
+        {
+          "label": "Solution (Recursive CTE)",
+          "code": "WITH RECURSIVE t AS (\nSELECT 1 AS n\nUNION ALL\nSELECT n+1 FROM t WHERE n < (SELECT MAX(customer_id) FROM Customers)\n)\nSELECT n AS ids\nFROM t\nWHERE n NOT IN (SELECT customer_id FROM Customers)"
+        }
+      ]
+    },
+    {
+      "id": 1623,
+      "title": "All Valid Triplets That Can Represent a Country",
+      "difficulty": "Easy",
+      "locked": true,
+      "url": "https://leetcode.com/problems/all-valid-triplets-that-can-represent-a-country",
+      "description": "Write an SQL query to find all valid triplets that can represent a country (one student from each school, no student's name appears more than once).",
+      "tables": [
+        "SchoolA",
+        "SchoolB",
+        "SchoolC"
+      ],
+      "solutions": [
+        {
+          "label": "Solution",
+          "code": "SELECT a.student_name AS member_A, b.student_name AS member_B, c.student_name AS member_C\nFROM SchoolA a, SchoolB b, SchoolC c\nWHERE a.student_name != b.student_name\nAND b.student_name != c.student_name\nAND a.student_name != c.student_name"
+        }
+      ]
+    },
+    {
+      "id": 1633,
+      "title": "Percentage of Users Attended a Contest",
+      "difficulty": "Easy",
+      "locked": false,
+      "url": "https://leetcode.com/problems/percentage-of-users-attended-a-contest",
+      "description": "Write an SQL query to find the percentage of users registered in each contest rounded to two decimals. Return the result table ordered by percentage in descending order, contest_id ascending in case of tie.",
+      "tables": [
+        "Users",
+        "Register"
+      ],
+      "solutions": [
+        {
+          "label": "Solution",
+          "code": "SELECT contest_id,\nROUND(COUNT(user_id)/(SELECT COUNT(*) FROM Users)*100, 2) AS percentage\nFROM Register\nGROUP BY contest_id\nORDER BY percentage DESC, contest_id"
+        }
+      ]
+    },
+    {
+      "id": 1635,
+      "title": "Hopper Company Queries I",
+      "difficulty": "Hard",
+      "locked": true,
+      "url": "https://leetcode.com/problems/hopper-company-queries-i",
+      "description": "Write an SQL query to report for each month (1-12 of 2020): the number of drivers currently with the Hopper company by end of that month, the number of accepted rides in that month, the number of rides that had at least 1 active driver.",
+      "tables": [
+        "Drivers",
+        "Rides",
+        "AcceptedRides"
+      ],
+      "solutions": [
+        {
+          "label": "Solution",
+          "code": "WITH RECURSIVE months AS (\nSELECT 1 AS month\nUNION ALL\nSELECT month + 1 FROM months WHERE month < 12\n),\nactive_drivers AS (\nSELECT month,\nCOUNT(driver_id) AS active_drivers\nFROM months LEFT JOIN Drivers\nON YEAR(join_date) < 2020 OR (YEAR(join_date) = 2020 AND MONTH(join_date) <= month)\nGROUP BY month\n),\nmonthly_rides AS (\nSELECT MONTH(requested_at) AS month, COUNT(DISTINCT r.ride_id) AS accepted_rides\nFROM Rides r JOIN AcceptedRides ar ON r.ride_id = ar.ride_id\nWHERE YEAR(requested_at) = 2020\nGROUP BY MONTH(requested_at)\n)\nSELECT m.month, COALESCE(ad.active_drivers, 0) AS active_drivers,\nCOALESCE(mr.accepted_rides, 0) AS accepted_rides\nFROM months m\nLEFT JOIN active_drivers ad ON m.month = ad.month\nLEFT JOIN monthly_rides mr ON m.month = mr.month"
+        }
+      ]
+    },
+    {
+      "id": 1645,
+      "title": "Hopper Company Queries II",
+      "difficulty": "Hard",
+      "locked": true,
+      "url": "https://leetcode.com/problems/hopper-company-queries-ii",
+      "description": "Write an SQL query to report the percentage of working drivers (accepted at least one ride) for each month of 2020. percentage = (number of drivers who accepted rides / total drivers) * 100, rounded to 2 decimals.",
+      "tables": [
+        "Drivers",
+        "Rides",
+        "AcceptedRides"
+      ],
+      "solutions": [
+        {
+          "label": "Solution",
+          "code": "WITH RECURSIVE months AS (\nSELECT 1 AS month\nUNION ALL\nSELECT month + 1 FROM months WHERE month < 12\n)\nSELECT m.month,\nROUND(COUNT(DISTINCT ar.driver_id) / COUNT(DISTINCT d.driver_id) * 100, 2) AS working_percentage\nFROM months m\nLEFT JOIN Drivers d ON YEAR(d.join_date) < 2020 OR (YEAR(d.join_date) = 2020 AND MONTH(d.join_date) <= m.month)\nLEFT JOIN Rides r ON MONTH(r.requested_at) = m.month AND YEAR(r.requested_at) = 2020\nLEFT JOIN AcceptedRides ar ON r.ride_id = ar.ride_id AND ar.driver_id = d.driver_id\nGROUP BY m.month"
+        }
+      ]
+    },
+    {
+      "id": 1651,
+      "title": "Hopper Company Queries III",
+      "difficulty": "Hard",
+      "locked": true,
+      "url": "https://leetcode.com/problems/hopper-company-queries-iii",
+      "description": "Write an SQL query to compute the average_ride_distance and average_ride_duration of every 3-month window starting from January to October 2020. Rounded to 2 decimal places.",
+      "tables": [
+        "Drivers",
+        "Rides",
+        "AcceptedRides"
+      ],
+      "solutions": [
+        {
+          "label": "Solution",
+          "code": "WITH RECURSIVE months AS (\nSELECT 1 AS month\nUNION ALL\nSELECT month + 1 FROM months WHERE month < 12\n),\nmonthly AS (\nSELECT MONTH(requested_at) AS month,\nSUM(ride_distance) AS total_distance,\nSUM(ride_duration) AS total_duration\nFROM Rides r JOIN AcceptedRides ar ON r.ride_id = ar.ride_id\nWHERE YEAR(requested_at) = 2020\nGROUP BY MONTH(requested_at)\n)\nSELECT m.month,\nROUND(SUM(COALESCE(m2.total_distance, 0)) / 3, 2) AS average_ride_distance,\nROUND(SUM(COALESCE(m2.total_duration, 0)) / 3, 2) AS average_ride_duration\nFROM months m\nJOIN months m2 ON m2.month BETWEEN m.month AND m.month + 2\nLEFT JOIN monthly ON monthly.month = m2.month\nWHERE m.month <= 10\nGROUP BY m.month"
+        }
+      ]
+    },
+    {
+      "id": 1661,
+      "title": "Average Time of Process per Machine",
+      "difficulty": "Easy",
+      "locked": false,
+      "url": "https://leetcode.com/problems/average-time-of-process-per-machine",
+      "description": "Write an SQL query to find the average time each machine takes to complete a process. Time = end_timestamp - start_timestamp. Round to 3 decimal places.",
+      "tables": [
+        "Activity"
+      ],
+      "solutions": [
+        {
+          "label": "Solution",
+          "code": "SELECT machine_id, ROUND(AVG(end_time - start_time), 3) AS processing_time\nFROM (\n    SELECT machine_id, process_id,\n        MAX(CASE WHEN activity_type = 'end' THEN timestamp END) AS end_time,\n        MAX(CASE WHEN activity_type = 'start' THEN timestamp END) AS start_time\n    FROM Activity\n    GROUP BY machine_id, process_id\n) t\nGROUP BY machine_id"
+        }
+      ]
+    },
+    {
+      "id": 1667,
+      "title": "Fix Names in a Table",
+      "difficulty": "Easy",
+      "locked": false,
+      "url": "https://leetcode.com/problems/fix-names-in-a-table",
+      "description": "Write an SQL query to fix the names so that only the first character is uppercase and the rest are lowercase. Return the result table ordered by user_id.",
+      "tables": [
+        "Users"
+      ],
+      "solutions": [
+        {
+          "label": "Solution",
+          "code": "SELECT user_id, CONCAT(UPPER(LEFT(name, 1)), LOWER(SUBSTRING(name, 2))) AS name\nFROM Users\nORDER BY user_id"
+        }
+      ]
+    },
+    {
+      "id": 1677,
+      "title": "Product's Worth Over Invoices",
+      "difficulty": "Easy",
+      "locked": true,
+      "url": "https://leetcode.com/problems/products-worth-over-invoices",
+      "description": "Write an SQL query to report the name and sum of rest and paid for each product, ordered by product name.",
+      "tables": [
+        "Product",
+        "Invoice"
+      ],
+      "solutions": [
+        {
+          "label": "Solution",
+          "code": "SELECT p.name, SUM(i.rest) AS rest, SUM(i.paid) AS paid,\nSUM(i.canceled) AS canceled, SUM(i.refunded) AS refunded\nFROM Product p JOIN Invoice i ON p.product_id = i.product_id\nGROUP BY p.product_id\nORDER BY p.name"
+        }
+      ]
+    },
+    {
+      "id": 1683,
+      "title": "Invalid Tweets",
+      "difficulty": "Easy",
+      "locked": false,
+      "url": "https://leetcode.com/problems/invalid-tweets",
+      "description": "Write an SQL query to find the IDs of the invalid tweets. A tweet is invalid if the number of characters used in the content of the tweet is strictly greater than 15.",
+      "tables": [
+        "Tweets"
+      ],
+      "solutions": [
+        {
+          "label": "Solution",
+          "code": "SELECT tweet_id FROM Tweets WHERE LENGTH(content) > 15"
+        }
+      ]
+    },
+    {
+      "id": 1693,
+      "title": "Daily Leads and Partners",
+      "difficulty": "Easy",
+      "locked": false,
+      "url": "https://leetcode.com/problems/daily-leads-and-partners",
+      "description": "Write an SQL query to find the number of unique leads and unique partners for each date_id and make_name combination. Return in any order.",
+      "tables": [
+        "DailySales"
+      ],
+      "solutions": [
+        {
+          "label": "Solution",
+          "code": "SELECT date_id, make_name,\nCOUNT(DISTINCT lead_id) AS unique_leads,\nCOUNT(DISTINCT partner_id) AS unique_partners\nFROM DailySales\nGROUP BY date_id, make_name"
+        }
+      ]
+    },
+    {
+      "id": 1699,
+      "title": "Number of Calls Between Two Persons",
+      "difficulty": "Medium",
+      "locked": true,
+      "url": "https://leetcode.com/problems/number-of-calls-between-two-persons",
+      "description": "Write an SQL query to report the number of calls and total call duration between each pair of distinct persons (person1, person2) where person1 < person2.",
+      "tables": [
+        "Calls"
+      ],
+      "solutions": [
+        {
+          "label": "Solution",
+          "code": "SELECT LEAST(from_id, to_id) AS person1,\nGREATEST(from_id, to_id) AS person2,\nCOUNT(*) AS call_count,\nSUM(duration) AS total_duration\nFROM Calls\nGROUP BY person1, person2"
+        }
+      ]
+    },
+    {
+      "id": 1709,
+      "title": "Biggest Window Between Visits",
+      "difficulty": "Medium",
+      "locked": true,
+      "url": "https://leetcode.com/problems/biggest-window-between-visits",
+      "description": "Write an SQL query to find the largest window between visits for each user. The window is the number of days between consecutive visits. Include 2021-01-01 as the end date.",
+      "tables": [
+        "UserVisits"
+      ],
+      "solutions": [
+        {
+          "label": "Solution",
+          "code": "SELECT user_id, MAX(diff) AS biggest_window\nFROM (\n    SELECT user_id,\n    DATEDIFF(\n        LEAD(visit_date, 1, '2021-01-01') OVER(PARTITION BY user_id ORDER BY visit_date),\n        visit_date\n    ) AS diff\n    FROM UserVisits\n) t\nGROUP BY user_id"
+        }
+      ]
+    },
+    {
+      "id": 1715,
+      "title": "Count Apples and Oranges",
+      "difficulty": "Medium",
+      "locked": true,
+      "url": "https://leetcode.com/problems/count-apples-and-oranges",
+      "description": "Write an SQL query to count the number of apples and oranges in all boxes. If a box contains a chest, count the apples and oranges in the chest too.",
+      "tables": [
+        "Boxes",
+        "Chests"
+      ],
+      "solutions": [
+        {
+          "label": "Solution",
+          "code": "SELECT SUM(COALESCE(b.apple_count, 0) + COALESCE(c.apple_count, 0)) AS apple_count,\n       SUM(COALESCE(b.orange_count, 0) + COALESCE(c.orange_count, 0)) AS orange_count\nFROM Boxes b LEFT JOIN Chests c\nON b.chest_id = c.chest_id"
+        }
+      ]
+    },
+    {
+      "id": 1729,
+      "title": "Find Followers Count",
+      "difficulty": "Easy",
+      "locked": false,
+      "url": "https://leetcode.com/problems/find-followers-count",
+      "description": "Write an SQL query to find the number of followers for each user. Return the result ordered by user_id in ascending order.",
+      "tables": [
+        "Followers"
+      ],
+      "solutions": [
+        {
+          "label": "Solution",
+          "code": "SELECT user_id, COUNT(follower_id) AS followers_count\nFROM Followers\nGROUP BY user_id\nORDER BY user_id"
+        }
+      ]
+    },
+    {
+      "id": 1731,
+      "title": "The Number of Employees Which Report to Each Employee",
+      "difficulty": "Easy",
+      "locked": false,
+      "url": "https://leetcode.com/problems/the-number-of-employees-which-report-to-each-employee",
+      "description": "Write an SQL query to report managers with at least 1 direct report. For each manager: employee_id, name, reports_count, average_age (rounded). Order by employee_id.",
+      "tables": [
+        "Employees"
+      ],
+      "solutions": [
+        {
+          "label": "Solution",
+          "code": "SELECT e.employee_id, e.name, COUNT(r.employee_id) AS reports_count,\nROUND(AVG(r.age)) AS average_age\nFROM Employees e JOIN Employees r\nON e.employee_id = r.reports_to\nGROUP BY e.employee_id\nORDER BY e.employee_id"
+        }
+      ]
+    },
+    {
+      "id": 1741,
+      "title": "Find Total Time Spent by Each Employee",
+      "difficulty": "Easy",
+      "locked": false,
+      "url": "https://leetcode.com/problems/find-total-time-spent-by-each-employee",
+      "description": "Write an SQL query to calculate the total time in minutes spent by each employee on each day at the office. Return in any order.",
+      "tables": [
+        "Employees"
+      ],
+      "solutions": [
+        {
+          "label": "Solution",
+          "code": "SELECT event_day AS day, emp_id, SUM(out_time - in_time) AS total_time\nFROM Employees\nGROUP BY event_day, emp_id"
+        }
+      ]
+    },
+    {
+      "id": 1747,
+      "title": "Leetflex Banned Accounts",
+      "difficulty": "Medium",
+      "locked": true,
+      "url": "https://leetcode.com/problems/leetflex-banned-accounts",
+      "description": "Write an SQL query to find the account_id of the accounts that should be banned from Leetflex (logged in from two different IP addresses at the same time).",
+      "tables": [
+        "LogInfo"
+      ],
+      "solutions": [
+        {
+          "label": "Solution",
+          "code": "SELECT DISTINCT a.account_id\nFROM LogInfo a JOIN LogInfo b\nON a.account_id = b.account_id\nAND a.ip_address != b.ip_address\nAND a.login <= b.logout\nAND b.login <= a.logout"
+        }
+      ]
+    },
+    {
+      "id": 1757,
+      "title": "Recyclable and Low Fat Products",
+      "difficulty": "Easy",
+      "locked": false,
+      "url": "https://leetcode.com/problems/recyclable-and-low-fat-products",
+      "description": "Write an SQL query to find the ids of products that are both low fat and recyclable.",
+      "tables": [
+        "Products"
+      ],
+      "solutions": [
+        {
+          "label": "Solution",
+          "code": "SELECT product_id FROM Products WHERE low_fats = 'Y' AND recyclable = 'Y'"
+        }
+      ]
+    },
+    {
+      "id": 1767,
+      "title": "Find the Subtasks That Did Not Execute",
+      "difficulty": "Hard",
+      "locked": true,
+      "url": "https://leetcode.com/problems/find-the-subtasks-that-did-not-execute",
+      "description": "Write an SQL query to report the IDs of the missing subtasks for each task_id.",
+      "tables": [
+        "Tasks",
+        "Executed"
+      ],
+      "solutions": [
+        {
+          "label": "Solution (Recursive CTE)",
+          "code": "WITH RECURSIVE subtasks AS (\nSELECT task_id, subtasks_count AS subtask_id FROM Tasks\nUNION ALL\nSELECT task_id, subtask_id - 1 FROM subtasks WHERE subtask_id > 1\n)\nSELECT task_id, subtask_id\nFROM subtasks\nWHERE (task_id, subtask_id) NOT IN (SELECT task_id, subtask_id FROM Executed)"
+        }
+      ]
+    },
+    {
+      "id": 1789,
+      "title": "Primary Department for Each Employee",
+      "difficulty": "Easy",
+      "locked": false,
+      "url": "https://leetcode.com/problems/primary-department-for-each-employee",
+      "description": "Write an SQL query to report all the employees with their primary department. For employees with only one department, report their only department.",
+      "tables": [
+        "Employee"
+      ],
+      "solutions": [
+        {
+          "label": "Solution",
+          "code": "SELECT employee_id, department_id\nFROM Employee\nWHERE primary_flag = 'Y'\nUNION\nSELECT employee_id, department_id\nFROM Employee\nGROUP BY employee_id\nHAVING COUNT(*) = 1"
+        }
+      ]
+    },
+    {
+      "id": 1795,
+      "title": "Rearrange Products Table",
+      "difficulty": "Easy",
+      "locked": false,
+      "url": "https://leetcode.com/problems/rearrange-products-table",
+      "description": "Write an SQL query to rearrange the Products table so that each row has (product_id, store, price). Ignore rows where price is null.",
+      "tables": [
+        "Products"
+      ],
+      "solutions": [
+        {
+          "label": "Solution",
+          "code": "SELECT product_id, 'store1' AS store, store1 AS price FROM Products WHERE store1 IS NOT NULL\nUNION ALL\nSELECT product_id, 'store2' AS store, store2 AS price FROM Products WHERE store2 IS NOT NULL\nUNION ALL\nSELECT product_id, 'store3' AS store, store3 AS price FROM Products WHERE store3 IS NOT NULL"
+        }
+      ]
+    },
+    {
+      "id": 1809,
+      "title": "Ad-Free Sessions",
+      "difficulty": "Easy",
+      "locked": true,
+      "url": "https://leetcode.com/problems/ad-free-sessions",
+      "description": "Write an SQL query to report all the sessions that did not get shown any ads.",
+      "tables": [
+        "Playback",
+        "Ads"
+      ],
+      "solutions": [
+        {
+          "label": "Solution",
+          "code": "SELECT session_id\nFROM Playback p\nWHERE NOT EXISTS (\n    SELECT 1 FROM Ads a\n    WHERE a.customer_id = p.customer_id\n    AND a.timestamp BETWEEN p.start_time AND p.end_time\n)"
+        }
+      ]
+    },
+    {
+      "id": 1821,
+      "title": "Find Customers With Positive Revenue this Year",
+      "difficulty": "Easy",
+      "locked": true,
+      "url": "https://leetcode.com/problems/find-customers-with-positive-revenue-this-year",
+      "description": "Write an SQL query to report the customers with positive revenue in the year 2021.",
+      "tables": [
+        "Customers"
+      ],
+      "solutions": [
+        {
+          "label": "Solution",
+          "code": "SELECT customer_id\nFROM Customers\nWHERE year = 2021 AND revenue > 0"
+        }
+      ]
+    },
+    {
+      "id": 1831,
+      "title": "Maximum Transaction Each Day",
+      "difficulty": "Medium",
+      "locked": true,
+      "url": "https://leetcode.com/problems/maximum-transaction-each-day",
+      "description": "Write an SQL query to report the IDs of the transactions with the maximum amount on their respective day. If multiple such transactions exist, return all of them. Order by transaction_id.",
+      "tables": [
+        "Transactions"
+      ],
+      "solutions": [
+        {
+          "label": "Solution",
+          "code": "SELECT transaction_id\nFROM Transactions\nWHERE (DATE(day), amount) IN (\n    SELECT DATE(day), MAX(amount)\n    FROM Transactions\n    GROUP BY DATE(day)\n)\nORDER BY transaction_id"
+        }
+      ]
+    },
+    {
+      "id": 1841,
+      "title": "League Statistics",
+      "difficulty": "Medium",
+      "locked": true,
+      "url": "https://leetcode.com/problems/league-statistics",
+      "description": "Write an SQL query to report the statistics of the league. Stats include: team_name, matches_played, points, goal_for, goal_against, goal_diff. Order by points desc, goal_diff desc, team_name.",
+      "tables": [
+        "Teams",
+        "Matches"
+      ],
+      "solutions": [
+        {
+          "label": "Solution",
+          "code": "SELECT team_name,\n    COUNT(*) AS matches_played,\n    SUM(CASE WHEN goal_for > goal_against THEN 3\n             WHEN goal_for = goal_against THEN 1\n             ELSE 0 END) AS points,\n    SUM(goal_for) AS goal_for,\n    SUM(goal_against) AS goal_against,\n    SUM(goal_for - goal_against) AS goal_diff\nFROM (\n    SELECT home_team_id AS team_id, home_team_goals AS goal_for, away_team_goals AS goal_against FROM Matches\n    UNION ALL\n    SELECT away_team_id, away_team_goals, home_team_goals FROM Matches\n) t JOIN Teams USING (team_id)\nGROUP BY team_name\nORDER BY points DESC, goal_diff DESC, team_name"
+        }
+      ]
+    },
+    {
+      "id": 1843,
+      "title": "Suspicious Bank Accounts",
+      "difficulty": "Medium",
+      "locked": true,
+      "url": "https://leetcode.com/problems/suspicious-bank-accounts",
+      "description": "Write an SQL query to report the IDs of all suspicious bank accounts. An account is suspicious if the total income for two consecutive months is greater than the max_income. Return in ascending order.",
+      "tables": [
+        "Accounts",
+        "Transactions"
+      ],
+      "solutions": [
+        {
+          "label": "Solution",
+          "code": "WITH monthly AS (\nSELECT account_id, DATE_FORMAT(day, '%Y-%m') AS month, SUM(amount) AS total\nFROM Transactions\nWHERE type = 'Creditor'\nGROUP BY account_id, month\n)\nSELECT DISTINCT m1.account_id\nFROM monthly m1 JOIN monthly m2\nON m1.account_id = m2.account_id\nAND PERIOD_DIFF(REPLACE(m2.month, '-', ''), REPLACE(m1.month, '-', '')) = 1\nJOIN Accounts a ON m1.account_id = a.account_id\nWHERE m1.total > a.max_income AND m2.total > a.max_income\nORDER BY m1.account_id"
+        }
+      ]
+    },
+    {
+      "id": 1853,
+      "title": "Convert Date Format",
+      "difficulty": "Easy",
+      "locked": true,
+      "url": "https://leetcode.com/problems/convert-date-format",
+      "description": "Write an SQL query to convert each date in Days table into a string formatted as 'Day_name, Month_name Day, Year'.",
+      "tables": [
+        "Days"
+      ],
+      "solutions": [
+        {
+          "label": "Solution",
+          "code": "SELECT DATE_FORMAT(day, '%W, %M %e, %Y') AS day FROM Days"
+        }
+      ]
+    },
+    {
+      "id": 1867,
+      "title": "Orders With Maximum Quantity Above Average",
+      "difficulty": "Medium",
+      "locked": true,
+      "url": "https://leetcode.com/problems/orders-with-maximum-quantity-above-average",
+      "description": "Write an SQL query to find the order_id of orders that have at least one product where the quantity is greater than the average quantity of every order.",
+      "tables": [
+        "OrdersDetails"
+      ],
+      "solutions": [
+        {
+          "label": "Solution",
+          "code": "SELECT order_id\nFROM OrdersDetails\nGROUP BY order_id\nHAVING MAX(quantity) > (SELECT MAX(avg_q) FROM (SELECT AVG(quantity) AS avg_q FROM OrdersDetails GROUP BY order_id) t)"
+        }
+      ]
+    },
+    {
+      "id": 1873,
+      "title": "Calculate Special Bonus",
+      "difficulty": "Easy",
+      "locked": false,
+      "url": "https://leetcode.com/problems/calculate-special-bonus",
+      "description": "Write an SQL query to calculate the bonus of each employee. Bonus = salary if employee_id is odd AND name doesn't start with 'M', otherwise 0. Order by employee_id.",
+      "tables": [
+        "Employees"
+      ],
+      "solutions": [
+        {
+          "label": "Solution",
+          "code": "SELECT employee_id,\nCASE WHEN employee_id % 2 = 1 AND name NOT LIKE 'M%' THEN salary\n     ELSE 0 END AS bonus\nFROM Employees\nORDER BY employee_id"
+        }
+      ]
+    },
+    {
+      "id": 1890,
+      "title": "The Latest Login in 2020",
+      "difficulty": "Easy",
+      "locked": false,
+      "url": "https://leetcode.com/problems/the-latest-login-in-2020",
+      "description": "Write an SQL query to report the latest login for all users in the year 2020. Do not include the users who did not login in 2020.",
+      "tables": [
+        "Logins"
+      ],
+      "solutions": [
+        {
+          "label": "Solution",
+          "code": "SELECT user_id, MAX(time_stamp) AS last_stamp\nFROM Logins\nWHERE YEAR(time_stamp) = 2020\nGROUP BY user_id"
+        }
+      ]
+    },
+    {
+      "id": 1907,
+      "title": "Count Salary Categories",
+      "difficulty": "Medium",
+      "locked": false,
+      "url": "https://leetcode.com/problems/count-salary-categories",
+      "description": "Write an SQL query to report the number of bank accounts of each salary category: 'Low Salary' (<20000), 'Average Salary' ([20000,50000]), 'High Salary' (>50000). Include all three categories even if count=0.",
+      "tables": [
+        "Accounts"
+      ],
+      "solutions": [
+        {
+          "label": "Solution",
+          "code": "SELECT 'Low Salary' AS category, COUNT(*) AS accounts_count\nFROM Accounts WHERE income < 20000\nUNION ALL\nSELECT 'Average Salary', COUNT(*)\nFROM Accounts WHERE income BETWEEN 20000 AND 50000\nUNION ALL\nSELECT 'High Salary', COUNT(*)\nFROM Accounts WHERE income > 50000"
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "total_problems": 162,
+    "easy": 77,
+    "medium": 63,
+    "hard": 22,
+    "locked_premium": 128,
+    "free": 34,
+    "problem_range": "175-1907"
+  }
+}
