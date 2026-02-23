@@ -217,12 +217,18 @@ a:hover {
 }
 
 .problem-card {
-  padding-bottom: 2.5rem;
-  border-bottom: 1px solid var(--border);
+  padding: 2rem;
+  border: 1px solid var(--border);
+  border-radius: 15px;
   max-width: 100%;
   overflow-wrap: break-word;
   word-wrap: break-word;
   scroll-margin-top: 1rem;
+  transition: all ease 0.3s;
+}
+
+.problem-card:hover{
+  border: 1px solid var(--accent-hover);
 }
 
 .problem-card:last-child {
