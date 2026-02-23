@@ -87,6 +87,68 @@ const SQLCode = ({ code }) => {
   return <code className="sql-code">{highlighted}</code>
 }
 
+// Schema syntax highlighter for table definitions
+const highlightSchema = (schema) => {
+  const lines = schema.split('\n')
+  const tokens = []
+  let key = 0
+
+  const SQL_TYPES = ['int', 'varchar', 'char', 'text', 'date', 'datetime', 'timestamp', 'boolean', 'decimal', 'float', 'double', 'bigint', 'smallint', 'tinyint', 'enum']
+
+  lines.forEach((line, lineIdx) => {
+    if (lineIdx > 0) {
+      tokens.push(<br key={key++} />)
+    }
+
+    // Table border lines
+    if (/^[+\-|]+$/.test(line.trim().replace(/\s/g, ''))) {
+      tokens.push(<span key={key++} className="schema-border">{line}</span>)
+      return
+    }
+
+    // Header row or data row with | separators
+    if (line.includes('|')) {
+      const parts = line.split('|')
+      parts.forEach((part, idx) => {
+        if (idx > 0) {
+          tokens.push(<span key={key++} className="schema-border">|</span>)
+        }
+        
+        const trimmed = part.trim().toLowerCase()
+        
+        // Check if it's a type
+        if (SQL_TYPES.some(t => trimmed === t)) {
+          tokens.push(<span key={key++} className="schema-type">{part}</span>)
+        }
+        // Check if header
+        else if (trimmed === 'column name' || trimmed === 'type') {
+          tokens.push(<span key={key++} className="schema-header">{part}</span>)
+        }
+        // Column name
+        else if (part.trim() && !/^[-+]+$/.test(part.trim())) {
+          tokens.push(<span key={key++} className="schema-column">{part}</span>)
+        }
+        else {
+          tokens.push(<span key={key++}>{part}</span>)
+        }
+      })
+      return
+    }
+
+    // Primary key note or other text
+    if (line.trim()) {
+      tokens.push(<span key={key++} className="schema-note">{line}</span>)
+    }
+  })
+
+  return tokens
+}
+
+const SchemaCode = ({ schema }) => {
+  const highlighted = useMemo(() => highlightSchema(schema), [schema])
+  return <code className="schema-code">{highlighted}</code>
+}
+
 const CopyButton = ({ text }) => {
   const [copied, setCopied] = useState(false)
 
@@ -113,13 +175,7 @@ const CopyButton = ({ text }) => {
 }
 
 const App = () => {
-  const { title, source, tags, total_problems: totalProblems, scraped_at: scrapedAt, problems } = dataset
-
-  const difficultyClasses = {
-    Easy: 'difficulty easy',
-    Medium: 'difficulty medium',
-    Hard: 'difficulty hard',
-  }
+  const { title, tags, total_problems: totalProblems, problems } = dataset
 
   return (
     <main className="page">
@@ -131,7 +187,7 @@ const App = () => {
         </p>
         <div className="tag-list">
           {tags.map((tag) => (
-            <span key={tag} className="tag">
+            <span key={tag} className="tag">  
               {tag}
             </span>
           ))}
@@ -141,47 +197,59 @@ const App = () => {
       <section className="problem-list">
         {problems.map((problem) => (
           <article key={problem.section_id} className="problem-card" id={problem.section_id}>
-            <div className="problem-head">
-              <h2>
-                {problem.id}. {problem.title}
-              </h2>
-              <span className={difficultyClasses[problem.difficulty] ?? 'difficulty'}>{problem.difficulty}</span>
-            </div>
-
-            {problem.description ? <p className="problem-description">{problem.description}</p> : null}
-
-            {problem.tables.length > 0 ? (
-              <p className="problem-tables">
-                <strong>Tables:</strong> {problem.tables.join(', ')}
-              </p>
-            ) : null}
-
-            {problem.leetcode_url ? (
-              <p className="problem-link">
+            {/* Problem Title Header */}
+            <h2 className="problem-title">
+              {problem.id}. {problem.title} | <span className={`difficulty-inline ${problem.difficulty.toLowerCase()}`}>{problem.difficulty}</span> |{' '}
+              {problem.leetcode_url ? (
                 <a href={problem.leetcode_url} target="_blank" rel="noreferrer">
-                  Open on LeetCode →
+                  LeetCode
                 </a>
-              </p>
-            ) : null}
+              ) : (
+                'LeetCode'
+              )}
+            </h2>
 
-            <div className="solution-list">
+            {/* Table Schema Sections */}
+            {problem.table_schemas && problem.table_schemas.length > 0 && (
+              <div className="tables-section">
+                {problem.table_schemas.map((table) => (
+                  <div key={table.name} className="table-schema-block">
+                    <p className="table-label">
+                      Table: <code>{table.name}</code>
+                    </p>
+                    <div className="code-block schema-block">
+                      <div className="code-block-header">
+                        <CopyButton text={table.schema} />
+                      </div>
+                      <pre className="schema-pre">
+                        <SchemaCode schema={table.schema} />
+                      </pre>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* Problem Description */}
+            {problem.description && (
+              <div className="description-section">
+                <p className="problem-description">{problem.description}</p>
+              </div>
+            )}
+
+            {/* Solution Section */}
+            <div className="solution-section">
+              <h3 className="section-title">Solution</h3>
               {problem.solutions.map((solution) => (
-                <section key={`${problem.id}-${solution.label}`} className="solution-block">
-                  <div className="solution-header">
-                    <h3>{solution.label}</h3>
+                <div key={`${problem.id}-${solution.label}`} className="code-block">
+                  <div className="code-block-header">
+                    {problem.solutions.length > 1 && <span className="solution-label">{solution.label}</span>}
                     <CopyButton text={solution.sql} />
                   </div>
-                  <div className="code-container">
-                    <div className="line-numbers">
-                      {solution.sql.split('\n').map((_, i) => (
-                        <span key={i}>{i + 1}</span>
-                      ))}
-                    </div>
-                    <pre>
-                      <SQLCode code={solution.sql} />
-                    </pre>
-                  </div>
-                </section>
+                  <pre>
+                    <SQLCode code={solution.sql} />
+                  </pre>
+                </div>
               ))}
             </div>
           </article>

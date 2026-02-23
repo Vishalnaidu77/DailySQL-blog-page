@@ -72,28 +72,50 @@ const parseProblemSection = (article, headingEl) => {
   }
 
   const descriptionParts = [];
-  const tables = [];
-  container.find('p').each((_, p) => {
-    const text = normalizeText(article(p).text());
-    if (!text) {
-      return;
+  const tableSchemas = [];
+  
+  // Parse table schemas - look for "Table: X" paragraphs followed by figure elements
+  container.children().each((_, el) => {
+    const node = article(el);
+    
+    if (el.tagName === 'p') {
+      const text = normalizeText(node.text());
+      
+      // Check if this is a table label
+      const tableMatch = text.match(/^Table:\s*(.+)$/i);
+      if (tableMatch) {
+        const tableName = tableMatch[1].trim();
+        // Get the next sibling figure for the schema
+        const nextFigure = node.next('figure');
+        if (nextFigure.length) {
+          const schemaText = nextFigure.find('pre code').text().trim();
+          if (schemaText) {
+            tableSchemas.push({
+              name: tableName,
+              schema: schemaText,
+            });
+          }
+        }
+        return;
+      }
+      
+      // Skip "Tables:" aggregate labels
+      if (/^table(s)?:/i.test(text)) {
+        return;
+      }
+      
+      // Regular description text
+      if (text) {
+        descriptionParts.push(text);
+      }
     }
-
-    if (/^table(s)?:/i.test(text)) {
-      const tableNames = text
-        .replace(/^table(s)?:/i, '')
-        .split(',')
-        .map((table) => normalizeText(table))
-        .filter(Boolean);
-      tables.push(...tableNames);
-      return;
-    }
-
-    descriptionParts.push(text);
   });
 
   const description = descriptionParts.join(' ').trim();
   const solutions = parseSolutions(container, container.find('h3').first());
+  
+  // Extract table names from schemas
+  const tables = tableSchemas.map((t) => t.name);
 
   return {
     section_id: sectionId,
@@ -104,6 +126,7 @@ const parseProblemSection = (article, headingEl) => {
     leetcode_url: leetcodeUrl,
     description,
     tables: [...new Set(tables)],
+    table_schemas: tableSchemas,
     solutions,
   };
 };

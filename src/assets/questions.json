@@ -8,7 +8,7 @@
     "LeetCode"
   ],
   "total_problems": 153,
-  "scraped_at": "2026-02-23T10:55:57.612Z",
+  "scraped_at": "2026-02-23T11:49:17.075Z",
   "problems": [
     {
       "section_id": "175-combine-two-tables--easy--leetcode",
@@ -21,6 +21,16 @@
       "tables": [
         "Person",
         "Address"
+      ],
+      "table_schemas": [
+        {
+          "name": "Person",
+          "schema": "+-------------+---------+\n| Column Name | Type    |\n+-------------+---------+\n| PersonId    | int     |\n| FirstName   | varchar |\n| LastName    | varchar |\n+-------------+---------+\nPersonId is the primary key column for this table."
+        },
+        {
+          "name": "Address",
+          "schema": "+-------------+---------+\n| Column Name | Type    |\n+-------------+---------+\n| AddressId   | int     |\n| PersonId    | int     |\n| City        | varchar |\n| State       | varchar |\n+-------------+---------+\nAddressId is the primary key column for this table."
+        }
       ],
       "solutions": [
         {
@@ -38,6 +48,7 @@
       "leetcode_url": "https://leetcode.com/problems/second-highest-salary/",
       "description": "Write a SQL query to get the second highest salary from the Employee table. For example, given the above Employee table, the query should return 200 as the second highest salary. If there is no second highest salary, then the query should return null.",
       "tables": [],
+      "table_schemas": [],
       "solutions": [
         {
           "label": "Solution 1",
@@ -54,6 +65,7 @@
       "leetcode_url": "https://leetcode.com/problems/nth-highest-salary/",
       "description": "Write a SQL query to get the nth highest salary from the Employee table. For example, given the above Employee table, the nth highest salary where n = 2 is 200. If there is no nth highest salary, then the query should return null.",
       "tables": [],
+      "table_schemas": [],
       "solutions": [
         {
           "label": "Solution 1",
@@ -70,6 +82,7 @@
       "leetcode_url": "https://leetcode.com/problems/rank-scores/",
       "description": "Write a SQL query to rank scores. If there is a tie between two scores, both should have the same ranking. Note that after a tie, the next ranking number should be the next consecutive integer value. In other words, there should be no \"holes\" between ranks. For example, given the above Scores table, your query should generate the following report (order by highest score): Important Note: For MySQL solutions, to escape reserved words used as column names, you can use an apostrophe before and after the keyword. For example Rank.",
       "tables": [],
+      "table_schemas": [],
       "solutions": [
         {
           "label": "Solution 1",
@@ -88,6 +101,12 @@
       "tables": [
         "Logs"
       ],
+      "table_schemas": [
+        {
+          "name": "Logs",
+          "schema": "+-------------+---------+\n| Column Name | Type    |\n+-------------+---------+\n| id          | int     |\n| num         | varchar |\n+-------------+---------+\nid is the primary key for this table."
+        }
+      ],
       "solutions": [
         {
           "label": "Solution 1",
@@ -104,6 +123,7 @@
       "leetcode_url": "https://leetcode.com/problems/employees-earning-more-than-their-managers/",
       "description": "The Employee table holds all employees including their managers. Every employee has an Id, and there is also a column for the manager Id. Given the Employee table, write a SQL query that finds out employees who earn more than their managers. For the above table, Joe is the only employee who earns more than his manager.",
       "tables": [],
+      "table_schemas": [],
       "solutions": [
         {
           "label": "Solution 1",
@@ -120,6 +140,7 @@
       "leetcode_url": "https://leetcode.com/problems/duplicate-emails/",
       "description": "Write a SQL query to find all duplicate emails in a table named Person. For example, your query should return the following for the above table: Note: All emails are in lowercase.",
       "tables": [],
+      "table_schemas": [],
       "solutions": [
         {
           "label": "Solution 1",
@@ -139,6 +160,16 @@
         "Customers.",
         "Orders."
       ],
+      "table_schemas": [
+        {
+          "name": "Customers.",
+          "schema": "+----+-------+\n| Id | Name  |\n+----+-------+\n| 1  | Joe   |\n| 2  | Henry |\n| 3  | Sam   |\n| 4  | Max   |\n+----+-------+"
+        },
+        {
+          "name": "Orders.",
+          "schema": "+----+------------+\n| Id | CustomerId |\n+----+------------+\n| 1  | 3          |\n| 2  | 1          |\n+----+------------+"
+        }
+      ],
       "solutions": [
         {
           "label": "Solution 1",
@@ -155,6 +186,7 @@
       "leetcode_url": "https://leetcode.com/problems/department-highest-salary/",
       "description": "The Employee table holds all employees. Every employee has an Id, a salary, and there is also a column for the department Id. The Department table holds all departments of the company. Write a SQL query to find employees who have the highest salary in each of the departments. For the above tables, your SQL query should return the following rows (order of rows does not matter). Explanation: Max and Jim both have the highest salary in the IT department and Henry has the highest salary in the Sales department.",
       "tables": [],
+      "table_schemas": [],
       "solutions": [
         {
           "label": "Solution 1",
@@ -171,6 +203,7 @@
       "leetcode_url": "https://leetcode.com/problems/department-top-three-salaries/",
       "description": "The Employee table holds all employees. Every employee has an Id, and there is also a column for the department Id. The Department table holds all departments of the company. Write a SQL query to find employees who earn the top three salaries in each of the department. For the above tables, your SQL query should return the following rows (order of rows does not matter). Explanation: In IT department, Max earns the highest salary, both Randy and Joe earn the second highest salary, and Will earns the third highest salary. There are only two employees in the Sales department, Henry earns the highest salary while Sam earns the second highest salary.",
       "tables": [],
+      "table_schemas": [],
       "solutions": [
         {
           "label": "Solution 1",
@@ -187,6 +220,7 @@
       "leetcode_url": "https://leetcode.com/problems/delete-duplicate-emails/",
       "description": "Write a SQL query to delete all duplicate email entries in a table named Person, keeping only unique emails based on its smallest Id. Id is the primary key column for this table. For example, after running your query, the above Person table should have the following rows: Note: Your output is the whole Person table after executing your sql. Use delete statement.",
       "tables": [],
+      "table_schemas": [],
       "solutions": [
         {
           "label": "Solution 1",
@@ -204,6 +238,12 @@
       "description": "Write an SQL query to find all dates' id with higher temperature compared to its previous dates (yesterday). Return the result table in any order. The query result format is in the following example:",
       "tables": [
         "Weather"
+      ],
+      "table_schemas": [
+        {
+          "name": "Weather",
+          "schema": "+---------------+---------+\n| Column Name   | Type    |\n+---------------+---------+\n| id            | int     |\n| recordDate    | date    |\n| temperature   | int     |\n+---------------+---------+\n\nid is the primary key for this table.\nThis table contains information about the temperature in a certain day."
+        }
       ],
       "solutions": [
         {
@@ -224,6 +264,16 @@
         "Trips",
         "Users"
       ],
+      "table_schemas": [
+        {
+          "name": "Trips",
+          "schema": "+-------------+----------+\n| Column Name | Type     |\n+-------------+----------+\n| Id          | int      |\n| Client_Id   | int      |\n| Driver_Id   | int      |\n| City_Id     | int      |\n| Status      | enum     |\n| Request_at  | date     |\n+-------------+----------+\nId is the primary key for this table.\nThe table holds all taxi trips. Each trip has a unique Id, while Client_Id and Driver_Id are foreign keys to the Users_Id at the Users table.\nStatus is an ENUM type of (‘completed’, ‘cancelled_by_driver’, ‘cancelled_by_client’)."
+        },
+        {
+          "name": "Users",
+          "schema": "+-------------+----------+\n| Column Name | Type     |\n+-------------+----------+\n| Users_Id    | int      |\n| Banned      | enum     |\n| Role        | enum     |\n+-------------+----------+\nUsers_Id is the primary key for this table.\nThe table holds all users. Each user has a unique Users_Id, and Role is an ENUM type of (‘client’, ‘driver’, ‘partner’).\nStatus is an ENUM type of (‘Yes’, ‘No’)."
+        }
+      ],
       "solutions": [
         {
           "label": "Solution 1",
@@ -241,6 +291,12 @@
       "description": "Write an SQL query that reports the first login date for each player. The query result format is in the following example:",
       "tables": [
         "Activity"
+      ],
+      "table_schemas": [
+        {
+          "name": "Activity",
+          "schema": "+--------------+---------+\n| Column Name  | Type    |\n+--------------+---------+\n| player_id    | int     |\n| device_id    | int     |\n| event_date   | date    |\n| games_played | int     |\n+--------------+---------+\n(player_id, event_date) is the primary key of this table.\nThis table shows the activity of players of some game.\nEach row is a record of a player who logged in and played a number of games (possibly 0) before logging out on some day using some device."
+        }
       ],
       "solutions": [
         {
@@ -260,6 +316,12 @@
       "tables": [
         "Activity"
       ],
+      "table_schemas": [
+        {
+          "name": "Activity",
+          "schema": "+--------------+---------+\n| Column Name  | Type    |\n+--------------+---------+\n| player_id    | int     |\n| device_id    | int     |\n| event_date   | date    |\n| games_played | int     |\n+--------------+---------+\n(player_id, event_date) is the primary key of this table.\nThis table shows the activity of players of some game.\nEach row is a record of a player who logged in and played a number of games (possibly 0) before logging out on some day using some device."
+        }
+      ],
       "solutions": [
         {
           "label": "Solution 1",
@@ -277,6 +339,12 @@
       "description": "Write an SQL query that reports for each player and date, how many games played so far by the player. That is, the total number of games played by the player until that date. Check the example for clarity. The query result format is in the following example:",
       "tables": [
         "Activity"
+      ],
+      "table_schemas": [
+        {
+          "name": "Activity",
+          "schema": "+--------------+---------+\n| Column Name  | Type    |\n+--------------+---------+\n| player_id    | int     |\n| device_id    | int     |\n| event_date   | date    |\n| games_played | int     |\n+--------------+---------+\n(player_id, event_date) is the primary key of this table.\nThis table shows the activity of players of some game.\nEach row is a record of a player who logged in and played a number of games (possibly 0) before logging out on some day using some device."
+        }
       ],
       "solutions": [
         {
@@ -296,6 +364,12 @@
       "tables": [
         "Activity"
       ],
+      "table_schemas": [
+        {
+          "name": "Activity",
+          "schema": "+--------------+---------+\n| Column Name  | Type    |\n+--------------+---------+\n| player_id    | int     |\n| device_id    | int     |\n| event_date   | date    |\n| games_played | int     |\n+--------------+---------+\n(player_id, event_date) is the primary key of this table.\nThis table shows the activity of players of some game.\nEach row is a record of a player who logged in and played a number of games (possibly 0) before logging out on some day using some device."
+        }
+      ],
       "solutions": [
         {
           "label": "Solution 1",
@@ -312,6 +386,7 @@
       "leetcode_url": "https://leetcode.com/problems/median-employee-salary/",
       "description": "The Employee table holds all employees. The employee table has three columns: Employee Id, Company Name, and Salary. Write a SQL query to find the median salary of each company. Bonus points if you can solve it without using any built-in SQL functions.",
       "tables": [],
+      "table_schemas": [],
       "solutions": [
         {
           "label": "Solution 1",
@@ -328,6 +403,7 @@
       "leetcode_url": "https://leetcode.com/problems/managers-with-at-least-5-direct-reports/",
       "description": "The Employee table holds all employees including their managers. Every employee has an Id, and there is also a column for the manager Id. Given the Employee table, write a SQL query that finds out managers with at least 5 direct report. For the above table, your SQL query should return: Note: No one would report to himself.",
       "tables": [],
+      "table_schemas": [],
       "solutions": [
         {
           "label": "Solution 1",
@@ -344,6 +420,7 @@
       "leetcode_url": "https://leetcode.com/problems/find-median-given-frequency-of-numbers/",
       "description": "The Numbers table keeps the value of number and its frequency. In this table, the numbers are 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 3, so the median is (0 + 0) / 2 = 0. Write a query to find the median of all numbers and name the result as median.",
       "tables": [],
+      "table_schemas": [],
       "solutions": [
         {
           "label": "Solution 1",
@@ -362,6 +439,16 @@
       "tables": [
         "Candidate",
         "Vote"
+      ],
+      "table_schemas": [
+        {
+          "name": "Candidate",
+          "schema": "+-----+---------+\n| id  | Name    |\n+-----+---------+\n| 1   | A       |\n| 2   | B       |\n| 3   | C       |\n| 4   | D       |\n| 5   | E       |\n+-----+---------+"
+        },
+        {
+          "name": "Vote",
+          "schema": "+-----+--------------+\n| id  | CandidateId  |\n+-----+--------------+\n| 1   |     2        |\n| 2   |     4        |\n| 3   |     3        |\n| 4   |     2        |\n| 5   |     5        |\n+-----+--------------+"
+        }
       ],
       "solutions": [
         {
@@ -382,6 +469,16 @@
         "Employee",
         "Bonus"
       ],
+      "table_schemas": [
+        {
+          "name": "Employee",
+          "schema": "+-------+--------+-----------+--------+\n| empId |  name  | supervisor| salary |\n+-------+--------+-----------+--------+\n|   1   | John   |  3        | 1000   |\n|   2   | Dan    |  3        | 2000   |\n|   3   | Brad   |  null     | 4000   |\n|   4   | Thomas |  3        | 4000   |\n+-------+--------+-----------+--------+\nempId is the primary key column for this table."
+        },
+        {
+          "name": "Bonus",
+          "schema": "+-------+-------+\n| empId | bonus |\n+-------+-------+\n| 2     | 500   |\n| 4     | 2000  |\n+-------+-------+\nempId is the primary key column for this table."
+        }
+      ],
       "solutions": [
         {
           "label": "Solution 1",
@@ -398,6 +495,7 @@
       "leetcode_url": "https://leetcode.com/problems/get-highest-answer-rate-question/",
       "description": "Get the highest answer rate question from a table survey_log with these columns: uid, action, question_id, answer_id, q_num, timestamp. uid means user id; action has these kind of values: “show”, “answer”, “skip”; answer_id is not null when action column is “answer”, while is null for “show” and “skip”; q_num is the numeral order of the question in current session. Write a sql query to identify the question which has the highest answer rate. Example: Input: Output: Explanation: question 285 has answer rate 1/1, while question 369 has 0/1 answer rate, so output 285. Note: The highest answer rate meaning is: answer number’s ratio in show number in the same question.",
       "tables": [],
+      "table_schemas": [],
       "solutions": [
         {
           "label": "Solution 1",
@@ -414,6 +512,7 @@
       "leetcode_url": "https://leetcode.com/problems/find-cumulative-salary-of-an-employee/",
       "description": "The Employee table holds the salary information in a year. Write a SQL to get the cumulative sum of an employee’s salary over a period of 3 months but exclude the most recent month. The result should be displayed by ‘Id’ ascending, and then by ‘Month’ descending. Example Input Output Explanation Employee ‘1’ has 3 salary records for the following 3 months except the most recent month ‘4’: salary 40 for month ‘3’, 30 for month ‘2’ and 20 for month ‘1’ So the cumulative sum of salary of this employee over 3 months is 90(40+30+20), 50(30+20) and 20 respectively. Employee ‘2’ only has one salary record (month ‘1’) except its most recent month ‘2’. Employ ‘3’ has two salary records except its most recent pay month ‘4’: month ‘3’ with 60 and month ‘2’ with 40. So the cumulative salary is as following.",
       "tables": [],
+      "table_schemas": [],
       "solutions": [
         {
           "label": "Solution 1",
@@ -430,6 +529,7 @@
       "leetcode_url": "https://leetcode.com/problems/count-student-number-in-departments/",
       "description": "A university uses 2 data tables, student and department, to store data about its students and the departments associated with each major. Write a query to print the respective department name and number of students majoring in each department for all departments in the department table (even ones with no current students). Sort your results by descending number of students; if two or more departments have the same number of students, then sort those departments alphabetically by department name. The student is described as follow: where student_id is the student’s ID number, student_name is the student’s name, gender is their gender, and dept_id is the department ID associated with their declared major. And the department table is described as below: where dept_id is the department’s ID number and dept_name is the department name. Here is an example input: student table: department table: The Output should be:",
       "tables": [],
+      "table_schemas": [],
       "solutions": [
         {
           "label": "Solution 1",
@@ -446,6 +546,7 @@
       "leetcode_url": "https://leetcode.com/problems/find-customer-referee/",
       "description": "Given a table customer holding customers information and the referee. Write a query to return the list of customers NOT referred by the person with id ‘2’. For the sample data above, the result is:",
       "tables": [],
+      "table_schemas": [],
       "solutions": [
         {
           "label": "Solution 1",
@@ -462,6 +563,7 @@
       "leetcode_url": "https://leetcode.com/problems/investments-in-2016/",
       "description": "Write a query to print the sum of all total investment values in 2016 (TIV_2016), to a scale of 2 decimal places, for all policy holders who meet the following criteria: where PID is the policyholder’s policy ID, TIV_2015 is the total investment value in 2015, TIV_2016 is the total investment value in 2016, LAT is the latitude of the policy holder’s city, and LON is the longitude of the policy holder’s city. Sample Input Sample Output Explanation",
       "tables": [],
+      "table_schemas": [],
       "solutions": [
         {
           "label": "Solution 1",
@@ -478,6 +580,7 @@
       "leetcode_url": "https://leetcode.com/problems/customer-placing-the-largest-number-of-orders/",
       "description": "Query the customer_number from the orders table for the customer who has placed the largest number of orders. It is guaranteed that exactly one customer will have placed more orders than any other customer. The orders table is defined as follows: Sample Input Sample Output Explanation",
       "tables": [],
+      "table_schemas": [],
       "solutions": [
         {
           "label": "Solution 1",
@@ -494,6 +597,7 @@
       "leetcode_url": "https://leetcode.com/problems/big-countries/",
       "description": "There is a table World A country is big if it has an area of bigger than 3 million square km or a population of more than 25 million. Write a SQL solution to output big countries' name, population and area. For example, according to the above table, we should output:",
       "tables": [],
+      "table_schemas": [],
       "solutions": [
         {
           "label": "Solution 1",
@@ -510,6 +614,7 @@
       "leetcode_url": "https://leetcode.com/problems/classes-more-than-5-students/",
       "description": "There is a table courses with columns: student and class Please list out all classes which have more than or equal to 5 students. For example, the table: Should output:",
       "tables": [],
+      "table_schemas": [],
       "solutions": [
         {
           "label": "Solution 1",
@@ -527,6 +632,12 @@
       "description": "In social network like Facebook or Twitter, people send friend requests and accept others’ requests as well. Now given two tables as below: Table: friend_request Write a query to find the overall acceptance rate of requests rounded to 2 decimals, which is the number of acceptance divide the number of requests. For the sample data above, your query should return the following result. Note: The accepted requests are not necessarily from the table friend_request. In this case, you just need to simply count the total accepted requests (no matter whether they are in the original requests), and divide it by the number of requests to get the acceptance rate. It is possible that a sender sends multiple requests to the same receiver, and a request could be accepted more than once. In this case, the ‘duplicated’ requests or acceptances are only counted once. If there is no requests at all, you should return 0.00 as the accept_rate. Explanation: There are 4 unique accepted requests, and there are 5 requests in total. So the rate is 0.80. Follow-up: Can you write a query to return the accept rate but for every month? How about the cumulative accept rate for every day?",
       "tables": [
         "request_accepted"
+      ],
+      "table_schemas": [
+        {
+          "name": "request_accepted",
+          "schema": "| requester_id | accepter_id |accept_date |\n|--------------|-------------|------------|\n| 1            | 2           | 2016_06-03 |\n| 1            | 3           | 2016-06-08 |\n| 2            | 3           | 2016-06-08 |\n| 3            | 4           | 2016-06-09 |\n| 3            | 4           | 2016-06-10 |"
+        }
       ],
       "solutions": [
         {
@@ -546,6 +657,12 @@
       "tables": [
         "Stadium"
       ],
+      "table_schemas": [
+        {
+          "name": "Stadium",
+          "schema": "+---------------+---------+\n| Column Name   | Type    |\n+---------------+---------+\n| id            | int     |\n| visit_date    | date    |\n| people        | int     |\n+---------------+---------+"
+        }
+      ],
       "solutions": [
         {
           "label": "Solution 1",
@@ -562,6 +679,7 @@
       "leetcode_url": "https://leetcode.com/problems/friend-requests-ii-who-has-the-most-friends/",
       "description": "In social network like Facebook or Twitter, people send friend requests and accept others’ requests as well. Table request_accepted holds the data of friend acceptance, while requester_id and accepter_id both are the id of a person. Write a query to find the the people who has most friends and the most friends number. For the sample data above, the result is: Note: It is guaranteed there is only 1 people having the most friends. The friend request could only been accepted once, which mean there is no multiple records with the same requester_id and accepter_id value. Explanation: The person with id ‘3’ is a friend of people ‘1’, ‘2’ and ‘4’, so he has 3 friends in total, which is the most number than any others. Follow-up: In the real world, multiple people could have the same most number of friends, can you find all these people in this case?",
       "tables": [],
+      "table_schemas": [],
       "solutions": [
         {
           "label": "Solution 1",
@@ -578,6 +696,7 @@
       "leetcode_url": "https://leetcode.com/problems/consecutive-available-seats/",
       "description": "Several friends at a cinema ticket office would like to reserve consecutive available seats. Can you help to query all the consecutive available seats order by the seat_id using the following cinema table? Your query should return the following result for the sample case above. Note: The seat_id is an auto increment int, and free is bool (‘1’ means free, and ‘0’ means occupied.). Consecutive available seats are more than 2(inclusive) seats consecutively available.",
       "tables": [],
+      "table_schemas": [],
       "solutions": [
         {
           "label": "Solution 1",
@@ -596,6 +715,12 @@
       "tables": [
         "salesperson"
       ],
+      "table_schemas": [
+        {
+          "name": "salesperson",
+          "schema": "+----------+------+--------+-----------------+-----------+\n| sales_id | name | salary | commission_rate | hire_date |\n+----------+------+--------+-----------------+-----------+\n|   1      | John | 100000 |     6           | 4/1/2006  |\n|   2      | Amy  | 120000 |     5           | 5/1/2010  |\n|   3      | Mark | 65000  |     12          | 12/25/2008|\n|   4      | Pam  | 25000  |     25          | 1/1/2005  |\n|   5      | Alex | 50000  |     10          | 2/3/2007  |\n+----------+------+--------+-----------------+-----------+"
+        }
+      ],
       "solutions": [
         {
           "label": "Solution 1",
@@ -612,6 +737,7 @@
       "leetcode_url": "https://leetcode.com/problems/tree-node/",
       "description": "Given a table tree, id is identifier of the tree node and p_id is its parent node’s id. Each node in the tree can be one of three types: Leaf: if the node is a leaf node. Root: if the node is the root of the tree. Inner: If the node is neither a leaf node nor a root node. Write a query to print the node id and the type of the node. Sort your output by the node id. The result for the above sample is: Explanation Node ‘1’ is root node, because its parent node is NULL and it has child node ‘2’ and ‘3’. Node ‘2’ is inner node, because it has parent node ‘1’ and child node ‘4’ and ‘5’. Node ‘3’, ‘4’ and ‘5’ is Leaf node, because they have parent node and they don’t have child node. And here is the image of the sample tree as below: Note If there is only one node on the tree, you only need to output its root attributes.",
       "tables": [],
+      "table_schemas": [],
       "solutions": [
         {
           "label": "Solution 1",
@@ -628,6 +754,7 @@
       "leetcode_url": "https://leetcode.com/problems/triangle-judgement/",
       "description": "A pupil Tim gets homework to identify whether three line segments could possibly form a triangle. However, this assignment is very heavy because there are hundreds of records to calculate. Could you help Tim by writing a query to judge whether these three sides can form a triangle, assuming table triangle holds the length of the three sides x, y and z. For the sample data above, your query should return the follow result:",
       "tables": [],
+      "table_schemas": [],
       "solutions": [
         {
           "label": "Solution 1",
@@ -644,6 +771,7 @@
       "leetcode_url": "https://leetcode.com/problems/shortest-distance-in-a-plane/",
       "description": "Table point_2d holds the coordinates (x,y) of some unique points (more than two) in a plane. Write a query to find the shortest distance between these points rounded to 2 decimals. The shortest distance is 1.00 from point (-1,-1) to (-1,2). So the output should be: Note: The longest distance among all the points are less than 10000.",
       "tables": [],
+      "table_schemas": [],
       "solutions": [
         {
           "label": "Solution 1",
@@ -660,6 +788,7 @@
       "leetcode_url": "https://leetcode.com/problems/shortest-distance-in-a-line/",
       "description": "Table point holds the x coordinate of some points on x-axis in a plane, which are all integers. Write a query to find the shortest distance between two points in these points. The shortest distance is ‘1’ obviously, which is from point ‘-1’ to ‘0’. So the output is as below: Note: Every point is unique, which means there is no duplicates in table point. Follow-up: What if all these points have an id and are arranged from the left most to the right most of x axis?",
       "tables": [],
+      "table_schemas": [],
       "solutions": [
         {
           "label": "Solution 1",
@@ -676,6 +805,7 @@
       "leetcode_url": "https://leetcode.com/problems/second-degree-follower/",
       "description": "In facebook, there is a follow table with two columns: followee, follower. Please write a sql query to get the amount of each follower’s follower if he/she has one. For example: should output: Explanation: Both B and D exist in the follower list, when as a followee, B’s follower is C and D, and D’s follower is E. A does not exist in follower list. Note: Followee would not follow himself/herself in all cases. Please display the result in follower’s alphabet order.",
       "tables": [],
+      "table_schemas": [],
       "solutions": [
         {
           "label": "Solution 1",
@@ -692,6 +822,7 @@
       "leetcode_url": "https://leetcode.com/problems/average-salary-departments-vs-company",
       "description": "Given two tables as below, write a query to display the comparison result (higher/lower/same) of the average salary of employees in a department to the company’s average salary. Table: salary The employee_id column refers to the employee_id in the following table employee. So for the sample data above, the result is: Explanation In March, the company’s average salary is (9000+6000+10000)/3 = 8333.33… The average salary for department ‘1’ is 9000, which is the salary of employee_id ‘1’ since there is only one employee in this department. So the comparison result is ‘higher’ since 9000 > 8333.33 obviously. The average salary of department ‘2’ is (6000 + 10000)/2 = 8000, which is the average of employee_id ‘2’ and ‘3’. So the comparison result is ‘lower’ since 8000 < 8333.33. With he same formula for the average salary comparison in February, the result is ‘same’ since both the department ‘1’ and ‘2’ have the same average salary with the company, which is 7000.",
       "tables": [],
+      "table_schemas": [],
       "solutions": [
         {
           "label": "Solution 1",
@@ -708,6 +839,7 @@
       "leetcode_url": "https://leetcode.com/problems/students-report-by-geography",
       "description": "A U.S graduate school has students from Asia, Europe and America. The students’ location information are stored in table student as below. Pivot the continent column in this table so that each name is sorted alphabetically and displayed underneath its corresponding continent. The output headers should be America, Asia and Europe respectively. It is guaranteed that the student number from America is no less than either Asia or Europe. For the sample input, the output is: Follow-up: If it is unknown which continent has the most students, can you write a query to generate the student report?",
       "tables": [],
+      "table_schemas": [],
       "solutions": [
         {
           "label": "Solution 1",
@@ -724,6 +856,7 @@
       "leetcode_url": "https://leetcode.com/problems/biggest-single-number",
       "description": "Table number contains many numbers in column num including duplicated ones. Can you write a SQL query to find the biggest number, which only appears once. For the sample data above, your query should return the following result: Note: If there is no such number, just output null.",
       "tables": [],
+      "table_schemas": [],
       "solutions": [
         {
           "label": "Solution 1",
@@ -740,6 +873,7 @@
       "leetcode_url": "https://leetcode.com/problems/not-boring-movies/",
       "description": "X city opened a new cinema, many people would like to go to this cinema. The cinema also gives out a poster indicating the movies’ ratings and descriptions. Please write a SQL query to output movies with an odd numbered ID and a description that is not 'boring'. Order the result by rating. For example, table cinema: For the example above, the output should be:",
       "tables": [],
+      "table_schemas": [],
       "solutions": [
         {
           "label": "Solution 1",
@@ -756,6 +890,7 @@
       "leetcode_url": "https://leetcode.com/problems/exchange-seats/",
       "description": "Mary is a teacher in a middle school and she has a table seat storing students' names and their corresponding seat ids. The column id is continuous increment. Mary wants to change seats for the adjacent students. Can you write a SQL query to output the result for Mary? For the sample input, the output is: Note: If the number of students is odd, there is no need to change the last one's seat.",
       "tables": [],
+      "table_schemas": [],
       "solutions": [
         {
           "label": "Solution 1",
@@ -773,6 +908,12 @@
       "description": "Write an SQL query to swap all 'f' and 'm' values (i.e., change all 'f' values to 'm' and vice versa) with a single update statement and no intermediate temp table(s). Note that you must write a single update statement, DO NOT write any select statement for this problem. The query result format is in the following example:",
       "tables": [
         "Salary"
+      ],
+      "table_schemas": [
+        {
+          "name": "Salary",
+          "schema": "+-------------+----------+\n| Column Name | Type     |\n+-------------+----------+\n| id          | int      |\n| name        | varchar  |\n| sex         | ENUM     |\n| salary      | int      |\n+-------------+----------+\n\nid is the primary key for this table.\nThe sex column is ENUM value of type ('m', 'f').\nThe table contains information about an employee."
+        }
       ],
       "solutions": [
         {
@@ -792,6 +933,12 @@
       "tables": [
         "Customer"
       ],
+      "table_schemas": [
+        {
+          "name": "Customer",
+          "schema": "+-------------+---------+\n| Column Name | Type    |\n+-------------+---------+\n| customer_id | int     |\n| product_key | int     |\n+-------------+---------+"
+        }
+      ],
       "solutions": [
         {
           "label": "Solution 1",
@@ -809,6 +956,12 @@
       "description": "Write a SQL query for a report that provides the pairs (actor_id, director_id) where the actor have cooperated with the director at least 3 times. Example:",
       "tables": [
         "ActorDirector"
+      ],
+      "table_schemas": [
+        {
+          "name": "ActorDirector",
+          "schema": "+-------------+---------+\n| Column Name | Type    |\n+-------------+---------+\n| actor_id    | int     |\n| director_id | int     |\n| timestamp   | int     |\n+-------------+---------+\ntimestamp is the primary key column for this table."
+        }
       ],
       "solutions": [
         {
@@ -829,6 +982,16 @@
         "Sales",
         "Product"
       ],
+      "table_schemas": [
+        {
+          "name": "Sales",
+          "schema": "+-------------+-------+\n| Column Name | Type  |\n+-------------+-------+\n| sale_id     | int   |\n| product_id  | int   |\n| year        | int   |\n| quantity    | int   |\n| price       | int   |\n+-------------+-------+\n(sale_id, year) is the primary key of this table.\nproduct_id is a foreign key to Product table.\nNote that the price is per unit."
+        },
+        {
+          "name": "Product",
+          "schema": "+--------------+---------+\n| Column Name  | Type    |\n+--------------+---------+\n| product_id   | int     |\n| product_name | varchar |\n+--------------+---------+\nproduct_id is the primary key of this table."
+        }
+      ],
       "solutions": [
         {
           "label": "Solution 1",
@@ -847,6 +1010,16 @@
       "tables": [
         "Sales",
         "Product"
+      ],
+      "table_schemas": [
+        {
+          "name": "Sales",
+          "schema": "+-------------+-------+\n| Column Name | Type  |\n+-------------+-------+\n| sale_id     | int   |\n| product_id  | int   |\n| year        | int   |\n| quantity    | int   |\n| price       | int   |\n+-------------+-------+\nsale_id is the primary key of this table.\nproduct_id is a foreign key to Product table.\nNote that the price is per unit."
+        },
+        {
+          "name": "Product",
+          "schema": "+--------------+---------+\n| Column Name  | Type    |\n+--------------+---------+\n| product_id   | int     |\n| product_name | varchar |\n+--------------+---------+\nproduct_id is the primary key of this table."
+        }
       ],
       "solutions": [
         {
@@ -867,6 +1040,16 @@
         "Sales",
         "Product"
       ],
+      "table_schemas": [
+        {
+          "name": "Sales",
+          "schema": "+-------------+-------+\n| Column Name | Type  |\n+-------------+-------+\n| sale_id     | int   |\n| product_id  | int   |\n| year        | int   |\n| quantity    | int   |\n| price       | int   |\n+-------------+-------+\nsale_id is the primary key of this table.\nproduct_id is a foreign key to Product table.\nNote that the price is per unit."
+        },
+        {
+          "name": "Product",
+          "schema": "+--------------+---------+\n| Column Name  | Type    |\n+--------------+---------+\n| product_id   | int     |\n| product_name | varchar |\n+--------------+---------+\nproduct_id is the primary key of this table."
+        }
+      ],
       "solutions": [
         {
           "label": "Solution 1",
@@ -885,6 +1068,16 @@
       "tables": [
         "Project",
         "Employee"
+      ],
+      "table_schemas": [
+        {
+          "name": "Project",
+          "schema": "+-------------+---------+\n| Column Name | Type    |\n+-------------+---------+\n| project_id  | int     |\n| employee_id | int     |\n+-------------+---------+\n(project_id, employee_id) is the primary key of this table.\nemployee_id is a foreign key to Employee table."
+        },
+        {
+          "name": "Employee",
+          "schema": "+------------------+---------+\n| Column Name      | Type    |\n+------------------+---------+\n| employee_id      | int     |\n| name             | varchar |\n| experience_years | int     |\n+------------------+---------+\nemployee_id is the primary key of this table."
+        }
       ],
       "solutions": [
         {
@@ -905,6 +1098,16 @@
         "Project",
         "Employee"
       ],
+      "table_schemas": [
+        {
+          "name": "Project",
+          "schema": "+-------------+---------+\n| Column Name | Type    |\n+-------------+---------+\n| project_id  | int     |\n| employee_id | int     |\n+-------------+---------+\n(project_id, employee_id) is the primary key of this table.\nemployee_id is a foreign key to Employee table."
+        },
+        {
+          "name": "Employee",
+          "schema": "+------------------+---------+\n| Column Name      | Type    |\n+------------------+---------+\n| employee_id      | int     |\n| name             | varchar |\n| experience_years | int     |\n+------------------+---------+\nemployee_id is the primary key of this table."
+        }
+      ],
       "solutions": [
         {
           "label": "Solution 1",
@@ -923,6 +1126,16 @@
       "tables": [
         "Project",
         "Employee"
+      ],
+      "table_schemas": [
+        {
+          "name": "Project",
+          "schema": "+-------------+---------+\n| Column Name | Type    |\n+-------------+---------+\n| project_id  | int     |\n| employee_id | int     |\n+-------------+---------+\n(project_id, employee_id) is the primary key of this table.\nemployee_id is a foreign key to Employee table."
+        },
+        {
+          "name": "Employee",
+          "schema": "+------------------+---------+\n| Column Name      | Type    |\n+------------------+---------+\n| employee_id      | int     |\n| name             | varchar |\n| experience_years | int     |\n+------------------+---------+\nemployee_id is the primary key of this table."
+        }
       ],
       "solutions": [
         {
@@ -943,6 +1156,16 @@
         "Product",
         "Sales"
       ],
+      "table_schemas": [
+        {
+          "name": "Product",
+          "schema": "+--------------+---------+\n| Column Name  | Type    |\n+--------------+---------+\n| product_id   | int     |\n| product_name | varchar |\n| unit_price   | int     |\n+--------------+---------+\nproduct_id is the primary key of this table."
+        },
+        {
+          "name": "Sales",
+          "schema": "+-------------+---------+\n| Column Name | Type    |\n+-------------+---------+\n| seller_id   | int     |\n| product_id  | int     |\n| buyer_id    | int     |\n| sale_date   | date    |\n| quantity    | int     |\n| price       | int     |\n+------ ------+---------+\nThis table has no primary key, it can have repeated rows.\nproduct_id is a foreign key to Product table."
+        }
+      ],
       "solutions": [
         {
           "label": "Solution 1",
@@ -962,6 +1185,16 @@
         "Product",
         "Sales"
       ],
+      "table_schemas": [
+        {
+          "name": "Product",
+          "schema": "+--------------+---------+\n| Column Name  | Type    |\n+--------------+---------+\n| product_id   | int     |\n| product_name | varchar |\n| unit_price   | int     |\n+--------------+---------+\nproduct_id is the primary key of this table."
+        },
+        {
+          "name": "Sales",
+          "schema": "+-------------+---------+\n| Column Name | Type    |\n+-------------+---------+\n| seller_id   | int     |\n| product_id  | int     |\n| buyer_id    | int     |\n| sale_date   | date    |\n| quantity    | int     |\n| price       | int     |\n+------ ------+---------+\nThis table has no primary key, it can have repeated rows.\nproduct_id is a foreign key to Product table."
+        }
+      ],
       "solutions": [
         {
           "label": "Solution 1",
@@ -978,6 +1211,7 @@
       "leetcode_url": "https://leetcode.com/problems/sales-analysis-iii",
       "description": "Reports the products that were only sold in spring 2019. That is, between 2019-01-01 and 2019-03-31 inclusive. Select the product that were only sold in spring 2019.",
       "tables": [],
+      "table_schemas": [],
       "solutions": [
         {
           "label": "Solution 1",
@@ -994,6 +1228,7 @@
       "leetcode_url": "https://leetcode.com/problems/game-play-analysis-v",
       "description": "We define the install date of a player to be the first login day of that player. We also define day 1 retention of some date X to be the number of players whose install date is X and they logged back in on the day right after X , divided by the number of players whose install date is X, rounded to 2 decimal places. Write an SQL query that reports for each install date, the number of players that installed the game on that day and the day 1 retention. The query result format is in the following example:",
       "tables": [],
+      "table_schemas": [],
       "solutions": [
         {
           "label": "Solution 1",
@@ -1013,6 +1248,16 @@
         "Books",
         "Orders"
       ],
+      "table_schemas": [
+        {
+          "name": "Books",
+          "schema": "+----------------+---------+\n| Column Name    | Type    |\n+----------------+---------+\n| book_id        | int     |\n| name           | varchar |\n| available_from | date    |\n+----------------+---------+\nbook_id is the primary key of this table."
+        },
+        {
+          "name": "Orders",
+          "schema": "+----------------+---------+\n| Column Name    | Type    |\n+----------------+---------+\n| order_id       | int     |\n| book_id        | int     |\n| quantity       | int     |\n| dispatch_date  | date    |\n+----------------+---------+\norder_id is the primary key of this table.\nbook_id is a foreign key to the Books table."
+        }
+      ],
       "solutions": [
         {
           "label": "Solution 1",
@@ -1030,6 +1275,12 @@
       "description": "Write an SQL query that reports for every date within at most 90 days from today, the number of users that logged in for the first time on that date. Assume today is 2019-06-30. The query result format is in the following example:",
       "tables": [
         "Traffic"
+      ],
+      "table_schemas": [
+        {
+          "name": "Traffic",
+          "schema": "+---------------+---------+\n| Column Name   | Type    |\n+---------------+---------+\n| user_id       | int     |\n| activity      | enum    |\n| activity_date | date    |\n+---------------+---------+\nThere is no primary key for this table, it may have duplicate rows.\nThe activity column is an ENUM type of ('login', 'logout', 'jobs', 'groups', 'homepage')."
+        }
       ],
       "solutions": [
         {
@@ -1049,6 +1300,12 @@
       "tables": [
         "Enrollments"
       ],
+      "table_schemas": [
+        {
+          "name": "Enrollments",
+          "schema": "+---------------+---------+\n| Column Name   | Type    |\n+---------------+---------+\n| student_id    | int     |\n| course_id     | int     |\n| grade         | int     |\n+---------------+---------+\n(student_id, course_id) is the primary key of this table."
+        }
+      ],
       "solutions": [
         {
           "label": "Solution 1",
@@ -1066,6 +1323,12 @@
       "description": "Write an SQL query that reports the number of posts reported yesterday for each report reason. Assume today is 2019-07-05. The query result format is in the following example: Note that we only care about report reasons with non zero number of reports.",
       "tables": [
         "Actions"
+      ],
+      "table_schemas": [
+        {
+          "name": "Actions",
+          "schema": "+---------------+---------+\n| Column Name   | Type    |\n+---------------+---------+\n| user_id       | int     |\n| post_id       | int     |\n| action_date   | date    |\n| action        | enum    |\n| extra         | varchar |\n+---------------+---------+\nThere is no primary key for this table, it may have duplicate rows.\nThe action column is an ENUM type of ('view', 'like', 'reaction', 'comment', 'report', 'share').\nThe extra column has optional information about the action such as a reason for report or a type of reaction."
+        }
       ],
       "solutions": [
         {
@@ -1085,6 +1348,12 @@
       "tables": [
         "Events"
       ],
+      "table_schemas": [
+        {
+          "name": "Events",
+          "schema": "+---------------+---------+\n| Column Name   | Type    |\n+---------------+---------+\n| business_id   | int     |\n| event_type    | varchar |\n| occurences    | int     |\n+---------------+---------+\n(business_id, event_type) is the primary key of this table.\nEach row in the table logs the info that an event of some type occured at some business for a number of times."
+        }
+      ],
       "solutions": [
         {
           "label": "Solution 1",
@@ -1102,6 +1371,12 @@
       "description": "Write an SQL query to find the total number of users and the total amount spent using mobile only, desktop only and both mobile and desktop together for each date. The query result format is in the following example:",
       "tables": [
         "Spending"
+      ],
+      "table_schemas": [
+        {
+          "name": "Spending",
+          "schema": "+-------------+---------+\n| Column Name | Type    |\n+-------------+---------+\n| user_id     | int     |\n| spend_date  | date    |\n| platform    | enum    |\n| amount      | int     |\n+-------------+---------+\nThe table logs the spendings history of users that make purchases from an online shopping website which has a desktop and a mobile application.\n(user_id, spend_date, platform) is the primary key of this table.\nThe platform column is an ENUM type of ('desktop', 'mobile')."
+        }
       ],
       "solutions": [
         {
@@ -1122,6 +1397,16 @@
         "Actions",
         "Removals"
       ],
+      "table_schemas": [
+        {
+          "name": "Actions",
+          "schema": "+---------------+---------+\n| Column Name   | Type    |\n+---------------+---------+\n| user_id       | int     |\n| post_id       | int     |\n| action_date   | date    |\n| action        | enum    |\n| extra         | varchar |\n+---------------+---------+\nThere is no primary key for this table, it may have duplicate rows.\nThe action column is an ENUM type of ('view', 'like', 'reaction', 'comment', 'report', 'share').\nThe extra column has optional information about the action such as a reason for report or a type of reaction."
+        },
+        {
+          "name": "Removals",
+          "schema": "+---------------+---------+\n| Column Name   | Type    |\n+---------------+---------+\n| post_id       | int     |\n| remove_date   | date    |\n+---------------+---------+\npost_id is the primary key of this table.\nEach row in this table indicates that some post was removed as a result of being reported or as a result of an admin review."
+        }
+      ],
       "solutions": [
         {
           "label": "Solution 1",
@@ -1139,6 +1424,12 @@
       "description": "Write an SQL query to find the daily active user count for a period of 30 days ending 2019-07-27 inclusively. A user was active on some day if he/she made at least one activity on that day. The query result format is in the following example:",
       "tables": [
         "Activity"
+      ],
+      "table_schemas": [
+        {
+          "name": "Activity",
+          "schema": "+---------------+---------+\n| Column Name   | Type    |\n+---------------+---------+\n| user_id       | int     |\n| session_id    | int     |\n| activity_date | date    |\n| activity_type | enum    |\n+---------------+---------+\nThere is no primary key for this table, it may have duplicate rows.\nThe activity_type column is an ENUM of type ('open_session', 'end_session', 'scroll_down', 'send_message').\nThe table shows the user activities for a social media website.\nNote that each session belongs to exactly one user."
+        }
       ],
       "solutions": [
         {
@@ -1158,6 +1449,12 @@
       "tables": [
         "Activity"
       ],
+      "table_schemas": [
+        {
+          "name": "Activity",
+          "schema": "+---------------+---------+\n| Column Name   | Type    |\n+---------------+---------+\n| user_id       | int     |\n| session_id    | int     |\n| activity_date | date    |\n| activity_type | enum    |\n+---------------+---------+\nThere is no primary key for this table, it may have duplicate rows.\nThe activity_type column is an ENUM of type ('open_session', 'end_session', 'scroll_down', 'send_message').\nThe table shows the user activities for a social media website.\nNote that each session belongs to exactly one user."
+        }
+      ],
       "solutions": [
         {
           "label": "Solution 1",
@@ -1176,6 +1473,12 @@
       "tables": [
         "Views"
       ],
+      "table_schemas": [
+        {
+          "name": "Views",
+          "schema": "+---------------+---------+\n| Column Name   | Type    |\n+---------------+---------+\n| article_id    | int     |\n| author_id     | int     |\n| viewer_id     | int     |\n| view_date     | date    |\n+---------------+---------+\nThere is no primary key for this table, it may have duplicate rows.\nEach row of this table indicates that some viewer viewed an article (written by some author) on some date.\nNote that equal author_id and viewer_id indicate the same person."
+        }
+      ],
       "solutions": [
         {
           "label": "Solution 1",
@@ -1193,6 +1496,12 @@
       "description": "Write an SQL query to find all the people who viewed more than one article on the same date, sorted in ascending order by their id. The query result format is in the following example:",
       "tables": [
         "Views"
+      ],
+      "table_schemas": [
+        {
+          "name": "Views",
+          "schema": "+---------------+---------+\n| Column Name   | Type    |\n+---------------+---------+\n| article_id    | int     |\n| author_id     | int     |\n| viewer_id     | int     |\n| view_date     | date    |\n+---------------+---------+\nThere is no primary key for this table, it may have duplicate rows.\nEach row of this table indicates that some viewer viewed an article (written by some author) on some date.\nNote that equal author_id and viewer_id indicate the same person."
+        }
       ],
       "solutions": [
         {
@@ -1214,6 +1523,20 @@
         "Orders",
         "Items"
       ],
+      "table_schemas": [
+        {
+          "name": "Users",
+          "schema": "+----------------+---------+\n| Column Name    | Type    |\n+----------------+---------+\n| user_id        | int     |\n| join_date      | date    |\n| favorite_brand | varchar |\n+----------------+---------+\nuser_id is the primary key of this table.\nThis table has the info of the users of an online shopping website where users can sell and buy items."
+        },
+        {
+          "name": "Orders",
+          "schema": "+---------------+---------+\n| Column Name   | Type    |\n+---------------+---------+\n| order_id      | int     |\n| order_date    | date    |\n| item_id       | int     |\n| buyer_id      | int     |\n| seller_id     | int     |\n+---------------+---------+\norder_id is the primary key of this table.\nitem_id is a foreign key to the Items table.\nbuyer_id and seller_id are foreign keys to the Users table."
+        },
+        {
+          "name": "Items",
+          "schema": "+---------------+---------+\n| Column Name   | Type    |\n+---------------+---------+\n| item_id       | int     |\n| item_brand    | varchar |\n+---------------+---------+\nitem_id is the primary key of this table."
+        }
+      ],
       "solutions": [
         {
           "label": "Solution 1",
@@ -1234,6 +1557,20 @@
         "Orders",
         "Items"
       ],
+      "table_schemas": [
+        {
+          "name": "Users",
+          "schema": "+----------------+---------+\n| Column Name    | Type    |\n+----------------+---------+\n| user_id        | int     |\n| join_date      | date    |\n| favorite_brand | varchar |\n+----------------+---------+\nuser_id is the primary key of this table.\nThis table has the info of the users of an online shopping website where users can sell and buy items."
+        },
+        {
+          "name": "Orders",
+          "schema": "+---------------+---------+\n| Column Name   | Type    |\n+---------------+---------+\n| order_id      | int     |\n| order_date    | date    |\n| item_id       | int     |\n| buyer_id      | int     |\n| seller_id     | int     |\n+---------------+---------+\norder_id is the primary key of this table.\nitem_id is a foreign key to the Items table.\nbuyer_id and seller_id are foreign keys to the Users table."
+        },
+        {
+          "name": "Items",
+          "schema": "+---------------+---------+\n| Column Name   | Type    |\n+---------------+---------+\n| item_id       | int     |\n| item_brand    | varchar |\n+---------------+---------+\nitem_id is the primary key of this table."
+        }
+      ],
       "solutions": [
         {
           "label": "Solution 1",
@@ -1251,6 +1588,12 @@
       "description": "Write an SQL query to find the prices of all products on 2019-08-16. Assume the price of all products before any change is 10. The query result format is in the following example:",
       "tables": [
         "Products"
+      ],
+      "table_schemas": [
+        {
+          "name": "Products",
+          "schema": "+---------------+---------+\n| Column Name   | Type    |\n+---------------+---------+\n| product_id    | int     |\n| new_price     | int     |\n| change_date   | date    |\n+---------------+---------+\n(product_id, change_date) is the primary key of this table.\nEach row of this table indicates that the price of some product was changed to a new price at some date."
+        }
       ],
       "solutions": [
         {
@@ -1270,6 +1613,12 @@
       "tables": [
         "Delivery"
       ],
+      "table_schemas": [
+        {
+          "name": "Delivery",
+          "schema": "+-----------------------------+---------+\n| Column Name                 | Type    |\n+-----------------------------+---------+\n| delivery_id                 | int     |\n| customer_id                 | int     |\n| order_date                  | date    |\n| customer_pref_delivery_date | date    |\n+-----------------------------+---------+\ndelivery_id is the primary key of this table.\nThe table holds information about food delivery to customers that make orders at some date and specify a preferred delivery date (on the same order date or after it)."
+        }
+      ],
       "solutions": [
         {
           "label": "Solution 1",
@@ -1287,6 +1636,12 @@
       "description": "If the preferred delivery date of the customer is the same as the order date then the order is called immediate otherwise it's called scheduled. The first order of a customer is the order with the earliest order date that customer made. It is guaranteed that a customer has exactly one first order. Write an SQL query to find the percentage of immediate orders in the first orders of all customers, rounded to 2 decimal places. The query result format is in the following example:",
       "tables": [
         "Delivery"
+      ],
+      "table_schemas": [
+        {
+          "name": "Delivery",
+          "schema": "+-----------------------------+---------+\n| Column Name                 | Type    |\n+-----------------------------+---------+\n| delivery_id                 | int     |\n| customer_id                 | int     |\n| order_date                  | date    |\n| customer_pref_delivery_date | date    |\n+-----------------------------+---------+\ndelivery_id is the primary key of this table.\nThe table holds information about food delivery to customers that make orders at some date and specify a preferred delivery date (on the same order date or after it)."
+        }
       ],
       "solutions": [
         {
@@ -1306,6 +1661,12 @@
       "tables": [
         "Department"
       ],
+      "table_schemas": [
+        {
+          "name": "Department",
+          "schema": "+---------------+---------+\n| Column Name   | Type    |\n+---------------+---------+\n| id            | int     |\n| revenue       | int     |\n| month         | varchar |\n+---------------+---------+\n(id, month) is the primary key of this table.\nThe table has information about the revenue of each department per month.\nThe month has values in [\"Jan\",\"Feb\",\"Mar\",\"Apr\",\"May\",\"Jun\",\"Jul\",\"Aug\",\"Sep\",\"Oct\",\"Nov\",\"Dec\"]."
+        }
+      ],
       "solutions": [
         {
           "label": "Solution 1",
@@ -1323,6 +1684,12 @@
       "description": "Write an SQL query to find for each month and country, the number of transactions and their total amount, the number of approved transactions and their total amount. The query result format is in the following example:",
       "tables": [
         "Transactions"
+      ],
+      "table_schemas": [
+        {
+          "name": "Transactions",
+          "schema": "+---------------+---------+\n| Column Name   | Type    |\n+---------------+---------+\n| id            | int     |\n| country       | varchar |\n| state         | enum    |\n| amount        | int     |\n| trans_date    | date    |\n+---------------+---------+\nid is the primary key of this table.\nThe table has information about incoming transactions.\nThe state column is an enum of type [\"approved\", \"declined\"]."
+        }
       ],
       "solutions": [
         {
@@ -1343,6 +1710,16 @@
         "Players",
         "Matches"
       ],
+      "table_schemas": [
+        {
+          "name": "Players",
+          "schema": "+-------------+-------+\n| Column Name | Type  |\n+-------------+-------+\n| player_id   | int   |\n| group_id    | int   |\n+-------------+-------+\nplayer_id is the primary key of this table.\nEach row of this table indicates the group of each player."
+        },
+        {
+          "name": "Matches",
+          "schema": "+---------------+---------+\n| Column Name   | Type    |\n+---------------+---------+\n| match_id      | int     |\n| first_player  | int     |\n| second_player | int     |\n| first_score   | int     |\n| second_score  | int     |\n+---------------+---------+\nmatch_id is the primary key of this table.\nEach row is a record of a match, first_player and second_player contain the player_id of each match.\nfirst_score and second_score contain the number of points of the first_player and second_player respectively.\nYou may assume that, in each match, players belongs to the same group."
+        }
+      ],
       "solutions": [
         {
           "label": "Solution 1",
@@ -1360,6 +1737,12 @@
       "description": "The maximum weight the elevator can hold is 1000. Write an SQL query to find the person_name of the last person who will fit in the elevator without exceeding the weight limit. It is guaranteed that the person who is first in the queue can fit in the elevator. The query result format is in the following example:",
       "tables": [
         "Queue"
+      ],
+      "table_schemas": [
+        {
+          "name": "Queue",
+          "schema": "+-------------+---------+\n| Column Name | Type    |\n+-------------+---------+\n| person_id   | int     |\n| person_name | varchar |\n| weight      | int     |\n| turn        | int     |\n+-------------+---------+\nperson_id is the primary key column for this table.\nThis table has the information about all people waiting for an elevator.\nThe person_id and turn columns will contain all numbers from 1 to n, where n is the number of rows in the table."
+        }
       ],
       "solutions": [
         {
@@ -1380,6 +1763,16 @@
         "Transactions",
         "Chargebacks"
       ],
+      "table_schemas": [
+        {
+          "name": "Transactions",
+          "schema": "+----------------+---------+\n| Column Name    | Type    |\n+----------------+---------+\n| id             | int     |\n| country        | varchar |\n| state          | enum    |\n| amount         | int     |\n| trans_date     | date    |\n+----------------+---------+\nid is the primary key of this table.\nThe table has information about incoming transactions.\nThe state column is an enum of type [\"approved\", \"declined\"]."
+        },
+        {
+          "name": "Chargebacks",
+          "schema": "+----------------+---------+\n| Column Name    | Type    |\n+----------------+---------+\n| trans_id       | int     |\n| charge_date    | date    |\n+----------------+---------+\nChargebacks contains basic information regarding incoming chargebacks from some transactions placed in Transactions table.\ntrans_id is a foreign key to the id column of Transactions table.\nEach chargeback corresponds to a transaction made previously even if they were not approved."
+        }
+      ],
       "solutions": [
         {
           "label": "Solution 1",
@@ -1398,6 +1791,12 @@
       "tables": [
         "Queries"
       ],
+      "table_schemas": [
+        {
+          "name": "Queries",
+          "schema": "+-------------+---------+\n| Column Name | Type    |\n+-------------+---------+\n| query_name  | varchar |\n| result      | varchar |\n| position    | int     |\n| rating      | int     |\n+-------------+---------+\nThere is no primary key for this table, it may have duplicate rows.\nThis table contains information collected from some queries on a database.\nThe position column has a value from 1 to 500.\nThe rating column has a value from 1 to 5. Query with rating less than 3 is a poor query."
+        }
+      ],
       "solutions": [
         {
           "label": "Solution 1",
@@ -1412,10 +1811,20 @@
       "difficulty": "Medium",
       "locked": true,
       "leetcode_url": "https://leetcode.com/problems/team-scores-in-football-tournament",
-      "description": "You would like to compute the scores of all teams after all matches. Points are awarded as follows: A team receives three points if they win a match (Score strictly more goals than the opponent team). A team receives one point if they draw a match (Same number of goals as the opponent team). A team receives no points if they lose a match (Score less goals than the opponent team). Write an SQL query that selects the team_id, team_name and num_points of each team in the tournament after all described matches. Result table should be ordered by num_points (decreasing order). In case of a tie, order the records by team_id (increasing order). The query result format is in the following example:",
+      "description": "You would like to compute the scores of all teams after all matches. Points are awarded as follows: The query result format is in the following example:",
       "tables": [
         "Teams",
         "Matches"
+      ],
+      "table_schemas": [
+        {
+          "name": "Teams",
+          "schema": "+---------------+----------+\n| Column Name   | Type     |\n+---------------+----------+\n| team_id       | int      |\n| team_name     | varchar  |\n+---------------+----------+\nteam_id is the primary key of this table.\nEach row of this table represents a single football team."
+        },
+        {
+          "name": "Matches",
+          "schema": "+---------------+---------+\n| Column Name   | Type    |\n+---------------+---------+\n| match_id      | int     |\n| host_team     | int     |\n| guest_team    | int     |\n| host_goals    | int     |\n| guest_goals   | int     |\n+---------------+---------+\nmatch_id is the primary key of this table.\nEach row is a record of a finished match between two different teams.\nTeams host_team and guest_team are represented by their IDs in the teams table (team_id) and they scored host_goals and guest_goals goals respectively."
+        }
       ],
       "solutions": [
         {
@@ -1436,6 +1845,16 @@
         "Failed",
         "Succeeded"
       ],
+      "table_schemas": [
+        {
+          "name": "Failed",
+          "schema": "+--------------+---------+\n| Column Name  | Type    |\n+--------------+---------+\n| fail_date    | date    |\n+--------------+---------+\nPrimary key for this table is fail_date.\nFailed table contains the days of failed tasks."
+        },
+        {
+          "name": "Succeeded",
+          "schema": "+--------------+---------+\n| Column Name  | Type    |\n+--------------+---------+\n| success_date | date    |\n+--------------+---------+\nPrimary key for this table is success_date.\nSucceeded table contains the days of succeeded tasks."
+        }
+      ],
       "solutions": [
         {
           "label": "Solution 1",
@@ -1453,6 +1872,12 @@
       "description": "Write an SQL query to find number of comments per each post. Result table should contain post_id and its corresponding number_of_comments, and must be sorted by post_id in ascending order. Submissions may contain duplicate comments. You should count the number of unique comments per post. Submissions may contain duplicate posts. You should treat them as one post. The query result format is in the following example:",
       "tables": [
         "Submissions"
+      ],
+      "table_schemas": [
+        {
+          "name": "Submissions",
+          "schema": "+---------------+----------+\n| Column Name   | Type     |\n+---------------+----------+\n| sub_id        | int      |\n| parent_id     | int      |\n+---------------+----------+\nThere is no primary key for this table, it may have duplicate rows.\nEach row can be a post or comment on the post.\nparent_id is null for posts.\nparent_id for comments is sub_id for another post in the table."
+        }
       ],
       "solutions": [
         {
@@ -1473,6 +1898,16 @@
         "Prices",
         "UnitsSold"
       ],
+      "table_schemas": [
+        {
+          "name": "Prices",
+          "schema": "+---------------+---------+\n| Column Name   | Type    |\n+---------------+---------+\n| product_id    | int     |\n| start_date    | date    |\n| end_date      | date    |\n| price         | int     |\n+---------------+---------+\n(product_id, start_date, end_date) is the primary key for this table.\nEach row of this table indicates the price of the product_id in the period from start_date to end_date.\nFor each product_id there will be no two overlapping periods. That means there will be no two intersecting periods for the same product_id."
+        },
+        {
+          "name": "UnitsSold",
+          "schema": "+---------------+---------+\n| Column Name   | Type    |\n+---------------+---------+\n| product_id    | int     |\n| purchase_date | date    |\n| units         | int     |\n+---------------+---------+\nThere is no primary key for this table, it may contain duplicates.\nEach row of this table indicates the date, units and product_id of each product sold."
+        }
+      ],
       "solutions": [
         {
           "label": "Solution 1",
@@ -1492,6 +1927,16 @@
         "Friendship",
         "Likes"
       ],
+      "table_schemas": [
+        {
+          "name": "Friendship",
+          "schema": "+---------------+---------+\n| Column Name   | Type    |\n+---------------+---------+\n| user1_id      | int     |\n| user2_id      | int     |\n+---------------+---------+\n(user1_id, user2_id) is the primary key for this table.\nEach row of this table indicates that there is a friendship relation between user1_id and user2_id."
+        },
+        {
+          "name": "Likes",
+          "schema": "+-------------+---------+\n| Column Name | Type    |\n+-------------+---------+\n| user_id     | int     |\n| page_id     | int     |\n+-------------+---------+\n(user_id, page_id) is the primary key for this table.\nEach row of this table indicates that user_id likes page_id."
+        }
+      ],
       "solutions": [
         {
           "label": "Solution 1",
@@ -1509,6 +1954,12 @@
       "description": "Write an SQL query to find employee_id of all employees that directly or indirectly report their work to the head of the company. The indirect relation between managers will not exceed 3 managers as the company is small. Return result table in any order without duplicates. The query result format is in the following example:",
       "tables": [
         "Employees"
+      ],
+      "table_schemas": [
+        {
+          "name": "Employees",
+          "schema": "+---------------+---------+\n| Column Name   | Type    |\n+---------------+---------+\n| employee_id   | int     |\n| employee_name | varchar |\n| manager_id    | int     |\n+---------------+---------+\nemployee_id is the primary key for this table.\nEach row of this table indicates that the employee with ID employee_id and name employee_name reports his work to his/her direct manager with manager_id\nThe head of the company is the employee with employee_id = 1."
+        }
       ],
       "solutions": [
         {
@@ -1530,6 +1981,20 @@
         "Subjects",
         "Examinations"
       ],
+      "table_schemas": [
+        {
+          "name": "Students",
+          "schema": "+---------------+---------+\n| Column Name   | Type    |\n+---------------+---------+\n| student_id    | int     |\n| student_name  | varchar |\n+---------------+---------+\nstudent_id is the primary key for this table.\nEach row of this table contains the ID and the name of one student in the school."
+        },
+        {
+          "name": "Subjects",
+          "schema": "+--------------+---------+\n| Column Name  | Type    |\n+--------------+---------+\n| subject_name | varchar |\n+--------------+---------+\nsubject_name is the primary key for this table.\nEach row of this table contains a name of one subject in the school."
+        },
+        {
+          "name": "Examinations",
+          "schema": "+--------------+---------+\n| Column Name  | Type    |\n+--------------+---------+\n| student_id   | int     |\n| subject_name | varchar |\n+--------------+---------+\nThere is no primary key for this table. It may contain duplicates.\nEach student from Students table takes every course from Subjects table.\nEach row of this table indicates that a student with ID student_id attended the exam of subject_name."
+        }
+      ],
       "solutions": [
         {
           "label": "Solution 1",
@@ -1547,6 +2012,12 @@
       "description": "Since some IDs have been removed from Logs. Write an SQL query to find the start and end number of continuous ranges in table Logs. Order the result table by start_id. The query result format is in the following example:",
       "tables": [
         "Logs"
+      ],
+      "table_schemas": [
+        {
+          "name": "Logs",
+          "schema": "+---------------+---------+\n| Column Name   | Type    |\n+---------------+---------+\n| log_id        | int     |\n+---------------+---------+\nid is the primary key for this table.\nEach row of this table contains the ID in a log Table."
+        }
       ],
       "solutions": [
         {
@@ -1567,6 +2038,16 @@
         "Countries",
         "Weather"
       ],
+      "table_schemas": [
+        {
+          "name": "Countries",
+          "schema": "+---------------+---------+\n| Column Name   | Type    |\n+---------------+---------+\n| country_id    | int     |\n| country_name  | varchar |\n+---------------+---------+\ncountry_id is the primary key for this table.\nEach row of this table contains the ID and the name of one country."
+        },
+        {
+          "name": "Weather",
+          "schema": "+---------------+---------+\n| Column Name   | Type    |\n+---------------+---------+\n| country_id    | int     |\n| weather_state | varchar |\n| day           | date    |\n+---------------+---------+\n(country_id, day) is the primary key for this table.\nEach row of this table indicates the weather state in a country for one day."
+        }
+      ],
       "solutions": [
         {
           "label": "Solution 1",
@@ -1584,6 +2065,12 @@
       "description": "Write an SQL query to find the team size of each of the employees. Return result table in any order. The query result format is in the following example:",
       "tables": [
         "Employee"
+      ],
+      "table_schemas": [
+        {
+          "name": "Employee",
+          "schema": "+---------------+---------+\n| Column Name   | Type    |\n+---------------+---------+\n| employee_id   | int     |\n| team_id       | int     |\n+---------------+---------+\nemployee_id is the primary key for this table.\nEach row of this table contains the ID of each employee and their respective team."
+        }
       ],
       "solutions": [
         {
@@ -1603,6 +2090,12 @@
       "tables": [
         "Scores"
       ],
+      "table_schemas": [
+        {
+          "name": "Scores",
+          "schema": "+---------------+---------+\n| Column Name   | Type    |\n+---------------+---------+\n| player_name   | varchar |\n| gender        | varchar |\n| day           | date    |\n| score_points  | int     |\n+---------------+---------+\n(gender, day) is the primary key for this table.\nA competition is held between females team and males team.\nEach row of this table indicates that a player_name and with gender has scored score_point in someday.\nGender is 'F' if the player is in females team and 'M' if the player is in males team."
+        }
+      ],
       "solutions": [
         {
           "label": "Solution 1",
@@ -1621,6 +2114,12 @@
       "tables": [
         "Customer"
       ],
+      "table_schemas": [
+        {
+          "name": "Customer",
+          "schema": "+---------------+---------+\n| Column Name   | Type    |\n+---------------+---------+\n| customer_id   | int     |\n| name          | varchar |\n| visited_on    | date    |\n| amount        | int     |\n+---------------+---------+\n(customer_id, visited_on) is the primary key for this table.\nThis table contains data about customer transactions in a restaurant.\nvisited_on is the date on which the customer with ID (customer_id) have visited the restaurant.\namount is the total paid by a customer."
+        }
+      ],
       "solutions": [
         {
           "label": "Solution 1",
@@ -1638,6 +2137,12 @@
       "description": "A company is running Ads and wants to calculate the performance of each Ad. Performance of the Ad is measured using Click-Through Rate (CTR) where: Write an SQL query to find the ctr of each Ad. Round ctr to 2 decimal points. Order the result table by ctr in descending order and by ad_id in ascending order in case of a tie. The query result format is in the following example:",
       "tables": [
         "Ads"
+      ],
+      "table_schemas": [
+        {
+          "name": "Ads",
+          "schema": "+---------------+---------+\n| Column Name   | Type    |\n+---------------+---------+\n| ad_id         | int     |\n| user_id       | int     |\n| action        | enum    |\n+---------------+---------+\n(ad_id, user_id) is the primary key for this table.\nEach row of this table contains the ID of an Ad, the ID of a user and the action taken by this user regarding this Ad.\nThe action column is an ENUM type of ('Clicked', 'Viewed', 'Ignored')."
+        }
       ],
       "solutions": [
         {
@@ -1658,6 +2163,16 @@
         "Products",
         "Orders"
       ],
+      "table_schemas": [
+        {
+          "name": "Products",
+          "schema": "+------------------+---------+\n| Column Name      | Type    |\n+------------------+---------+\n| product_id       | int     |\n| product_name     | varchar |\n| product_category | varchar |\n+------------------+---------+\nproduct_id is the primary key for this table.\nThis table contains data about the company's products."
+        },
+        {
+          "name": "Orders",
+          "schema": "+---------------+---------+\n| Column Name   | Type    |\n+---------------+---------+\n| product_id    | int     |\n| order_date    | date    |\n| unit          | int     |\n+---------------+---------+\nThere is no primary key for this table. It may have duplicate rows.\nproduct_id is a foreign key to Products table.\nunit is the number of products ordered in order_date."
+        }
+      ],
       "solutions": [
         {
           "label": "Solution 1",
@@ -1677,6 +2192,16 @@
         "Visits",
         "Transactions"
       ],
+      "table_schemas": [
+        {
+          "name": "Visits",
+          "schema": "+---------------+---------+\n| Column Name   | Type    |\n+---------------+---------+\n| user_id       | int     |\n| visit_date    | date    |\n+---------------+---------+\n(user_id, visit_date) is the primary key for this table.\nEach row of this table indicates that user_id has visited the bank in visit_date."
+        },
+        {
+          "name": "Transactions",
+          "schema": "+------------------+---------+\n| Column Name      | Type    |\n+------------------+---------+\n| user_id          | int     |\n| transaction_date | date    |\n| amount           | int     |\n+------------------+---------+\nThere is no primary key for this table, it may contain duplicates.\nEach row of this table indicates that user_id has done a transaction of amount in transaction_date.\nIt is guaranteed that the user has visited the bank in the transaction_date.(i.e The Visits table contains (user_id, transaction_date) in one row)"
+        }
+      ],
       "solutions": [
         {
           "label": "Solution 1",
@@ -1691,11 +2216,25 @@
       "difficulty": "Medium",
       "locked": true,
       "leetcode_url": "https://leetcode.com/problems/movie-rating",
-      "description": "Write the following SQL query: Find the name of the user who has rated the greatest number of the movies. In case of a tie, return lexicographically smaller user name. Find the movie name with the highest average rating in February 2020. In case of a tie, return lexicographically smaller movie name.. Query is returned in 2 rows, the query result format is in the following example:",
+      "description": "Write the following SQL query: Query is returned in 2 rows, the query result format is in the following example:",
       "tables": [
         "Movies",
         "Users",
         "Movie_Rating"
+      ],
+      "table_schemas": [
+        {
+          "name": "Movies",
+          "schema": "+---------------+---------+\n| Column Name   | Type    |\n+---------------+---------+\n| movie_id      | int     |\n| title         | varchar |\n+---------------+---------+\nmovie_id is the primary key for this table.\ntitle is the name of the movie."
+        },
+        {
+          "name": "Users",
+          "schema": "+---------------+---------+\n| Column Name   | Type    |\n+---------------+---------+\n| user_id       | int     |\n| name          | varchar |\n+---------------+---------+\nuser_id is the primary key for this table."
+        },
+        {
+          "name": "Movie_Rating",
+          "schema": "+---------------+---------+\n| Column Name   | Type    |\n+---------------+---------+\n| movie_id      | int     |\n| user_id       | int     |\n| rating        | int     |\n| created_at    | date    |\n+---------------+---------+\n(movie_id, user_id) is the primary key for this table.\nThis table contains the rating of a movie by a user in their review.\ncreated_at is the user's review date."
+        }
       ],
       "solutions": [
         {
@@ -1716,6 +2255,16 @@
         "Departments",
         "Students"
       ],
+      "table_schemas": [
+        {
+          "name": "Departments",
+          "schema": "+---------------+---------+\n| Column Name   | Type    |\n+---------------+---------+\n| id            | int     |\n| name          | varchar |\n+---------------+---------+\nid is the primary key of this table.\nThe table has information about the id of each department of a university."
+        },
+        {
+          "name": "Students",
+          "schema": "+---------------+---------+\n| Column Name   | Type    |\n+---------------+---------+\n| id            | int     |\n| name          | varchar |\n| department_id | int     |\n+---------------+---------+\nid is the primary key of this table.\nThe table has information about the id of each student at a university and the id of the department he/she studies at."
+        }
+      ],
       "solutions": [
         {
           "label": "Solution 1",
@@ -1734,6 +2283,16 @@
       "tables": [
         "Friends",
         "Activities"
+      ],
+      "table_schemas": [
+        {
+          "name": "Friends",
+          "schema": "+---------------+---------+\n| Column Name   | Type    |\n+---------------+---------+\n| id            | int     |\n| name          | varchar |\n| activity      | varchar |\n+---------------+---------+\nid is the id of the friend and primary key for this table.\nname is the name of the friend.\nactivity is the name of the activity which the friend takes part in."
+        },
+        {
+          "name": "Activities",
+          "schema": "+---------------+---------+\n| Column Name   | Type    |\n+---------------+---------+\n| id            | int     |\n| name          | varchar |\n+---------------+---------+\nid is the primary key for this table.\nname is the name of the activity."
+        }
       ],
       "solutions": [
         {
@@ -1755,6 +2314,20 @@
         "Contacts",
         "Invoices"
       ],
+      "table_schemas": [
+        {
+          "name": "Customers",
+          "schema": "+---------------+---------+\n| Column Name   | Type    |\n+---------------+---------+\n| customer_id   | int     |\n| customer_name | varchar |\n| email         | varchar |\n+---------------+---------+\ncustomer_id is the primary key for this table.\nEach row of this table contains the name and the email of a customer of an online shop."
+        },
+        {
+          "name": "Contacts",
+          "schema": "+---------------+---------+\n| Column Name   | Type    |\n+---------------+---------+\n| user_id       | id      |\n| contact_name  | varchar |\n| contact_email | varchar |\n+---------------+---------+\n(user_id, contact_email) is the primary key for this table.\nEach row of this table contains the name and email of one contact of customer with user_id.\nThis table contains information about people each customer trust. The contact may or may not exist in the Customers table."
+        },
+        {
+          "name": "Invoices",
+          "schema": "+--------------+---------+\n| Column Name  | Type    |\n+--------------+---------+\n| invoice_id   | int     |\n| price        | int     |\n| user_id      | int     |\n+--------------+---------+\ninvoice_id is the primary key for this table.\nEach row of this table indicates that user_id has an invoice with invoice_id and a price."
+        }
+      ],
       "solutions": [
         {
           "label": "Solution 1",
@@ -1772,6 +2345,12 @@
       "description": "Write an SQL query to show the second most recent activity of each user. If the user only has one activity, return that one. A user can't perform more than one activity at the same time. Return the result table in any order. The query result format is in the following example:",
       "tables": [
         "UserActivity"
+      ],
+      "table_schemas": [
+        {
+          "name": "UserActivity",
+          "schema": "+---------------+---------+\n| Column Name   | Type    |\n+---------------+---------+\n| username      | varchar |\n| activity      | varchar |\n| startDate     | Date    |\n| endDate       | Date    |\n+---------------+---------+\nThis table does not contain primary key.\nThis table contain information about the activity performed of each user in a period of time.\nA person with username performed a activity from startDate to endDate."
+        }
       ],
       "solutions": [
         {
@@ -1792,6 +2371,16 @@
         "Employees",
         "EmployeeUNI"
       ],
+      "table_schemas": [
+        {
+          "name": "Employees",
+          "schema": "+---------------+---------+\n| Column Name   | Type    |\n+---------------+---------+\n| id            | int     |\n| name          | varchar |\n+---------------+---------+\nid is the primary key for this table.\nEach row of this table contains the id and the name of an employee in a company."
+        },
+        {
+          "name": "EmployeeUNI",
+          "schema": "+---------------+---------+\n| Column Name   | Type    |\n+---------------+---------+\n| id            | int     |\n| unique_id     | int     |\n+---------------+---------+\n(id, unique_id) is the primary key for this table.\nEach row of this table contains the id and the corresponding unique id of an employee in the company."
+        }
+      ],
       "solutions": [
         {
           "label": "Solution 1",
@@ -1808,8 +2397,13 @@
       "leetcode_url": "https://leetcode.com/problems/total-sales-amount-by-year",
       "description": "+---------------+---------+ | Column Name | Type | +---------------+---------+ | product_id | int | | product_name | varchar | +---------------+---------+ product_id is the primary key for this table. product_name is the name of the product. Write an SQL query to report the Total sales amount of each item for each year, with corresponding product name, product_id, product_name and report_year. Dates of the sales years are between 2018 to 2020. Return the result table ordered by product_id and report_year. The query result format is in the following example:",
       "tables": [
-        "Product",
         "Sales"
+      ],
+      "table_schemas": [
+        {
+          "name": "Sales",
+          "schema": "+---------------------+---------+\n| Column Name         | Type    |\n+---------------------+---------+\n| product_id          | int     |\n| period_start        | varchar |\n| period_end          | date    |\n| average_daily_sales | int     |\n+---------------------+---------+\nproduct_id is the primary key for this table.\nperiod_start and period_end indicates the start and end date for sales period, both dates are inclusive.\nThe average_daily_sales column holds the average daily sales amount of the items for the period."
+        }
       ],
       "solutions": [
         {
@@ -1828,6 +2422,12 @@
       "description": "Write an SQL query to report the Capital gain/loss for each stock. The capital gain/loss of a stock is total gain or loss after buying and selling the stock one or many times. Return the result table in any order. The query result format is in the following example:",
       "tables": [
         "Stocks"
+      ],
+      "table_schemas": [
+        {
+          "name": "Stocks",
+          "schema": "+---------------+---------+\n| Column Name   | Type    |\n+---------------+---------+\n| stock_name    | varchar |\n| operation     | enum    |\n| operation_day | int     |\n| price         | int     |\n+---------------+---------+\n(stock_name, day) is the primary key for this table.\nThe operation column is an ENUM of type ('Sell', 'Buy')\nEach row of this table indicates that the stock which has stock_name had an operation on the day operation_day with the price.\nIt is guaranteed that each 'Sell' operation for a stock has a corresponding 'Buy' operation in a previous day."
+        }
       ],
       "solutions": [
         {
@@ -1848,6 +2448,16 @@
         "Customers",
         "Orders"
       ],
+      "table_schemas": [
+        {
+          "name": "Customers",
+          "schema": "+---------------------+---------+\n| Column Name         | Type    |\n+---------------------+---------+\n| customer_id         | int     |\n| customer_name       | varchar |\n+---------------------+---------+\ncustomer_id is the primary key for this table.\ncustomer_name is the name of the customer."
+        },
+        {
+          "name": "Orders",
+          "schema": "+---------------+---------+\n| Column Name   | Type    |\n+---------------+---------+\n| order_id      | int     |\n| customer_id   | int     |\n| product_name  | varchar |\n+---------------+---------+\norder_id is the primary key for this table.\ncustomer_id is the id of the customer who bought the product \"product_name\"."
+        }
+      ],
       "solutions": [
         {
           "label": "Solution 1",
@@ -1866,6 +2476,16 @@
       "tables": [
         "Users",
         "Rides"
+      ],
+      "table_schemas": [
+        {
+          "name": "Users",
+          "schema": "+---------------+---------+\n| Column Name   | Type    |\n+---------------+---------+\n| id            | int     |\n| name          | varchar |\n+---------------+---------+\nid is the primary key for this table.\nname is the name of the user."
+        },
+        {
+          "name": "Rides",
+          "schema": "+---------------+---------+\n| Column Name   | Type    |\n+---------------+---------+\n| id            | int     |\n| user_id       | int     |\n| distance      | int     |\n+---------------+---------+\nid is the primary key for this table.\ncity_id is the id of the city who bought the product \"product_name\"."
+        }
       ],
       "solutions": [
         {
@@ -1886,6 +2506,16 @@
         "Student",
         "Exam"
       ],
+      "table_schemas": [
+        {
+          "name": "Student",
+          "schema": "+---------------------+---------+\n| Column Name         | Type    |\n+---------------------+---------+\n| student_id          | int     |\n| student_name        | varchar |\n+---------------------+---------+\nstudent_id is the primary key for this table.\nstudent_name is the name of the student."
+        },
+        {
+          "name": "Exam",
+          "schema": "+---------------+---------+\n| Column Name   | Type    |\n+---------------+---------+\n| exam_id       | int     |\n| student_id    | int     |\n| score         | int     |\n+---------------+---------+\n(exam_id, student_id) is the primary key for this table.\nStudent with student_id got score points in exam with id exam_id."
+        }
+      ],
       "solutions": [
         {
           "label": "Solution 1",
@@ -1905,6 +2535,16 @@
         "NPV",
         "Queries"
       ],
+      "table_schemas": [
+        {
+          "name": "NPV",
+          "schema": "+---------------+---------+\n| Column Name   | Type    |\n+---------------+---------+\n| id            | int     |\n| year          | int     |\n| npv           | int     |\n+---------------+---------+\n(id, year) is the primary key of this table.\nThe table has information about the id and the year of each inventory and the corresponding net present value."
+        },
+        {
+          "name": "Queries",
+          "schema": "+---------------+---------+\n| Column Name   | Type    |\n+---------------+---------+\n| id            | int     |\n| year          | int     |\n+---------------+---------+\n(id, year) is the primary key of this table.\nThe table has information about the id and the year of each inventory query."
+        }
+      ],
       "solutions": [
         {
           "label": "Solution 1",
@@ -1923,6 +2563,12 @@
       "tables": [
         "Sessions"
       ],
+      "table_schemas": [
+        {
+          "name": "Sessions",
+          "schema": "+---------------------+---------+\n| Column Name         | Type    |\n+---------------------+---------+\n| session_id          | int     |\n| duration            | int     |\n+---------------------+---------+\nsession_id is the primary key for this table.\nduration is the time in seconds that a user has visited the application."
+        }
+      ],
       "solutions": [
         {
           "label": "Solution 1",
@@ -1939,6 +2585,7 @@
       "leetcode_url": "https://leetcode.com/problems/evaluate-boolean-expression",
       "description": "Table Variables: Table Expressions: Write an SQL query to evaluate the boolean expressions in Expressions table. Return the result table in any order. The query result format is in the following example.",
       "tables": [],
+      "table_schemas": [],
       "solutions": [
         {
           "label": "Solution 1",
@@ -1957,6 +2604,12 @@
       "tables": [
         "Sales"
       ],
+      "table_schemas": [
+        {
+          "name": "Sales",
+          "schema": "+---------------+---------+\n| Column Name   | Type    |\n+---------------+---------+\n| sale_date     | date    |\n| fruit         | enum    |\n| sold_num      | int     |\n+---------------+---------+\n(sale_date,fruit) is the primary key for this table.\nThis table contains the sales of \"apples\" and \"oranges\" sold each day."
+        }
+      ],
       "solutions": [
         {
           "label": "Solution 1",
@@ -1973,6 +2626,7 @@
       "leetcode_url": "https://leetcode.com/problems/active-users",
       "description": "Table Accounts: Table Logins: Write an SQL query to find the id and the name of active users. Active users are those who logged in to their accounts for 5 or more consecutive days. Return the result table ordered by the id. The query result format is in the following example: Follow up question: Can you write a general solution if the active users are those who logged in to their accounts for n or more consecutive days?",
       "tables": [],
+      "table_schemas": [],
       "solutions": [
         {
           "label": "Solution 1",
@@ -1991,6 +2645,12 @@
       "tables": [
         "Points"
       ],
+      "table_schemas": [
+        {
+          "name": "Points",
+          "schema": "+---------------+---------+\n| Column Name   | Type    |\n+---------------+---------+\n| id            | int     |\n| x_value       | int     |\n| y_value       | int     |\n+---------------+---------+\nid is the primary key for this table.\nEach point is represented as a 2D Dimensional (x_value, y_value)."
+        }
+      ],
       "solutions": [
         {
           "label": "Solution 1",
@@ -2007,6 +2667,7 @@
       "leetcode_url": "https://leetcode.com/problems/calculate-salaries",
       "description": "Table Salaries: Write an SQL query to find the salaries of the employees after applying taxes. The tax rate is calculated for each company based on the following criteria: The query result format is in the following example:",
       "tables": [],
+      "table_schemas": [],
       "solutions": [
         {
           "label": "Solution 1",
@@ -2026,6 +2687,16 @@
         "Orders",
         "Items"
       ],
+      "table_schemas": [
+        {
+          "name": "Orders",
+          "schema": "+---------------+---------+\n| Column Name   | Type    |\n+---------------+---------+\n| order_id      | int     |\n| customer_id   | int     |\n| order_date    | date    |\n| item_id       | varchar |\n| quantity      | int     |\n+---------------+---------+\n(ordered_id, item_id) is the primary key for this table.\nThis table contains information of the orders placed.\norder_date is the date when item_id was ordered by the customer with id customer_id."
+        },
+        {
+          "name": "Items",
+          "schema": "+---------------------+---------+\n| Column Name         | Type    |\n+---------------------+---------+\n| item_id             | varchar |\n| item_name           | varchar |\n| item_category       | varchar |\n+---------------------+---------+\nitem_id is the primary key for this table.\nitem_name is the name of the item.\nitem_category is the category of the item."
+        }
+      ],
       "solutions": [
         {
           "label": "Solution 1",
@@ -2042,6 +2713,7 @@
       "leetcode_url": "https://leetcode.com/problems/group-sold-products-by-the-date",
       "description": "Table Activities: Write an SQL query to find for each date, the number of distinct products sold and their names. The sold-products names for each date should be sorted lexicographically. Return the result table ordered by sell_date. The query result format is in the following example.",
       "tables": [],
+      "table_schemas": [],
       "solutions": [
         {
           "label": "Solution 1",
@@ -2061,6 +2733,16 @@
         "TVProgram",
         "Content"
       ],
+      "table_schemas": [
+        {
+          "name": "TVProgram",
+          "schema": "+---------------+---------+\n| Column Name   | Type    |\n+---------------+---------+\n| program_date  | date    |\n| content_id    | int     |\n| channel       | varchar |\n+---------------+---------+\n(program_date, content_id) is the primary key for this table.\nThis table contains information of the programs on the TV.\ncontent_id is the id of the program in some channel on the TV."
+        },
+        {
+          "name": "Content",
+          "schema": "+------------------+---------+\n| Column Name      | Type    |\n+------------------+---------+\n| content_id       | varchar |\n| title            | varchar |\n| Kids_content     | enum    |\n| content_type     | varchar |\n+------------------+---------+\ncontent_id is the primary key for this table.\nKids_content is an enum that takes one of the values ('Y', 'N') where:\n'Y' means is content for kids otherwise 'N' is not content for kids.\ncontent_type is the category of the content as movies, series, etc."
+        }
+      ],
       "solutions": [
         {
           "label": "Solution 1",
@@ -2077,6 +2759,7 @@
       "leetcode_url": "https://leetcode.com/problems/countries-you-can-safely-invest-in",
       "description": "Table Person: Table Country: Table Calls: Write an SQL query to find the countries where this company can invest. Return the result table in any order. The query result format is in the following example.",
       "tables": [],
+      "table_schemas": [],
       "solutions": [
         {
           "label": "Solution 1",
@@ -2097,6 +2780,20 @@
         "Product",
         "Orders"
       ],
+      "table_schemas": [
+        {
+          "name": "Customers",
+          "schema": "+---------------+---------+\n| Column Name   | Type    |\n+---------------+---------+\n| customer_id   | int     |\n| name          | varchar |\n| country       | varchar |\n+---------------+---------+\ncustomer_id is the primary key for this table.\nThis table contains information of the customers in the company."
+        },
+        {
+          "name": "Product",
+          "schema": "+---------------+---------+\n| Column Name   | Type    |\n+---------------+---------+\n| product_id    | int     |\n| description   | varchar |\n| price         | int     |\n+---------------+---------+\nproduct_id is the primary key for this table.\nThis table contains information of the products in the company.\nprice is the product cost."
+        },
+        {
+          "name": "Orders",
+          "schema": "+---------------+---------+\n| Column Name   | Type    |\n+---------------+---------+\n| order_id      | int     |\n| customer_id   | int     |\n| product_id    | int     |\n| order_date    | date    |\n| quantity      | int     |\n+---------------+---------+\norder_id is the primary key for this table.\nThis table contains information on customer orders.\ncustomer_id is the id of the customer who bought \"quantity\" products with id \"product_id\".\nOrder_date is the date in format ('YYYY-MM-DD') when the order was shipped."
+        }
+      ],
       "solutions": [
         {
           "label": "Solution 1",
@@ -2115,6 +2812,12 @@
       "tables": [
         "Users"
       ],
+      "table_schemas": [
+        {
+          "name": "Users",
+          "schema": "+---------------+---------+\n| Column Name   | Type    |\n+---------------+---------+\n| user_id       | int     |\n| name          | varchar |\n| mail          | varchar |\n+---------------+---------+\nuser_id is the primary key for this table.\nThis table contains information of the users signed up in a website. Some e-mails are invalid."
+        }
+      ],
       "solutions": [
         {
           "label": "Solution 1",
@@ -2132,6 +2835,12 @@
       "description": "Write an SQL query to report the patient_id, patient_name all conditions of patients who have Type I Diabetes. Type I Diabetes always starts with DIAB1 prefix Return the result table in any order. The query result format is in the following example.",
       "tables": [
         "Patients"
+      ],
+      "table_schemas": [
+        {
+          "name": "Patients",
+          "schema": "+--------------+---------+\n| Column Name  | Type    |\n+--------------+---------+\n| patient_id   | int     |\n| patient_name | varchar |\n| conditions   | varchar |\n+--------------+---------+\npatient_id is the primary key for this table.\n'conditions' contains 0 or more code separated by spaces.\nThis table contains information of the patients in the hospital."
+        }
       ],
       "solutions": [
         {
@@ -2152,6 +2861,16 @@
         "Customers",
         "Orders"
       ],
+      "table_schemas": [
+        {
+          "name": "Customers",
+          "schema": "+---------------+---------+\n| Column Name   | Type    |\n+---------------+---------+\n| customer_id   | int     |\n| name          | varchar |\n+---------------+---------+\ncustomer_id is the primary key for this table.\nThis table contains information about customers."
+        },
+        {
+          "name": "Orders",
+          "schema": "+---------------+---------+\n| Column Name   | Type    |\n+---------------+---------+\n| order_id      | int     |\n| order_date    | date    |\n| customer_id   | int     |\n| cost          | int     |\n+---------------+---------+\norder_id is the primary key for this table.\nThis table contains information about the orders made customer_id.\nEach customer has one order per day."
+        }
+      ],
       "solutions": [
         {
           "label": "Solution 1",
@@ -2169,6 +2888,12 @@
       "description": "Since table Sales was filled manually in the year 2000, product_name may contain leading and/or trailing white spaces, also they are case-insensitive. Write an SQL query to report The query result format is in the following example.",
       "tables": [
         "Sales"
+      ],
+      "table_schemas": [
+        {
+          "name": "Sales",
+          "schema": "+--------------+---------+\n| Column Name  | Type    |\n+--------------+---------+\n| sale_id      | int     |\n| product_name | varchar |\n| sale_date    | date    |\n+--------------+---------+\nsale_id is the primary key for this table.\nEach row of this table contains the product name and the date it was sold."
+        }
       ],
       "solutions": [
         {
@@ -2190,6 +2915,20 @@
         "Orders",
         "Products"
       ],
+      "table_schemas": [
+        {
+          "name": "Customers",
+          "schema": "+---------------+---------+\n| Column Name   | Type    |\n+---------------+---------+\n| customer_id   | int     |\n| name          | varchar |\n+---------------+---------+\ncustomer_id is the primary key for this table.\nThis table contains information about the customers."
+        },
+        {
+          "name": "Orders",
+          "schema": "+---------------+---------+\n| Column Name   | Type    |\n+---------------+---------+\n| order_id      | int     |\n| order_date    | date    |\n| customer_id   | int     |\n| product_id    | int     |\n+---------------+---------+\norder_id is the primary key for this table.\nThis table contains information about the orders made by customer_id.\nThere will be no product ordered by the same user more than once in one day."
+        },
+        {
+          "name": "Products",
+          "schema": "+---------------+---------+\n| Column Name   | Type    |\n+---------------+---------+\n| product_id    | int     |\n| product_name  | varchar |\n| price         | int     |\n+---------------+---------+\nproduct_id is the primary key for this table.\nThis table contains information about the Products."
+        }
+      ],
       "solutions": [
         {
           "label": "Solution 1",
@@ -2209,6 +2948,16 @@
         "Users",
         "Transaction"
       ],
+      "table_schemas": [
+        {
+          "name": "Users",
+          "schema": "+--------------+---------+\n| Column Name  | Type    |\n+--------------+---------+\n| user_id      | int     |\n| user_name    | varchar |\n| credit       | int     |\n+--------------+---------+\nuser_id is the primary key for this table.\nEach row of this table contains the current credit information for each user."
+        },
+        {
+          "name": "Transaction",
+          "schema": "+---------------+---------+\n| Column Name   | Type    |\n+---------------+---------+\n| trans_id      | int     |\n| paid_by       | int     |\n| paid_to       | int     |\n| amount        | int     |\n| transacted_on | date    |\n+---------------+---------+\ntrans_id is the primary key for this table.\nEach row of this table contains the information about the transaction in the bank.\nUser with id (paid_by) transfer money to user with id (paid_to)."
+        }
+      ],
       "solutions": [
         {
           "label": "Solution 1",
@@ -2226,6 +2975,12 @@
       "description": "Write an SQL query to find the number of unique orders and the number of unique users with invoices > $20 for each different month. Return the result table sorted in any order. The query result format is in the following example:",
       "tables": [
         "Orders"
+      ],
+      "table_schemas": [
+        {
+          "name": "Orders",
+          "schema": "+---------------+---------+\n| Column Name   | Type    |\n+---------------+---------+\n| order_id      | int     |\n| order_date    | date    |\n| customer_id   | int     |\n| invoice       | int     |\n+---------------+---------+\norder_id is the primary key for this table.\nThis table contains information about the orders made by customer_id."
+        }
       ],
       "solutions": [
         {
@@ -2246,6 +3001,16 @@
         "Warehouse",
         "Products"
       ],
+      "table_schemas": [
+        {
+          "name": "Warehouse",
+          "schema": "+--------------+---------+\n| Column Name  | Type    |\n+--------------+---------+\n| name         | varchar |\n| product_id   | int     |\n| units        | int     |\n+--------------+---------+\n(name, product_id) is the primary key for this table.\nEach row of this table contains the information of the products in each warehouse."
+        },
+        {
+          "name": "Products",
+          "schema": "+---------------+---------+\n| Column Name   | Type    |\n+---------------+---------+\n| product_id    | int     |\n| product_name  | varchar |\n| Width         | int     |\n| Length        | int     |\n| Height        | int     |\n+---------------+---------+\nproduct_id is the primary key for this table.\nEach row of this table contains the information about the product dimensions (Width, Lenght and Height) in feets of each product."
+        }
+      ],
       "solutions": [
         {
           "label": "Solution 1",
@@ -2265,6 +3030,16 @@
         "Visits",
         "Transactions"
       ],
+      "table_schemas": [
+        {
+          "name": "Visits",
+          "schema": "+-------------+---------+\n| Column Name | Type    |\n+-------------+---------+\n| visit_id    | int     |\n| customer_id | int     |\n+-------------+---------+\nvisit_id is the primary key for this table.\nThis table contains information about the customers who visited the mall."
+        },
+        {
+          "name": "Transactions",
+          "schema": "+----------------+---------+\n| Column Name    | Type    |\n+----------------+---------+\n| transaction_id | int     |\n| visit_id       | int     |\n| amount         | int     |\n+----------------+---------+\ntransaction_id is the primary key for this table.\nThis table contains information about the customers who visited the mall."
+        }
+      ],
       "solutions": [
         {
           "label": "Solution 1",
@@ -2283,6 +3058,16 @@
       "tables": [
         "Users",
         "Transactions"
+      ],
+      "table_schemas": [
+        {
+          "name": "Users",
+          "schema": "+--------------+---------+\n| Column Name  | Type    |\n+--------------+---------+\n| account      | int     |\n| name         | varchar |\n+--------------+---------+\naccount is the primary key for this table.\nEach row of this table contains the account number of each user in the bank."
+        },
+        {
+          "name": "Transactions",
+          "schema": "+---------------+---------+\n| Column Name   | Type    |\n+---------------+---------+\n| trans_id      | int     |\n| account       | int     |\n| amount        | int     |\n| transacted_on | date    |\n+---------------+---------+\ntrans_id is the primary key for this table.\nEach row of this table contains all changes made to all accounts.\namount is positive if the user received money and negative if they transferred money.\nAll accounts start with a balance 0."
+        }
       ],
       "solutions": [
         {
@@ -2304,6 +3089,20 @@
         "Orders",
         "Products"
       ],
+      "table_schemas": [
+        {
+          "name": "Customers",
+          "schema": "+---------------+---------+\n| Column Name   | Type    |\n+---------------+---------+\n| customer_id   | int     |\n| name          | varchar |\n+---------------+---------+\ncustomer_id is the primary key for this table.\nThis table contains information about the customers."
+        },
+        {
+          "name": "Orders",
+          "schema": "+---------------+---------+\n| Column Name   | Type    |\n+---------------+---------+\n| order_id      | int     |\n| order_date    | date    |\n| customer_id   | int     |\n| product_id    | int     |\n+---------------+---------+\norder_id is the primary key for this table.\nThis table contains information about the orders made by customer_id.\nNo customer will order the same product more than once in a single day."
+        },
+        {
+          "name": "Products",
+          "schema": "+---------------+---------+\n| Column Name   | Type    |\n+---------------+---------+\n| product_id    | int     |\n| product_name  | varchar |\n| price         | int     |\n+---------------+---------+\nproduct_id is the primary key for this table.\nThis table contains information about the products."
+        }
+      ],
       "solutions": [
         {
           "label": "Solution 1",
@@ -2324,6 +3123,20 @@
         "Orders",
         "Seller"
       ],
+      "table_schemas": [
+        {
+          "name": "Customer",
+          "schema": "+---------------+---------+\n| Column Name   | Type    |\n+---------------+---------+\n| customer_id   | int     |\n| customer_name | varchar |\n+---------------+---------+\ncustomer_id is the primary key for this table.\nEach row of this table contains the information of each customer in the WebStore."
+        },
+        {
+          "name": "Orders",
+          "schema": "+---------------+---------+\n| Column Name   | Type    |\n+---------------+---------+\n| order_id      | int     |\n| sale_date     | date    |\n| order_cost    | int     |\n| customer_id   | int     |\n| seller_id     | int     |\n+---------------+---------+\norder_id is the primary key for this table.\nEach row of this table contains all orders made in the webstore.\nsale_date is the date when the transaction was made between the customer (customer_id) and the seller (seller_id)."
+        },
+        {
+          "name": "Seller",
+          "schema": "+---------------+---------+\n| Column Name   | Type    |\n+---------------+---------+\n| seller_id     | int     |\n| seller_name   | varchar |\n+---------------+---------+\nseller_id is the primary key for this table.\nEach row of this table contains the information of each seller."
+        }
+      ],
       "solutions": [
         {
           "label": "Solution 1",
@@ -2341,6 +3154,12 @@
       "description": "Write an SQL query to find the missing customer IDs. The missing IDs are ones that are not in the Customers table but are in the range between 1 and the maximum customer_id present in the table. Notice that the maximum customer_id will not exceed 100. Return the result table ordered by ids in ascending order. The query result format is in the following example.",
       "tables": [
         "Customers"
+      ],
+      "table_schemas": [
+        {
+          "name": "Customers",
+          "schema": "+---------------+---------+\n| Column Name   | Type    |\n+---------------+---------+\n| customer_id   | int     |\n| customer_name | varchar |\n+---------------+---------+\ncustomer_id is the primary key for this table.\nEach row of this table contains the name and the id customer."
+        }
       ],
       "solutions": [
         {
@@ -2362,6 +3181,20 @@
         "SchoolB",
         "SchoolC"
       ],
+      "table_schemas": [
+        {
+          "name": "SchoolA",
+          "schema": "+---------------+---------+\n| Column Name   | Type    |\n+---------------+---------+\n| student_id    | int     |\n| student_name  | varchar |\n+---------------+---------+\nstudent_id is the primary key for this table.\nEach row of this table contains the name and the id of a student in school A.\nAll student_name are distinct."
+        },
+        {
+          "name": "SchoolB",
+          "schema": "+---------------+---------+\n| Column Name   | Type    |\n+---------------+---------+\n| student_id    | int     |\n| student_name  | varchar |\n+---------------+---------+\nstudent_id is the primary key for this table.\nEach row of this table contains the name and the id of a student in school B.\nAll student_name are distinct."
+        },
+        {
+          "name": "SchoolC",
+          "schema": "+---------------+---------+\n| Column Name   | Type    |\n+---------------+---------+\n| student_id    | int     |\n| student_name  | varchar |\n+---------------+---------+\nstudent_id is the primary key for this table.\nEach row of this table contains the name and the id of a student in school C.\nAll student_name are distinct."
+        }
+      ],
       "solutions": [
         {
           "label": "Solution 1",
@@ -2380,6 +3213,16 @@
       "tables": [
         "Users",
         "Register"
+      ],
+      "table_schemas": [
+        {
+          "name": "Users",
+          "schema": "+-------------+---------+\n| Column Name | Type    |\n+-------------+---------+\n| user_id     | int     |\n| user_name   | varchar |\n+-------------+---------+\nuser_id is the primary key for this table.\nEach row of this table contains the name and the id of a user."
+        },
+        {
+          "name": "Register",
+          "schema": "+-------------+---------+\n| Column Name | Type    |\n+-------------+---------+\n| contest_id  | int     |\n| user_id     | int     |\n+-------------+---------+\n(contest_id, user_id) is the primary key for this table.\nEach row of this table contains the id of a user and the contest they registered into."
+        }
       ],
       "solutions": [
         {
@@ -2401,6 +3244,20 @@
         "Rides",
         "AcceptedRides"
       ],
+      "table_schemas": [
+        {
+          "name": "Drivers",
+          "schema": "+-------------+---------+\n| Column Name | Type    |\n+-------------+---------+\n| driver_id   | int     |\n| join_date   | date    |\n+-------------+---------+\ndriver_id is the primary key for this table.\nEach row of this table contains the driver's ID and the date they joined the Hopper company."
+        },
+        {
+          "name": "Rides",
+          "schema": "+--------------+---------+\n| Column Name  | Type    |\n+--------------+---------+\n| ride_id      | int     |\n| user_id      | int     |\n| requested_at | date    |\n+--------------+---------+\nride_id is the primary key for this table.\nEach row of this table contains the ID of a ride, the user's ID that requested it, and the day they requested it.\nThere may be some ride requests in this table that were not accepted."
+        },
+        {
+          "name": "AcceptedRides",
+          "schema": "+---------------+---------+\n| Column Name   | Type    |\n+---------------+---------+\n| ride_id       | int     |\n| driver_id     | int     |\n| ride_distance | int     |\n| ride_duration | int     |\n+---------------+---------+\nride_id is the primary key for this table.\nEach row of this table contains some information about an accepted ride.\nIt is guaranteed that each accepted ride exists in the Rides table."
+        }
+      ],
       "solutions": [
         {
           "label": "Solution 1",
@@ -2420,6 +3277,20 @@
         "Drivers",
         "Rides",
         "AcceptedRides"
+      ],
+      "table_schemas": [
+        {
+          "name": "Drivers",
+          "schema": "+-------------+---------+\n| Column Name | Type    |\n+-------------+---------+\n| driver_id   | int     |\n| join_date   | date    |\n+-------------+---------+\ndriver_id is the primary key for this table.\nEach row of this table contains the driver's ID and the date they joined the Hopper company."
+        },
+        {
+          "name": "Rides",
+          "schema": "+--------------+---------+\n| Column Name  | Type    |\n+--------------+---------+\n| ride_id      | int     |\n| user_id      | int     |\n| requested_at | date    |\n+--------------+---------+\nride_id is the primary key for this table.\nEach row of this table contains the ID of a ride, the user's ID that requested it, and the day they requested it.\nThere may be some ride requests in this table that were not accepted."
+        },
+        {
+          "name": "AcceptedRides",
+          "schema": "+---------------+---------+\n| Column Name   | Type    |\n+---------------+---------+\n| ride_id       | int     |\n| driver_id     | int     |\n| ride_distance | int     |\n| ride_duration | int     |\n+---------------+---------+\nride_id is the primary key for this table.\nEach row of this table contains some information about an accepted ride.\nIt is guaranteed that each accepted ride exists in the Rides table."
+        }
       ],
       "solutions": [
         {
@@ -2441,6 +3312,20 @@
         "Rides",
         "AcceptedRides"
       ],
+      "table_schemas": [
+        {
+          "name": "Drivers",
+          "schema": "+-------------+---------+\n| Column Name | Type    |\n+-------------+---------+\n| driver_id   | int     |\n| join_date   | date    |\n+-------------+---------+\ndriver_id is the primary key for this table.\nEach row of this table contains the driver's ID and the date they joined the Hopper company."
+        },
+        {
+          "name": "Rides",
+          "schema": "+--------------+---------+\n| Column Name  | Type    |\n+--------------+---------+\n| ride_id      | int     |\n| user_id      | int     |\n| requested_at | date    |\n+--------------+---------+\nride_id is the primary key for this table.\nEach row of this table contains the ID of a ride, the user's ID that requested it, and the day they requested it.\nThere may be some ride requests in this table that were not accepted."
+        },
+        {
+          "name": "AcceptedRides",
+          "schema": "+---------------+---------+\n| Column Name   | Type    |\n+---------------+---------+\n| ride_id       | int     |\n| driver_id     | int     |\n| ride_distance | int     |\n| ride_duration | int     |\n+---------------+---------+\nride_id is the primary key for this table.\nEach row of this table contains some information about an accepted ride.\nIt is guaranteed that each accepted ride exists in the Rides table."
+        }
+      ],
       "solutions": [
         {
           "label": "Solution 1",
@@ -2459,6 +3344,12 @@
       "tables": [
         "Activity"
       ],
+      "table_schemas": [
+        {
+          "name": "Activity",
+          "schema": "+----------------+---------+\n| Column Name    | Type    |\n+----------------+---------+\n| machine_id     | int     |\n| process_id     | int     |\n| activity_type  | enum    |\n| timestamp      | float   |\n+----------------+---------+\nThe table shows the user activities for a factory website.\n(machine_id, process_id, activity_type) is the primary key of this table.\nmachine_id is the ID of a machine.\nprocess_id is the ID of a process running on the machine with ID machine_id.\nactivity_type is an ENUM of type ('start', 'end').\ntimestamp is a float representing the current time in seconds.\n'start' means the machine starts the process at the given timestamp and 'end' means the machine ends the process at the given timestamp.\nThe 'start' timestamp will always be before the 'end' timestamp for every (machine_id, process_id) pair."
+        }
+      ],
       "solutions": [
         {
           "label": "Solution 1",
@@ -2476,6 +3367,12 @@
       "description": "Write an SQL query to fix the names so that only the first character is uppercase and the rest are lowercase. Return the result table ordered by user_id. The query result format is in the following example:",
       "tables": [
         "Users"
+      ],
+      "table_schemas": [
+        {
+          "name": "Users",
+          "schema": "+----------------+---------+\n| Column Name    | Type    |\n+----------------+---------+\n| user_id        | int     |\n| name           | varchar |\n+----------------+---------+\nuser_id is the primary key for this table.\nThis table contains the ID and the name of the user. The name consists of only lowercase and uppercase characters."
+        }
       ],
       "solutions": [
         {
@@ -2496,6 +3393,16 @@
         "Product",
         "Invoice"
       ],
+      "table_schemas": [
+        {
+          "name": "Product",
+          "schema": "+-------------+---------+\n| Column Name | Type    |\n+-------------+---------+\n| product_id  | int     |\n| name        | varchar |\n+-------------+---------+\nproduct_id is the primary key for this table.\nThis table contains the ID and the name of the product. The name consists of only lowercase English letters. No two products have the same name."
+        },
+        {
+          "name": "Invoice",
+          "schema": "+-------------+------+\n| Column Name | Type |\n+-------------+------+\n| invoice_id  | int  |\n| product_id  | int  |\n| rest        | int  |\n| paid        | int  |\n| canceled    | int  |\n| refunded    | int  |\n+-------------+------+\ninvoice_id is the primary key for this table and the id of this invoice.\nproduct_id is the id of the product for this invoice.\nrest is the amount left to pay for this invoice.\npaid is the amount paid for this invoice.\ncanceled is the amount canceled for this invoice.\nrefunded is the amount refunded for this invoice."
+        }
+      ],
       "solutions": [
         {
           "label": "Solution 1",
@@ -2513,6 +3420,12 @@
       "description": "Write an SQL query to find the IDs of the invalid tweets. The tweet is invalid if the number of characters used in the content of the tweet is strictly greater than 15. Return the result table in any order. The query result format is in the following example:",
       "tables": [
         "Tweets"
+      ],
+      "table_schemas": [
+        {
+          "name": "Tweets",
+          "schema": "+----------------+---------+\n| Column Name    | Type    |\n+----------------+---------+\n| tweet_id       | int     |\n| content        | varchar |\n+----------------+---------+\ntweet_id is the primary key for this table.\nThis table contains all the tweets in a social media app."
+        }
       ],
       "solutions": [
         {
@@ -2532,6 +3445,12 @@
       "tables": [
         "DailySales"
       ],
+      "table_schemas": [
+        {
+          "name": "DailySales",
+          "schema": "+-------------+---------+\n| Column Name | Type    |\n+-------------+---------+\n| date_id     | date    |\n| make_name   | varchar |\n| lead_id     | int     |\n| partner_id  | int     |\n+-------------+---------+\nThis table does not have a primary key.\nThis table contains the date and the name of the product sold and the IDs of the lead and partner it was sold to.\nThe name consists of only lowercase English letters."
+        }
+      ],
       "solutions": [
         {
           "label": "Solution 1",
@@ -2550,6 +3469,12 @@
       "tables": [
         "Calls"
       ],
+      "table_schemas": [
+        {
+          "name": "Calls",
+          "schema": "+-------------+---------+\n| Column Name | Type    |\n+-------------+---------+\n| from_id     | int     |\n| to_id       | int     |\n| duration    | int     |\n+-------------+---------+\nThis table does not have a primary key, it may contain duplicates.\nThis table contains the duration of a phone call between from_id and to_id.\nfrom_id != to_id"
+        }
+      ],
       "solutions": [
         {
           "label": "Solution 1",
@@ -2567,6 +3492,12 @@
       "description": "Assume today's date is '2021-1-1'. Write an SQL query that will, for each user_id, find out the largest window of days between each visit and the one right after it (or today if you are considering the last visit). Return the result table ordered by user_id. The query result format is in the following example:",
       "tables": [
         "UserVisits"
+      ],
+      "table_schemas": [
+        {
+          "name": "UserVisits",
+          "schema": "+-------------+------+\n| Column Name | Type |\n+-------------+------+\n| user_id     | int  |\n| visit_date  | date |\n+-------------+------+\nThis table does not have a primary key.\nThis table contains logs of the dates that users vistied a certain retailer."
+        }
       ],
       "solutions": [
         {
@@ -2587,6 +3518,16 @@
         "Boxes",
         "Chests"
       ],
+      "table_schemas": [
+        {
+          "name": "Boxes",
+          "schema": "+--------------+------+\n| Column Name  | Type |\n+--------------+------+\n| box_id       | int  |\n| chest_id     | int  |\n| apple_count  | int  |\n| orange_count | int  |\n+--------------+------+\nbox_id is the primary key for this table.\nchest_id is a foreign key of the chests table.\nThis table contains information about the boxes and the number of oranges and apples they contain. Each box may contain a chest, which also can contain oranges and apples."
+        },
+        {
+          "name": "Chests",
+          "schema": "+--------------+------+\n| Column Name  | Type |\n+--------------+------+\n| chest_id     | int  |\n| apple_count  | int  |\n| orange_count | int  |\n+--------------+------+\nchest_id is the primary key for this table.\nThis table contains information about the chests we have, and the corresponding number if oranges and apples they contain."
+        }
+      ],
       "solutions": [
         {
           "label": "Solution 1",
@@ -2604,6 +3545,12 @@
       "description": "Write an SQL query that will, for each user, return the number of followers. Return the result table ordered by user_id. The query result format is in the following example:",
       "tables": [
         "Followers"
+      ],
+      "table_schemas": [
+        {
+          "name": "Followers",
+          "schema": "+-------------+------+\n| Column Name | Type |\n+-------------+------+\n| user_id     | int  |\n| follower_id | int  |\n+-------------+------+\n(user_id, follower_id) is the primary key for this table.\nThis table contains the IDs of a user and a follower in a social media app where the follower follows the user."
+        }
       ],
       "solutions": [
         {
@@ -2623,6 +3570,12 @@
       "tables": [
         "Employees"
       ],
+      "table_schemas": [
+        {
+          "name": "Employees",
+          "schema": "+-------------+----------+\n| Column Name | Type     |\n+-------------+----------+\n| employee_id | int      |\n| name        | varchar  |\n| reports_to  | int      |\n| age         | int      |\n+-------------+----------+\nemployee_id is the primary key for this table.\nThis table contains information about the employees and the id of the manager they report to. Some employees do not report to anyone (reports_to is null)."
+        }
+      ],
       "solutions": [
         {
           "label": "Solution 1",
@@ -2640,6 +3593,12 @@
       "description": "Write an SQL query to calculate the total time in minutes spent by each employee on each day at the office. Note that within one day, an employee can enter and leave more than once. Return the result table in any order. The query result format is in the following example:",
       "tables": [
         "Employees"
+      ],
+      "table_schemas": [
+        {
+          "name": "Employees",
+          "schema": "+-------------+------+\n| Column Name | Type |\n+-------------+------+\n| emp_id      | int  |\n| event_day   | date |\n| in_time     | int  |\n| out_time    | int  |\n+-------------+------+\n(emp_id, event_day, in_time) is the primary key of this table.\nThe table shows the employees' entries and exits in an office.\nevent_day is the day at which this event happened and in_time is the minute at which the employee entered the office and out_time is the time at which he got outnumbered from 1 to 1440.\nIt's guaranteed that no two events on the same day intersect in time."
+        }
       ],
       "solutions": [
         {
@@ -2659,6 +3618,12 @@
       "tables": [
         "LogInfo"
       ],
+      "table_schemas": [
+        {
+          "name": "LogInfo",
+          "schema": "+-------------+----------+\n| Column Name | Type     |\n+-------------+----------+\n| account_id  | int      |\n| ip_address  | int      |\n| login       | datetime |\n| logout      | datetime |\n+-------------+----------+\nThere is no primary key for this table, and it may contain duplicates.\nThe table contains information about the login and logout dates of Leetflex accounts. It also contains the IP address from which the account logged in and out.\nIt is guaranteed that the logout time is after the login time."
+        }
+      ],
       "solutions": [
         {
           "label": "Solution 1",
@@ -2676,6 +3641,12 @@
       "description": "Write an SQL query to find the ids of products that are both low fat and recyclable. Return the result table in any order. The query result format is in the following example:",
       "tables": [
         "Products"
+      ],
+      "table_schemas": [
+        {
+          "name": "Products",
+          "schema": "+-------------+---------+\n| Column Name | Type    |\n+-------------+---------+\n| product_id  | int     |\n| low_fats    | enum    |\n| recyclable  | enum    |\n+-------------+---------+\nproduct_id is the primary key for this table.\nlow_fats is an ENUM of type ('Y', 'N') where 'Y' means this product is low fat and 'N' means it is not.\nrecyclable is an ENUM of types ('Y', 'N') where 'Y' means this product is recyclable and 'N' means it is not."
+        }
       ],
       "solutions": [
         {
@@ -2696,6 +3667,16 @@
         "Tasks",
         "Executed"
       ],
+      "table_schemas": [
+        {
+          "name": "Tasks",
+          "schema": "+----------------+---------+\n| Column Name    | Type    |\n+----------------+---------+\n| task_id        | int     |\n| subtasks_count | int     |\n+----------------+---------+\ntask_id is the primary key for this table.\nEach row in this table indicates that task_id was divided into subtasks_count subtasks labelled from 1 to subtasks_count.\nIt is guaranteed that 2 <= subtasks_count <= 20."
+        },
+        {
+          "name": "Executed",
+          "schema": "+---------------+---------+\n| Column Name   | Type    |\n+---------------+---------+\n| task_id       | int     |\n| subtask_id    | int     |\n+---------------+---------+\n(task_id, subtask_id) is the primary key for this table.\nEach row in this table indicates that for the task task_id, the subtask with ID subtask_id was executed successfully.\nIt is guaranteed that subtask_id <= subtasks_count for each task_id."
+        }
+      ],
       "solutions": [
         {
           "label": "Solution 1",
@@ -2713,6 +3694,12 @@
       "description": "Write an SQL query to find the price of each product in each store. Return the result table in any order. The query result format is in the following example:",
       "tables": [
         "Products"
+      ],
+      "table_schemas": [
+        {
+          "name": "Products",
+          "schema": "+-------------+---------+\n| Column Name | Type    |\n+-------------+---------+\n| product_id  | int     |\n| store       | enum    |\n| price       | int     |\n+-------------+---------+\n(product_id,store) is the primary key for this table.\nstore is an ENUM of type ('store1', 'store2', 'store3') where each represents the store this product is available at.\nprice is the price of the product at this store."
+        }
       ],
       "solutions": [
         {
@@ -2733,6 +3720,16 @@
         "Players",
         "Championships"
       ],
+      "table_schemas": [
+        {
+          "name": "Players",
+          "schema": "+----------------+---------+\n| Column Name    | Type    |\n+----------------+---------+\n| player_id      | int     |\n| player_name    | varchar |\n+----------------+---------+\nplayer_id is the primary key for this table.\nEach row in this table contains the name and the ID of a tennis player."
+        },
+        {
+          "name": "Championships",
+          "schema": "+---------------+---------+\n| Column Name   | Type    |\n+---------------+---------+\n| year          | int     |\n| Wimbledon     | int     |\n| Fr_open       | int     |\n| US_open       | int     |\n| Au_open       | int     |\n+---------------+---------+\nyear is the primary key for this table.\nEach row of this table containts the IDs of the players who won one each tennis tournament of the grand slam."
+        }
+      ],
       "solutions": [
         {
           "label": "Solution 1",
@@ -2750,6 +3747,12 @@
       "description": "Employees can belong to multiple departments. When the employee joins other departments, they need to decide which department is their primary department. Note that when an employee belongs to only one department, their primary column is 'N'. Write an SQL query to report all the employees with their primary department. For employees who belong to one department, report their only department. Return the result table in any order. The query result format is in the following example.",
       "tables": [
         "Employee"
+      ],
+      "table_schemas": [
+        {
+          "name": "Employee",
+          "schema": "+--------------+---------+\n| Column Name  |  Type   |\n+--------------+---------+\n| employee_id  | int     |\n| deprtment_id | int     |\n| primary_flag | varchar |\n+--------------+---------+\n(employee_id, department_id) is the primary key for this table.\nemployee_id is the id of the employee.\ndepartment_id is the id of the department to which the employee belongs.\nprimary_flag is an ENUM of type ('Y', 'N'). If the flag is 'Y', the department is the primary department for the employee. If the flag is 'N', the department is not the primary."
+        }
       ],
       "solutions": [
         {
