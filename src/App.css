@@ -554,7 +554,7 @@ a:hover {
   top: 1rem;
   left: 1rem;
   z-index: 1000;
-  background: var(--surface);
+  background: var(--bg-gradient-end);
   border: 1px solid var(--border);
   color: var(--text-primary);
   padding: 0.6rem;
