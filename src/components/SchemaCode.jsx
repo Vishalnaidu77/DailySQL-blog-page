@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { highlightSchema } from '../utils/schemaHighlighter'
+import { highlightSchema } from '../utils/schemaHighlighter.jsx'
 
 const SchemaCode = ({ schema }) => {
   const highlighted = useMemo(() => highlightSchema(schema), [schema])

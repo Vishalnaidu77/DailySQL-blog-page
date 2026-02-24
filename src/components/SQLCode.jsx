@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { highlightSQL } from '../utils/sqlHighlighter'
+import { highlightSQL } from '../utils/sqlHighlighter.jsx'
 
 const SQLCode = ({ code }) => {
   const highlighted = useMemo(() => highlightSQL(code), [code])
