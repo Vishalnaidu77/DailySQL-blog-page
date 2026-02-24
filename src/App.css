@@ -69,7 +69,6 @@ a:hover {
   min-width: 320px;
   height: calc(100vh);
   background: var(--bg-gradient-start);
-  border-right: 1px solid var(--border);
   overflow-y: auto;
 }
 
@@ -104,8 +103,7 @@ a:hover {
 
 .sidebar-link:hover {
   color: var(--text-primary);
-  background: var(--surface);
-  border-left-color: var(--accent);
+  border-left: 2px solid var(--accent);
 }
 
 .sidebar-link-id {
@@ -140,8 +138,61 @@ a:hover {
   color: var(--hard);
 }
 
-.sidebar::-webkit-scrollbar{
+/* Hide default scrollbar */
+.sidebar::-webkit-scrollbar {
   display: none;
+}
+
+.sidebar {
+  scrollbar-width: none;
+}
+
+/* Zigzag Wavy Scrollbar */
+.sidebar-wrapper {
+  position: relative;
+  display: flex;
+  height: 100%;
+  overflow: hidden;
+}
+
+.sidebar-inner {
+  flex: 1;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+.sidebar-inner::-webkit-scrollbar {
+  display: none;
+}
+
+.zigzag-scrollbar {
+  position: absolute;
+  right: -2px;
+  bottom: 0;
+  top: 6%;
+  width: 16px;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.zigzag-scrollbar svg {
+  width: 100%;
+  height: 100%;
+}
+
+.zigzag-track {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.08);
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+.zigzag-thumb {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.541);
+  stroke-width: 2;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.15s ease-out;
 }
 
 /* ===== Main Content ===== */
@@ -155,7 +206,7 @@ a:hover {
 .page-header {
   text-align: center;
   padding: 2rem 2rem;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px dashed var(--border);
 }
 
 .badge {
